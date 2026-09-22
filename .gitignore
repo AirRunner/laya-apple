@@ -22,3 +22,6 @@ benchmarks/results/
 # Local tooling
 .omc/
 .DS_Store
+
+# Private planning notes
+DEVELOPMENT_PLAN.md
