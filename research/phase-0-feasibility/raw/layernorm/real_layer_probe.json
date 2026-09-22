@@ -1,0 +1,98 @@
+{
+  "layers_0_1": {
+    "start_layer": 0,
+    "count": 1,
+    "max_abs_input": 13.169508934020996,
+    "diff_vs_fp32_ref": {
+      "cpu_only": 0.4479255676269531,
+      "cpu_ne": 0.08012199401855469,
+      "cpu_gpu": 0.048908233642578125,
+      "all": 0.08012199401855469
+    },
+    "cpu_only_vs_cpu_ne": 0.5
+  },
+  "layers_0_3": {
+    "start_layer": 0,
+    "count": 3,
+    "max_abs_input": 13.169508934020996,
+    "diff_vs_fp32_ref": {
+      "cpu_only": 0.48734283447265625,
+      "cpu_ne": 0.24442291259765625,
+      "cpu_gpu": 0.08277130126953125,
+      "all": 0.24442291259765625
+    },
+    "cpu_only_vs_cpu_ne": 0.5625
+  },
+  "layers_5_1": {
+    "start_layer": 5,
+    "count": 1,
+    "max_abs_input": 69.45817565917969,
+    "diff_vs_fp32_ref": {
+      "cpu_only": 15.68798828125,
+      "cpu_ne": 0.68798828125,
+      "cpu_gpu": 0.685791015625,
+      "all": 0.68798828125
+    },
+    "cpu_only_vs_cpu_ne": 15.0
+  },
+  "layers_5_3": {
+    "start_layer": 5,
+    "count": 3,
+    "max_abs_input": 69.45817565917969,
+    "diff_vs_fp32_ref": {
+      "cpu_only": 44.9906005859375,
+      "cpu_ne": 1.18408203125,
+      "cpu_gpu": 0.9906005859375,
+      "all": 1.18408203125
+    },
+    "cpu_only_vs_cpu_ne": 45.0
+  },
+  "layers_14_1": {
+    "start_layer": 14,
+    "count": 1,
+    "max_abs_input": 2444.7978515625,
+    "diff_vs_fp32_ref": {
+      "cpu_only": 141.69970703125,
+      "cpu_ne": 7.6357421875,
+      "cpu_gpu": 6.30029296875,
+      "all": 7.6357421875
+    },
+    "cpu_only_vs_cpu_ne": 148.0
+  },
+  "layers_14_3": {
+    "start_layer": 14,
+    "count": 3,
+    "max_abs_input": 2444.7978515625,
+    "diff_vs_fp32_ref": {
+      "cpu_only": 143.71240234375,
+      "cpu_ne": 10.3232421875,
+      "cpu_gpu": 6.3232421875,
+      "all": 10.3232421875
+    },
+    "cpu_only_vs_cpu_ne": 148.0
+  },
+  "layers_19_1": {
+    "start_layer": 19,
+    "count": 1,
+    "max_abs_input": 10603.9697265625,
+    "diff_vs_fp32_ref": {
+      "cpu_only": 471.732421875,
+      "cpu_ne": 30.728515625,
+      "cpu_gpu": 30.728515625,
+      "all": 30.728515625
+    },
+    "cpu_only_vs_cpu_ne": 480.0
+  },
+  "layers_19_3": {
+    "start_layer": 19,
+    "count": 3,
+    "max_abs_input": 10603.9697265625,
+    "diff_vs_fp32_ref": {
+      "cpu_only": 474.0078125,
+      "cpu_ne": 27.90234375,
+      "cpu_gpu": 24.544921875,
+      "all": 27.90234375
+    },
+    "cpu_only_vs_cpu_ne": 480.0
+  }
+}

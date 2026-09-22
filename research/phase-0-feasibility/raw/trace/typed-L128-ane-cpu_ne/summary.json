@@ -1,0 +1,483 @@
+{
+ "spec": {
+  "backend": "ane",
+  "units": "cpu_ne",
+  "model": "laya-typed-decisions"
+ },
+ "length": 128,
+ "template": "Core AI",
+ "record_returncode": 0,
+ "record_stderr_tail": "",
+ "tables": {
+  "ane-hw-intervals": {
+   "rows": 777,
+   "columns": [
+    "start",
+    "duration",
+    "channel-name",
+    "event-depth",
+    "event-label",
+    "state",
+    "color"
+   ],
+   "row_kinds": {
+    "Apple Neural Engine | Neural Engine Prediction | Active": 772,
+    "Apple Neural Engine | model_B64264E3-CFCB-4A3D-85B6-3BB9DF85BFCD_main__Op0_AneInference Load: cached | Active": 1,
+    "Apple Neural Engine | model_2BFBD880-73E1-495F-912C-5C88682FB1A1_main__Op0_AneInference Load: cached | Active": 1,
+    "Apple Neural Engine | model_2BFBD880-73E1-495F-912C-5C88682FB1A1_main__Op0_AneInference Prediction | Active": 1,
+    "Apple Neural Engine | Neural Engine Compile (QoS=Default) | Active": 1,
+    "Apple Neural Engine | model_6EC87B1B-424A-4823-80B7-11BEF240B389_main__Op0_AneInference Load: cached | Active": 1
+   },
+   "duration_total_ms": 10222.30978,
+   "duration_median_ms": 9.22975
+  },
+  "device-gpu-info": {
+   "rows": 1,
+   "columns": [
+    "timestamp",
+    "accelerator-id",
+    "device-name",
+    "vendor-name",
+    "recommended-max-working-set-size",
+    "headless",
+    "removable",
+    "low-power",
+    "mobile",
+    "agx-tracecode-version",
+    "perf-map"
+   ],
+   "row_kinds": {
+    "M4 Max | Apple": 1
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "gpu-shader-profiler-interval": {
+   "rows": 0,
+   "columns": [
+    "start",
+    "duration",
+    "pc",
+    "submission-id",
+    "datamaster"
+   ],
+   "row_kinds": {},
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "gpu-shader-profiler-sample": {
+   "rows": 0,
+   "columns": [
+    "timestamp",
+    "pcs",
+    "num-pcs"
+   ],
+   "row_kinds": {},
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-application-encoders-list": {
+   "rows": 0,
+   "columns": [
+    "start",
+    "duration",
+    "thread",
+    "process",
+    "gpu",
+    "frame-number",
+    "cmdbuffer-label",
+    "cmdbuffer-label-indexed",
+    "encoder-label",
+    "encoder-label-indexed",
+    "event-type",
+    "cmdbuffer-id",
+    "encoder-id"
+   ],
+   "row_kinds": {},
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-command-buffer-completed": {
+   "rows": 1802,
+   "columns": [
+    "timestamp",
+    "cmdbuffer-id",
+    "commit-id"
+   ],
+   "row_kinds": {
+    "": 1802
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-command-buffer-frame-assignment": {
+   "rows": 1817,
+   "columns": [
+    "timestamp",
+    "cmdbuffer-id",
+    "commit-time",
+    "commit-id",
+    "frame-number",
+    "frame-color",
+    "cmdbuffer-index",
+    "has-present",
+    "is-compositor",
+    "type-name",
+    "present-surface-id",
+    "compositor-cmdbuffer-id",
+    "xr-frame",
+    "pid",
+    "process"
+   ],
+   "row_kinds": {
+    "Command Buffer": 1817
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-gpu-execution-points": {
+   "rows": 4210,
+   "columns": [
+    "timestamp",
+    "channel-id",
+    "function",
+    "slot-id",
+    "gpu-submission-id",
+    "accelerator-id",
+    "note"
+   ],
+   "row_kinds": {
+    "": 4210
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-gpu-info": {
+   "rows": 1,
+   "columns": [
+    "timestamp",
+    "gpu-name",
+    "gpu-index",
+    "accelerator-id",
+    "mobile"
+   ],
+   "row_kinds": {
+    "M4 Max": 1
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-gpu-intervals": {
+   "rows": 2105,
+   "columns": [
+    "start",
+    "duration",
+    "channel-name",
+    "frame-number",
+    "start-latency",
+    "event-depth",
+    "event-label",
+    "state",
+    "connection-UUID",
+    "color",
+    "process",
+    "gpu",
+    "channel-subtitle",
+    "iosurface-accesses",
+    "bytes",
+    "cmdbuffer-id",
+    "encoder-id",
+    "gpu-submission-id"
+   ],
+   "row_kinds": {
+    "Compute | GPU Execution  (n/a) 0x85e27f13 | Active": 15,
+    "Compute | GPU Execution  (n/a) 0x85e280c6 | Active": 15,
+    "Compute | GPU Execution  (n/a) 0x85e27d49 | Active": 14,
+    "Compute | GPU Execution  (n/a) 0x85e27dfa | Active": 13,
+    "Compute | GPU Execution  (n/a) 0x85e27e91 | Active": 13,
+    "Compute | GPU Execution  (n/a) 0x85e27f48 | Active": 13,
+    "Compute | GPU Execution  (n/a) 0x85e27fa7 | Active": 13,
+    "Compute | GPU Execution  (n/a) 0x85e27c21 | Active": 12,
+    "Compute | GPU Execution  (n/a) 0x85e27ceb | Active": 12,
+    "Compute | GPU Execution  (n/a) 0x85e27faa | Active": 12,
+    "Compute | GPU Execution  (n/a) 0x85e2800c | Active": 12,
+    "Compute | GPU Execution  (n/a) 0x85e2804e | Active": 12,
+    "Compute | GPU Execution  (n/a) 0x85e27cbb | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e27ce8 | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e27d29 | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e27d9b | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e27db3 | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e27de8 | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e27e39 | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e27e4d | Active": 11,
+    "Compute | Command Buffer 0:Compute Command 0  (python3.12 (31689)) 0x85e280fd | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e28124 | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e2817d | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e281b1 | Active": 11,
+    "Compute | GPU Execution  (n/a) 0x85e27b7e | Active": 10
+   },
+   "duration_total_ms": 9042.283108,
+   "duration_median_ms": 2.009542
+  },
+  "metal-gpu-state-intervals": {
+   "rows": 1770,
+   "columns": [
+    "start",
+    "duration",
+    "state",
+    "label",
+    "color",
+    "num-events",
+    "gpu"
+   ],
+   "row_kinds": {
+    "Active | 1 channels active": 834,
+    "Idle | Idle": 701,
+    "Active | 2 channels active": 183,
+    "Active | 3 channels active": 52
+   },
+   "duration_total_ms": 8075.235583,
+   "duration_median_ms": 0.008917
+  },
+  "metal-gpu-submission-to-command-buffer-id": {
+   "rows": 2108,
+   "columns": [
+    "timestamp",
+    "cmdbuffer-id",
+    "gpu-submission-id",
+    "segment-id",
+    "segmentlist-id",
+    "encoder-id",
+    "accelerator-id",
+    "channel-id",
+    "submission-type",
+    "metadata-1",
+    "metadata-2",
+    "pid",
+    "process",
+    "model",
+    "commit-id",
+    "num-coalasced-encoders"
+   ],
+   "row_kinds": {
+    "0 | 1": 2108
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-io-surface-access": {
+   "rows": 56,
+   "columns": [
+    "timestamp",
+    "cmdbuffer-id",
+    "encoder-id",
+    "gpu-submission-id",
+    "submission-id",
+    "segment-id",
+    "channel-id",
+    "accelerator-id",
+    "surface-id",
+    "pixel-format",
+    "width",
+    "height",
+    "access-type",
+    "pid",
+    "process"
+   ],
+   "row_kinds": {
+    "1": 56
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-known-compositor-process": {
+   "rows": 1,
+   "columns": [
+    "timestamp",
+    "compositor-name",
+    "pid",
+    "process"
+   ],
+   "row_kinds": {
+    "WindowServer": 1
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-object-dependency-chain-gpu": {
+   "rows": 1135,
+   "columns": [
+    "in-time",
+    "root-id",
+    "out-time",
+    "block-id",
+    "color",
+    "track-id"
+   ],
+   "row_kinds": {
+    "": 1135
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-object-label": {
+   "rows": 3176,
+   "columns": [
+    "timestamp",
+    "object-id",
+    "frame-number",
+    "label",
+    "object-type",
+    "pid"
+   ],
+   "row_kinds": {
+    "Command Buffer 0 | 10": 1761,
+    "Compute Command 0 | 11": 898,
+    "AGXHeap with guard | 5": 144,
+    "packed-layer | 11": 56,
+    "root-layer | 11": 56,
+    "RBImageRenderer | 10": 56,
+    "rb:heap-texture | 5": 56,
+    "rb:memoryless-texture | 5": 36,
+    "AGXHeap without guard | 5": 34,
+    "Compute Command 1 | 11": 28,
+    "IOGPUMetalHeap | 5": 12,
+    "AGXHeap with guard (large) | 5": 12,
+    "Compute Command 2 | 11": 4,
+    "coreanimation.transient-surface-heap-Virtual-14\" | 5": 2,
+    "rb:surface-pool.184368 | 5": 1,
+    "IOGPUMetalHeap, \"rb:shared-heap.25094\" | 5": 1,
+    "rb:shared-buffer.67657 | 5": 1,
+    "rb:surface-pool.184369 | 5": 1,
+    "rb:shared-buffer.67658 | 5": 1,
+    "rb:surface-pool.184370 | 5": 1,
+    "rb:shared-buffer.67659 | 5": 1,
+    "rb:surface-pool.184371 | 5": 1,
+    "rb:shared-buffer.67660 | 5": 1,
+    "rb:surface-pool.184372 | 5": 1,
+    "rb:shared-buffer.67661 | 5": 1
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-shader-profiler-intervals": {
+   "rows": 0,
+   "columns": [
+    "start",
+    "duration",
+    "name",
+    "label",
+    "pso-label",
+    "event-name",
+    "shader-type",
+    "percent-of-kick",
+    "total-kick-percent",
+    "color",
+    "event-priority",
+    "process",
+    "gpu",
+    "channel-name",
+    "event-depth",
+    "connection-UUID"
+   ],
+   "row_kinds": {},
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-shader-profiler-shader-list": {
+   "rows": 673,
+   "columns": [
+    "timestamp",
+    "name",
+    "label",
+    "pso-name",
+    "id",
+    "pc-start",
+    "pc-end",
+    "shader-type",
+    "process",
+    "gpu"
+   ],
+   "row_kinds": {
+    "VfxU10Xh (28) | None | VfxU10Xh (28) | Vertex": 29,
+    "VfxU10Xh (120) | None | VfxU10Xh (120) | Vertex": 17,
+    "VfxXh (114) | None | VfxXh (114) | Vertex": 10,
+    "fa16gcopa4 (18) | None | fa16gcopa4 (18) | Fragment": 6,
+    "uber_vertex (7) | None | uber_vertex (7) | Vertex": 5,
+    "fa16bempa4 (17) | None | fa16bempa4 (17) | Fragment": 5,
+    "VfxU11Xh (534) | None | VfxU11Xh (534) | Vertex": 5,
+    "fa17fmpa4 (19) | None | fa17fmpa4 (19) | Fragment": 4,
+    "fa16dhmpa4 (16) | None | fa16dhmpa4 (16) | Fragment": 4,
+    "fa16kampa4 (5) | None | fa16kampa4 (5) | Fragment": 4,
+    "fa16kfmpa4 (20) | None | fa16kfmpa4 (20) | Fragment": 4,
+    "UberCompositeVertex (4) | None | UberCompositeVertex (4) | Vertex": 4,
+    "VfxXh (366) | None | VfxXh (366) | Vertex": 3,
+    "VfxU10Xh (287) | None | VfxU10Xh (287) | Vertex": 3,
+    "Ef4IExpAFf4INegativeEGV2IBroadcastBCHV2IBroadcastCBIV2IAddGHJV2IBroadcastIDKV2IBroadcastDILV2ILogAddExpJKMf4IAsTypeLNf4IBroadcastFMOf4IBroadcastMFPf4IMultiplyNOQf4OExpP_VVVC_f4V2V2_10408321403207385874_strided_2 (0) | None | Ef4IExpAFf4INegativeEGV2IBroadcastBCHV2IBroadcastCBIV2IAddGHJV2IBroadcastIDKV2IBroadcastDILV2ILogAddExpJKMf4IAsTypeLNf4IBroadcastFMOf4IBroadcastMFPf4IMultiplyNOQf4OExpP_VVVC_f4V2V2_10408321403207385874_strided_2 (0) | Compute": 2,
+    "depthwise_conv_1d_bfloat16 (16) | None | depthwise_conv_1d_bfloat16 (16) | Compute": 2,
+    "rmsbfloat16 (21) | None | rmsbfloat16 (21) | Compute": 2,
+    "custom_effect_vertex (16) | None | custom_effect_vertex (16) | Vertex": 2,
+    "path_exterior_fragment (9) | None | path_exterior_fragment (9) | Fragment": 2,
+    "fa16jbmpa4 (9) | None | fa16jbmpa4 (9) | Fragment": 2,
+    "path_interior_fragment (34) | None | path_interior_fragment (34) | Fragment": 2,
+    "primitive__vertex (14) | None | primitive__vertex (14) | Vertex": 2,
+    "plane__vertex (12) | None | plane__vertex (12) | Vertex": 2,
+    "VfxLlnXh (590) | None | VfxLlnXh (590) | Vertex": 2,
+    "VfxU11Xh (253) | None | VfxU11Xh (253) | Vertex": 2
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  },
+  "metal-visual-highlight-chain-gpu": {
+   "rows": 1147,
+   "columns": [
+    "timestamp",
+    "root-id",
+    "block-id"
+   ],
+   "row_kinds": {
+    "": 1147
+   },
+   "duration_total_ms": 0.0,
+   "duration_median_ms": null
+  }
+ },
+ "schemas": [
+  "ODIEProfile",
+  "ane-hw-intervals",
+  "device-gpu-info",
+  "dyld-library-load",
+  "gpu-shader-profiler-interval",
+  "gpu-shader-profiler-sample",
+  "graphics-compiler-spill-events",
+  "kdebug",
+  "kdebug-strings",
+  "life-cycle-period",
+  "metal-application-encoders-list",
+  "metal-command-buffer-completed",
+  "metal-command-buffer-frame-assignment",
+  "metal-gpu-execution-points",
+  "metal-gpu-info",
+  "metal-gpu-intervals",
+  "metal-gpu-state-intervals",
+  "metal-gpu-submission-to-command-buffer-id",
+  "metal-io-surface-access",
+  "metal-known-compositor-process",
+  "metal-object-dependency-chain-gpu",
+  "metal-object-label",
+  "metal-shader-profiler-intervals",
+  "metal-shader-profiler-shader-list",
+  "metal-visual-highlight-chain-gpu",
+  "mps-hw-intervals",
+  "os-signpost",
+  "os-signpost-arg",
+  "process-info",
+  "thread-info",
+  "tick",
+  "time-info",
+  "time-profile",
+  "time-sample",
+  "visual-chain",
+  "visual-connection"
+ ]
+}

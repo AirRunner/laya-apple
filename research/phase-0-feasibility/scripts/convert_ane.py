@@ -101,7 +101,7 @@ def main():
 
     from backends import ane_package_dir
 
-    out = ane_package_dir(args.model, args.length, args.batch, args.variant)
+    out = ane_package_dir(args.model, args.length, args.batch, args.variant, args.block)
     record = {
         "experiment": "convert_ane_bc1s",
         "model": args.model,

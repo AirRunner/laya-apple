@@ -1,0 +1,169 @@
+{
+  "baseline/realistic_29700": {
+    "formulation": "baseline",
+    "magnitude_case": "realistic_29700",
+    "overflow_note": {
+      "max_abs_x": 43776.71813994109,
+      "max_x_squared": 1916401051.1038473,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": true,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.003927467044931632,
+      "cpu_ne": 0.003927467044931632,
+      "cpu_gpu": 0.003927467044931632,
+      "all": 0.003927467044931632
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "functional_ln/realistic_29700": {
+    "formulation": "functional_ln",
+    "magnitude_case": "realistic_29700",
+    "overflow_note": {
+      "max_abs_x": 43776.71813994109,
+      "max_x_squared": 1916401051.1038473,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": true,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.006257177938368663,
+      "cpu_ne": 0.006257177938368663,
+      "cpu_gpu": 0.006257177938368663,
+      "all": 0.006257177938368663
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "prescaled_1024/realistic_29700": {
+    "formulation": "prescaled_1024",
+    "magnitude_case": "realistic_29700",
+    "overflow_note": {
+      "max_abs_x": 43776.71813994109,
+      "max_x_squared": 1916401051.1038473,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": true,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.006257177938368663,
+      "cpu_ne": 0.006257177938368663,
+      "cpu_gpu": 0.006257177938368663,
+      "all": 0.006257177938368663
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "baseline/multilingual_13000": {
+    "formulation": "baseline",
+    "magnitude_case": "multilingual_13000",
+    "overflow_note": {
+      "max_abs_x": 19161.52645856007,
+      "max_x_squared": 367164096.22209764,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": true,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.004150498154012361,
+      "cpu_ne": 0.004150498154012361,
+      "cpu_gpu": 0.004150498154012361,
+      "all": 0.004150498154012361
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "functional_ln/multilingual_13000": {
+    "formulation": "functional_ln",
+    "magnitude_case": "multilingual_13000",
+    "overflow_note": {
+      "max_abs_x": 19161.52645856007,
+      "max_x_squared": 367164096.22209764,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": true,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.006845458524272097,
+      "cpu_ne": 0.006845458524272097,
+      "cpu_gpu": 0.006845458524272097,
+      "all": 0.006845458524272097
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "prescaled_1024/multilingual_13000": {
+    "formulation": "prescaled_1024",
+    "magnitude_case": "multilingual_13000",
+    "overflow_note": {
+      "max_abs_x": 19161.52645856007,
+      "max_x_squared": 367164096.22209764,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": true,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.006845458524272097,
+      "cpu_ne": 0.006845458524272097,
+      "cpu_gpu": 0.006845458524272097,
+      "all": 0.006845458524272097
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "baseline/small_100": {
+    "formulation": "baseline",
+    "magnitude_case": "small_100",
+    "overflow_note": {
+      "max_abs_x": 147.39635737353902,
+      "max_x_squared": 21725.68616698803,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": false,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.004475849235535456,
+      "cpu_ne": 0.004475849235535456,
+      "cpu_gpu": 0.004475849235535456,
+      "all": 0.004475849235535456
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "functional_ln/small_100": {
+    "formulation": "functional_ln",
+    "magnitude_case": "small_100",
+    "overflow_note": {
+      "max_abs_x": 147.39635737353902,
+      "max_x_squared": 21725.68616698803,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": false,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.005589674351663909,
+      "cpu_ne": 0.005589674351663909,
+      "cpu_gpu": 0.005589674351663909,
+      "all": 0.005589674351663909
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "prescaled_1024/small_100": {
+    "formulation": "prescaled_1024",
+    "magnitude_case": "small_100",
+    "overflow_note": {
+      "max_abs_x": 147.39635737353902,
+      "max_x_squared": 21725.68616698803,
+      "fp16_max": 65504.0,
+      "x_squared_overflows_fp16": false,
+      "any_input_clipped_to_f16": false
+    },
+    "max_abs_diff_vs_fp64_ref": {
+      "cpu_only": 0.005976782696263783,
+      "cpu_ne": 0.005976782696263783,
+      "cpu_gpu": 0.005976782696263783,
+      "all": 0.005976782696263783
+    },
+    "cpu_only_vs_cpu_ne": 0.0
+  },
+  "_device_placement_cpu_and_ne": {
+    "baseline": {},
+    "functional_ln": {},
+    "prescaled_1024": {}
+  }
+}

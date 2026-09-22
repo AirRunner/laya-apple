@@ -31,6 +31,17 @@ COMPUTE_UNITS = {
 }
 
 
+_HASHES: dict = {}
+
+
+def _weights_sha256(path) -> str:
+    """Source-weight integrity check, cached per process so it is paid once, not per bucket."""
+    key = (str(path), Path(path).stat().st_mtime_ns)
+    if key not in _HASHES:
+        _HASHES[key] = sha256_file(path)
+    return _HASHES[key]
+
+
 class Backend:
     name = "base"
 
@@ -174,7 +185,8 @@ class CoreMLBackend(Backend):
         tag = model if fixed is None else f"{model}-fixed{fixed}-sdpa"
         self.export = ARTIFACTS / "coreml-ordinary" / tag
         # Enumerated-shape export: the RangeDim + CPU_AND_GPU guard in laya-coreml does not apply.
-        self.agent = Agent(self.export, compute_units=units)
+        # laya-coreml spells CPU_ONLY as "cpu"; keep the harness key for describe().
+        self.agent = Agent(self.export, compute_units={"cpu_only": "cpu"}.get(units, units))
         self.shape = self.agent.shape
 
     def describe(self):
@@ -243,8 +255,11 @@ class ANEBackend(Backend):
         self.source = checkpoint(model)
         self.package_dir = ane_package_dir(model, length, batch, variant)
         self.manifest = json.loads((self.package_dir / "manifest.json").read_text())
-        if self.manifest["source_weights_sha256"] != sha256_file(self.source / "model.safetensors"):
+        if self.manifest["source_weights_sha256"] != _weights_sha256(self.source / "model.safetensors"):
             raise ValueError("package was converted from different weights")
+        expect = {"batch": batch, "length": length, "options": 32}
+        if self.manifest["shape"] != expect or self.manifest["variant"] != variant:
+            raise ValueError(f"package manifest {self.manifest['shape']}/{self.manifest['variant']} != requested {expect}/{variant}")
         self.cfg = json.loads((self.source / "rl_agent_config.json").read_text())
         (self.temperature, self.temperature_by_options, *_rest) = read_temperatures(self.cfg)
         self.tok = Tokenizer(self.source / "tokenizer")
@@ -409,8 +424,9 @@ def public_answer(qdef, p, k, act0, confidence_from_probs):
     return ans
 
 
-def ane_package_dir(model: str, length: int, batch: int = 1, variant: str = "masked") -> Path:
-    return ARTIFACTS / "ane" / model / f"L{length}-B{batch}-{variant}"
+def ane_package_dir(model: str, length: int, batch: int = 1, variant: str = "masked", block: int = 64) -> Path:
+    suffix = "" if variant == "masked" or block == 64 else f"-blk{block}"
+    return ARTIFACTS / "ane" / model / f"L{length}-B{batch}-{variant}{suffix}"
 
 
 def make_backend(spec: dict) -> Backend:
@@ -475,6 +491,32 @@ class Bucketed(Backend):
             buckets.append(L)
         self.last_buckets = buckets
         return np.stack(lg), np.stack(ac)
+
+    def predict(self, state, questions):
+        from laya_coreml.common import confidence_from_probs, temp_bucket
+
+        sub = self.sub(self.lengths[0])
+        items = self.prepare(state, questions)
+        logits, act = self.forward(items)
+        act = np.exp(act - act.max(-1, keepdims=True))
+        act /= act.sum(-1, keepdims=True)
+        cfg = sub.agent.cfg if hasattr(sub, "agent") else sub.cfg
+        from laya_mlx.common import clamp_temperature
+
+        temps = [clamp_temperature(t) for t in cfg.get("temperature", [1.0, 1.0, 1.0])]
+        by = {k: clamp_temperature(v) for k, v in cfg.get("temperature_by_options", {}).items()}
+        answers = {}
+        for row, (qid, qdef) in enumerate(questions.items()):
+            k, qt = len(items[row]["markers"]), items[row]["qtype"]
+            z = logits[row, :k] / by.get(temp_bucket(qt, k), temps[qt])
+            p = np.exp(z - z.max())
+            p /= p.sum()
+            answers[qid] = public_answer(qdef, p, k, act[row, 0], confidence_from_probs)
+        return {
+            "model": "laya-rl-agent",
+            "answers": answers,
+            "usage": {"input_tokens": sum(len(i["ids"]) for i in items), "output_tokens": 0},
+        }
 
 
 def package_fingerprint(path) -> str:

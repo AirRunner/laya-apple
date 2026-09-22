@@ -42,6 +42,17 @@ def calibrated(cfg, logits, k, qtype):
     return p / p.sum()
 
 
+def _finite_json(value):
+    """Non-finite floats become the strings "nan"/"inf" so failures are stored, not crashed on."""
+    if isinstance(value, float) and not math.isfinite(value):
+        return str(value)
+    if isinstance(value, dict):
+        return {k: _finite_json(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [_finite_json(v) for v in value]
+    return value
+
+
 def softmax(x):
     x = np.asarray(x, np.float64)
     e = np.exp(x - x.max())
@@ -108,6 +119,7 @@ def main():
                 rows.append(
                     {
                         "case": case["name"],
+                        "case_length": case.get("length"),
                         "row": r,
                         "tokens": len(it["ids"]),
                         "bucket": buckets[r],
@@ -129,9 +141,9 @@ def main():
         rep = []
         longest = max(ref["cases"], key=lambda c: max(len(i["ids"]) for i in c["items"]))
         for case in (ref["cases"][0], longest):
-            a1 = b.forward(case["items"])[0]
-            a2 = b.forward(case["items"])[0]
-            rep.append(bool(np.array_equal(a1, a2)))
+            a1, x1 = b.forward(case["items"])
+            a2, x2 = b.forward(case["items"])
+            rep.append(bool(np.array_equal(a1, a2) and np.array_equal(x1, x2)))
         out["repeat_identical"] = all(rep)
         out["token_mismatch_cases"] = token_mismatch
         out["status"] = "ran"
@@ -149,22 +161,24 @@ def main():
         out["summary"] = {
             "rows": len(rows),
             "all_finite": all(r["finite"] for r in rows),
+            "nonfinite_rows": [{k: r[k] for k in ("case", "row", "tokens")} for r in rows if not r["finite"]],
             "decision_mismatches": len(mism),
             "decision_mismatches_outside_near_tie": len(hard),
             "near_tie_flips": [
                 {k: r[k] for k in ("case", "row", "tokens", "ref_margin", "prob_max_abs")} for r in mism if r not in hard
             ],
-            "logit_max_abs": max(r["logit_max_abs"] for r in rows),
+            "logit_max_abs": float(np.max([r["logit_max_abs"] for r in rows])),
             "logit_mean_abs": float(np.mean([r["logit_mean_abs"] for r in rows])),
             "logit_rel_max": max(r["logit_rel"] for r in rows),
-            "prob_max_abs": max(r["prob_max_abs"] for r in rows),
+            "prob_max_abs": float(np.max([r["prob_max_abs"] for r in rows])),
             "prob_p99_abs": float(np.percentile([r["prob_max_abs"] for r in rows], 99)),
             "action_prob_max_abs": max(r["action_prob_max_abs"] for r in rows),
             "action_logit_max_abs": max(r["action_logit_max_abs"] for r in rows),
             "by_length": {},
         }
-        for L in sorted({r["bucket"] or r["tokens"] for r in rows}):
-            sel = [r for r in rows if (r["bucket"] or r["tokens"]) == L]
+        group = lambda r: r["case_length"] or r["bucket"] or "edge"  # noqa: E731
+        for L in sorted({group(r) for r in rows}, key=str):
+            sel = [r for r in rows if group(r) == L]
             out["summary"]["by_length"][str(L)] = {
                 "rows": len(sel),
                 "prob_max_abs": max(r["prob_max_abs"] for r in sel),
@@ -184,6 +198,7 @@ def main():
     else:
         out["passed"] = False
     safe = label.replace("=", "-").replace(",", "_")
+    out = _finite_json(out)
     save_json(RAW / "parity" / args.model / f"{safe}.json", out)
     s = out.get("summary", {})
     print(

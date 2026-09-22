@@ -83,8 +83,11 @@ class ConvAttention(nn.Module):
 
     def _windowed(self, qi, ki, vi, mask):
         # Exact sliding-window attention computed on query blocks of `block` tokens; each
-        # block only visits the key span [start - radius, end + radius). The additive mask is
-        # sliced to the same span, so masked keys and the padded-query rule are unchanged.
+        # block only visits the key span [start - radius, end + radius), with the additive mask
+        # sliced to the same span. Outputs at valid positions are identical to the dense path;
+        # padded query positions (which in the dense path see all valid keys) only see their
+        # span here. Those states are never read: padded keys are masked in every later layer
+        # and the CLS/marker positions are always valid.
         out = []
         n, blk, r = self.length, self.block, self.window
         for start in range(0, n, blk):
