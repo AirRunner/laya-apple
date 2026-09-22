@@ -173,11 +173,87 @@ def latency():
     print(out)
 
 
+# ----------------------------------------------------------------------------- crossover
+
+
+def _p50(rows, model, pred, L, q, tag=("pass-a", "refine"), mode="forward"):
+    tags = (tag,) if isinstance(tag, str) else tag
+    hit = [r for r in rows if r["model"] == model and pred(r["spec"]) and r["length"] == L
+           and r["questions"] == q and r["tag"] in tags and mode in r]
+    return hit[0][mode]["p50_ms"] if hit else None
+
+
+def crossover_point(lengths, a, b):
+    """First length where b becomes faster than a, log-log interpolated between samples."""
+    pts = [(L, x, y) for L, x, y in zip(lengths, a, b) if x is not None and y is not None]
+    for (L0, a0, b0), (L1, a1, b1) in zip(pts, pts[1:]):
+        r0, r1 = np.log(a0 / b0), np.log(a1 / b1)  # >0 means b faster
+        if r0 <= 0 < r1:
+            t = -r0 / (r1 - r0)
+            return float(np.exp(np.log(L0) + t * (np.log(L1) - np.log(L0))))
+    return None
+
+
+def crossover():
+    rows = latency_rows()
+    is_mlx = lambda s: s["backend"] == "mlx" and s.get("dtype", "float16") == "float16"  # noqa: E731
+    is_ane = lambda s: s["backend"] == "ane" and s.get("units") == "cpu_ne" and s.get("batch", 1) == 1 and s.get("variant", "masked") == "masked"  # noqa: E731
+    is_cmg = lambda s: s["backend"] == "coreml" and s.get("units") == "cpu_gpu" and not s.get("enumerated")  # noqa: E731
+    out = {"generated_by": "scripts/report.py crossover", "models": {}}
+    lines = ["# GPU / ANE crossover", "", "Forward (model-only) P50, pass A. Ratio > 1 means ANE is faster.", ""]
+    for model in MODELS:
+        Ls = sorted({r["length"] for r in rows if r["model"] == model and r["tag"] in ("pass-a", "refine")})
+        if not Ls:
+            continue
+        lines += [f"## {model}", ""]
+        out["models"][model] = {}
+        for q in (1, 4, 8):
+            mlx = [_p50(rows, model, is_mlx, L, q) for L in Ls]
+            ane = [_p50(rows, model, is_ane, L, q) for L in Ls]
+            cmg = [_p50(rows, model, is_cmg, L, q) for L in Ls]
+            if not any(ane) or not any(mlx):
+                continue
+            x = crossover_point(Ls, ane, mlx)
+            both = [(a, m) for a, m in zip(ane, mlx) if a is not None and m is not None]
+            if x:
+                verdict = "crossover ≈ L%.0f" % x
+            elif all(a < m for a, m in both):
+                verdict = "ANE faster at every measured length"
+            else:
+                verdict = "GPU faster at every measured length"
+            out["models"][model][f"q{q}"] = {"lengths": Ls, "mlx_fp16": mlx, "ane_cpu_ne_b1": ane, "coreml_gpu_fixed": cmg, "crossover_length": x}
+            lines += [f"### {q} question(s), ANE B=1 sequential vs MLX batched — {verdict}", ""]
+            lines += ["| L | MLX FP16 | Core ML GPU (fixed) | ANE (CPU_AND_NE) | MLX/ANE | faster |", "|---:|---:|---:|---:|---:|---|"]
+            for L, m, c, a in zip(Ls, mlx, cmg, ane):
+                if m is None or a is None:
+                    continue
+                lines.append(f"| {L} | {m:.2f} | {c:.2f} | {a:.2f} | {m / a:.2f} | {'ANE' if a < m else 'GPU'} |" if c else f"| {L} | {m:.2f} | — | {a:.2f} | {m / a:.2f} | {'ANE' if a < m else 'GPU'} |")
+            lines.append("")
+        # batched ANE exports
+        bat = [r for r in rows if r["model"] == model and r["tag"] == "batch"]
+        if bat:
+            lines += ["### Batched ANE exports (B questions in one Core ML call) vs MLX with the same question count", ""]
+            lines += ["| B | L | ANE batched | ANE B=1 sequential | MLX FP16 | MLX/ANE-batched |", "|---:|---:|---:|---:|---:|---:|"]
+            for r in sorted(bat, key=lambda r: (r["spec"]["batch"], r["length"])):
+                B, L = r["spec"]["batch"], r["length"]
+                m = _p50(rows, model, is_mlx, L, B)
+                seq = _p50(rows, model, is_ane, L, B)
+                a = r["forward"]["p50_ms"]
+                lines.append(f"| {B} | {L} | {a:.2f} | {seq if seq is None else f'{seq:.2f}'} | {m if m is None else f'{m:.2f}'} | {(m / a) if m else float('nan'):.2f} |")
+                out["models"][model].setdefault("batched", []).append({"batch": B, "length": L, "ane_batched": a, "ane_seq": seq, "mlx": m})
+            lines.append("")
+    (REPORTS / "crossover.md").write_text("\n".join(lines) + "\n")
+    from common import save_json
+
+    save_json(REPORTS / "crossover.json", out)
+    print(REPORTS / "crossover.md")
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("what", choices=["parity", "latency"])
+    ap.add_argument("what", choices=["parity", "latency", "crossover"])
     args = ap.parse_args()
-    {"parity": parity, "latency": latency}[args.what]()
+    {"parity": parity, "latency": latency, "crossover": crossover}[args.what]()
 
 
 if __name__ == "__main__":
