@@ -1,0 +1,17 @@
+[project]
+name = "laya-apple"
+version = "0.0.1"
+description = "Apple-native inference runtime for Laya with MLX GPU and Apple Neural Engine acceleration."
+readme = "README.md"
+authors = [
+    { name = "oliver", email = "tc3oliver@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-root = ""
