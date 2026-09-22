@@ -86,8 +86,12 @@ Timer: `time.perf_counter_ns`. One sample is one request.
 - Each (model × backend configuration) runs in a **fresh process**, and jobs run
   sequentially with no other model job running.
 - Per workload cell there are 10 warmup calls, discarded, then a time-budgeted sample
-  count: at least 50 and at most 300 samples, targeting about 6 s per cell. The actual *n*
-  is stored with every cell.
+  count: at least 50 and at most 300 samples, targeting about **4 s per cell**. This is the
+  `BUDGET=4` used by `scripts/run_bench.sh`; the 6 s originally planned was reduced to fit
+  the matrix. The actual *n* is stored with every cell. Two exceptions:
+  - The enumerated-shape Core ML export runs on CPU at 0.2–0.9 s per call, so it was
+    measured with at least 20 samples at L128 and L512 only.
+  - Component probes use exactly 100 samples.
 - The benchmark matrix runs in **two passes with reversed backend order**, so slow drift
   (thermal, background) shows up as a pass-to-pass difference instead of as a backend
   difference. Both passes are kept.
@@ -109,6 +113,25 @@ not `1 / P50`.
 
 These metrics are not interchangeable across frameworks and are not presented as if
 they were.
+
+### Other timed experiments
+
+- **Concurrency** (`scripts/concurrency.py`): persistent worker processes, 20 s
+  closed-loop windows with a synchronised start, 3 cycles with alternating order. See
+  concurrency.md.
+- **Component probes** (`scripts/profile_probes.py`): single-component Core ML packages
+  built from real weights, `repeat=4`, 10 warmup calls + 100 samples of
+  `MLModel.predict`.
+- **Cold start** (`scripts/coldstart.py`): every measurement is a fresh process. It
+  compares loading the `.mlpackage` with loading a pre-compiled `.mlmodelc` at a stable
+  path.
+- **Traces** (`scripts/trace_ane.py`): `xctrace record --template "Core AI" --attach
+  <pid>`, 6 s. Only allow-listed table summaries are kept; full traces carry process
+  environment data and are not committed.
+
+All timed runs were executed from one serial queue (`scripts/run_timed.sh`,
+`scripts/run_followup.sh`). No other model job and no conversion ran concurrently.
+Conversions and untimed parity runs used separate time windows.
 
 ## 5. Parity tolerances (fixed before measurement)
 
