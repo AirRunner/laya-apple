@@ -95,7 +95,8 @@ def main():
     t0 = time.perf_counter()
     try:
         if spec["backend"] in ("coreml", "ane") and spec.get("bucketed", True) and not spec.get("enumerated"):
-            b = Bucketed({k: v for k, v in spec.items() if k not in ("bucketed",)}, valid_lengths(args.model))
+            buckets = spec.get("buckets") or valid_lengths(args.model)
+            b = Bucketed({k: v for k, v in spec.items() if k not in ("bucketed", "buckets")}, buckets)
         else:
             b = make_backend({k: v for k, v in spec.items() if k != "enumerated"})
         out["describe"] = b.describe()

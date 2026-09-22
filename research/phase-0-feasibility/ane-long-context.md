@@ -2,7 +2,7 @@
 
 **Model profiled:** `laya-typed-decisions`, ModernBERT-large. It is the plan's focus and
 shares its architecture with `laya`. The BC1S graph runs cleanly on the ANE for this
-model: 100% of planned cost on ANE, 0 device transitions, one ANE interval per call, and
+model: 100% of planned cost on ANE, 0 device transitions, ≈ one ANE interval per call, and
 parity passes at every length.
 
 **Answer:** ANE latency grows superlinearly because **attention score work — QKᵀ, the

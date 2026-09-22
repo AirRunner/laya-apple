@@ -122,9 +122,16 @@ should include cases where the action head is not saturated.
 
 - Fixed-shape ordinary packages fail on `CPU_AND_NE` for all three checkpoints: 12, 19
   and 85 hard decision mismatches.
-- Under `ALL`, the short lengths fail with the same magnitudes while L256+ pass. This is
-  *consistent with* Core ML placing short lengths on the ANE and longer ones elsewhere
-  under `ALL`. Per-length placement under `ALL` was not traced, so this is a hypothesis.
+- Under `ALL`, the short lengths fail with the same magnitudes while L256+ pass. The
+  per-length MLComputePlans (`raw/profile/plan-laya-typed-decisions-ordinary-*.json`)
+  confirm this is placement:
+  - Under `ALL`, L64–L128 place 1076 ops on ANE, 37 on GPU and 13 on CPU.
+  - Under `ALL`, L256–L1024 place 0 ops on ANE and about 1060 on GPU. ANE compilation
+    failed at those lengths (`ANECCompile() FAILED` in `raw/logs/plans.log`).
+  - Under `CPU_AND_NE`, L64–L512 place 1084 ops on ANE and 42 on CPU, with 6 device
+    transitions. L1024 places 0 on ANE and 1093 on CPU.
+
+  **The graph is correct exactly where the ANE does not execute it.**
 - The identical packages are correct under `CPU_AND_GPU`.
 - Which operator introduces the error was **not** bisected for this graph.
 

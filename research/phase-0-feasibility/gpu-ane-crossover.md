@@ -185,10 +185,12 @@ policy has to add:
   is slower for multi-question requests only because it is a B=1 export run
   sequentially. A single framework (Core ML) could therefore serve both GPU and ANE at
   q = 1. MLX's measured advantages are batching and no per-length packages.
-- **`ALL` is neither "GPU" nor "ANE".** With the BC1S package, `ALL` matched ANE timings
-  up to L512. At L1024 it ran at 114 ms (typed) and 49.6 ms (multilingual), between the
-  ANE (170 / 83) and GPU (99 / 49) figures for that graph. Core ML repartitions by length
-  on its own. With the ordinary graph, `ALL` at short lengths behaves like the ANE path,
+- **`ALL` is neither "GPU" nor "ANE".**
+  - With the BC1S package, the `ALL` plan is 100% ANE at L64–L256 and 96–97% GPU at
+    L512–L1024 (typed-decisions plans).
+  - At L1024 `ALL` ran at 114 ms (typed) and 49.6 ms (multilingual), between the ANE
+    (170 / 83) and GPU (99 / 49) figures for that graph.
+  - Core ML repartitions by length on its own. With the ordinary graph, `ALL` at short lengths behaves like the ANE path,
   and so is numerically wrong (parity.md).
 - **Upstream PyTorch MPS is 1.4–2.3× slower than MLX** (typed L128: 21.8 vs 12.2 ms;
   L1024: 107.8 vs 71.0 ms). It is not a candidate backend.

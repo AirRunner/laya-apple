@@ -131,7 +131,7 @@ far below M4 Max bandwidth.
 **Evidence:** with short and long streams on the ANE at the same time, the short stream's
 latency becomes the long stream's latency: 170 ms P50 for an L128 request whose solo
 latency is 10 ms. Each stream gets roughly alternating service. This is consistent with
-the ANE executing one prediction at a time. Instruments shows one "Neural Engine
+the ANE executing one prediction at a time. Instruments shows ≈ one "Neural Engine
 Prediction" interval per call (`raw/trace/`).
 
 **Consequence:** routing a long request to the ANE is harmful even when the ANE is idle
