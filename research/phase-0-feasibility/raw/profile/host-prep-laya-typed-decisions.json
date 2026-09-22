@@ -1,0 +1,120 @@
+{
+ "what": "ANEBackend host feature construction (embedding gather + two LxL additive masks + marker map), CPU",
+ "environment": {
+  "soc": "Apple M4 Max",
+  "cpu_cores": {
+   "total": 16,
+   "performance": 12,
+   "efficiency": 4
+  },
+  "memory_bytes": 68719476736,
+  "macos": "26.6.2",
+  "os_build": "25G83",
+  "python": "3.12.14",
+  "executable": "research/phase-0-feasibility/.venv/bin/python3",
+  "packages": {
+   "torch": "2.7.0",
+   "numpy": "2.1.3",
+   "coremltools": "9.0",
+   "transformers": "5.17.0",
+   "tokenizers": "0.23.2",
+   "safetensors": "0.8.0",
+   "huggingface-hub": "1.32.0",
+   "mlx": "0.32.2",
+   "mlx-metal": "0.32.2",
+   "laya": "0.3.5",
+   "laya-mlx": "0.2.0",
+   "laya-coreml": "0.1.1",
+   "psutil": "7.2.2"
+  },
+  "research_git_revision": "e01f730632c0b79234fcfde590252e8b2f780e77",
+  "research_scripts_dirty": true,
+  "reference_repos": {
+   "NandhaKishorM/laya": "573e5b62696ba441230cd6be71d593331b5d23af",
+   "mizorewww/laya-mlx": "0a859518634112655cb97c745dbf04f5191aaf13",
+   "mizorewww/laya-coreml": "4619e0483f07adf39068532e85b42ec2347edb83"
+  },
+  "models": {
+   "laya": {
+    "repo": "convaiinnovations/laya",
+    "revision": "c5d78730f3493e4fe16d61507ef4b78eef7318cf",
+    "weights_sha256": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c"
+   },
+   "laya-multilingual": {
+    "repo": "convaiinnovations/laya-multilingual",
+    "revision": "052592a15d198d9ad47da779604259b10b47b7aa",
+    "weights_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204"
+   },
+   "laya-typed-decisions": {
+    "repo": "convaiinnovations/laya-typed-decisions",
+    "revision": "f9ab0b228f0fc0f14d873dbc99038f135c2da1b2",
+    "weights_sha256": "4fa56de72383a9d3efa9cfa78955733c81b9fc8067a587ca4beb82c78107a24e"
+   }
+  },
+  "conditions": {
+   "time": "2026-09-22T22:14:03.866598+00:00",
+   "loadavg": [
+    2.00048828125,
+    1.93017578125,
+    1.720703125
+   ],
+   "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+   "power_source": [
+    "Now drawing from 'AC Power'"
+   ],
+   "low_power_mode": false
+  }
+ },
+ "stats": {
+  "64": {
+   "n": 50,
+   "mean_ms": 0.047224354930222034,
+   "std_ms": 0.002130380115860658,
+   "p50_ms": 0.046124972868710756,
+   "p95_ms": 0.05108350305818021,
+   "p99_ms": 0.0511477398686111,
+   "min_ms": 0.04545808769762516,
+   "max_ms": 0.05120900459587574
+  },
+  "128": {
+   "n": 50,
+   "mean_ms": 0.1432858081534505,
+   "std_ms": 0.005884605999544606,
+   "p50_ms": 0.13974955072626472,
+   "p95_ms": 0.15573110431432724,
+   "p99_ms": 0.15602311701513827,
+   "min_ms": 0.13920804485678673,
+   "max_ms": 0.1561250537633896
+  },
+  "256": {
+   "n": 50,
+   "mean_ms": 0.3846099623478949,
+   "std_ms": 0.012922556401590934,
+   "p50_ms": 0.38120854878798127,
+   "p95_ms": 0.4052998556289822,
+   "p99_ms": 0.4098467738367617,
+   "min_ms": 0.36745902616530657,
+   "max_ms": 0.4135830095037818
+  },
+  "512": {
+   "n": 50,
+   "mean_ms": 1.2242092075757682,
+   "std_ms": 0.047144407712688324,
+   "p50_ms": 1.2091254466213286,
+   "p95_ms": 1.3180981040932238,
+   "p99_ms": 1.3786218897439537,
+   "min_ms": 1.165082911029458,
+   "max_ms": 1.4284999342635274
+  },
+  "1024": {
+   "n": 50,
+   "mean_ms": 4.083725742530078,
+   "std_ms": 0.04423299143964912,
+   "p50_ms": 4.08952048746869,
+   "p95_ms": 4.130837338743731,
+   "p99_ms": 4.1634347510989755,
+   "min_ms": 3.8953330367803574,
+   "max_ms": 4.171459004282951
+  }
+ }
+}
