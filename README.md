@@ -1,502 +1,391 @@
 # laya-apple
 
-Apple-native inference runtime for the Laya family of non-autoregressive
-typed-decision models. Laya takes a context and a set of typed questions
-(`choice`, `score`, `noul`) and returns calibrated decisions in a single
-forward pass — there is no text generation. `laya-apple` runs Laya on Apple
-Silicon with MLX on the GPU as the default backend, and the Apple Neural
-Engine (via Core ML) as an optional accelerator for a narrow, validated set
-of short, single-question, fixed-shape requests.
+[![CI](https://github.com/tc3oliver/laya-apple/actions/workflows/ci.yml/badge.svg)](https://github.com/tc3oliver/laya-apple/actions/workflows/ci.yml)
 
-## Status
+**A correctness-validated heterogeneous Apple silicon runtime for
+[Laya](https://github.com/NandhaKishorM/laya).** Laya models take a context and a set of
+typed questions (`choice`, `score`, `noul`) and return calibrated decisions in a single
+forward pass; there is no text generation.
 
-v0.3. Tested only on **Apple M4 Max, macOS 26.6.2**, with MLX 0.32.2 and
-coremltools 9.0. Other Apple Silicon and macOS versions are expected to run
-the MLX backend correctly but are not validated; the ANE path is validated
-only on the tested profile (see `docs/support-matrix.md`).
+laya-apple does three things:
+- it runs Laya on the **MLX GPU** for every workload;
+- it adds the **Apple Neural Engine** only where an exact configuration has been proven
+  to give the same decisions as upstream Laya;
+- it routes each request to the right engine and serves both engines **at the same
+  time**.
 
-## Install
+## What makes laya-apple different
 
-`laya-apple` is not published on PyPI. Install from a clone:
-
-```bash
-git clone https://github.com/tc3oliver/laya-apple && cd laya-apple
-uv sync                          # base: MLX backend only
-uv sync --extra ane              # + Neural Engine backend (coremltools==9.0, pins numpy<2.2)
-uv sync --extra ane --extra convert   # + building ANE artifacts (torch==2.7.0)
-```
-
-or with pip into an existing environment: `pip install ".[ane]"`.
-
-Requires Python 3.11–3.13 and Apple Silicon (`arm64`) for MLX.
+- **MLX GPU is the general backend.** Every model, length, question count and batch
+  runs on MLX.
+- **The ANE is used only for validated fixed-shape paths.** A Core ML artifact is
+  registered only after it passes a parity gate against upstream PyTorch FP32 on the
+  machine that uses it. It must also show a 100% Neural Engine compute plan and pass a
+  runtime placement probe.
+- **`device="auto"` picks the validated backend per request, from measurements.** Short
+  single-question requests go to the ANE. Long contexts and multi-question requests go
+  to MLX. Every result records why.
+- **GPU and ANE serve requests concurrently.** One `Laya` instance keeps both engines
+  busy. On the tested machine that gives 2.9–4.6× the throughput of GPU-only serving on
+  a short/long mix, with no answer changes.
+- **No silent Core ML fallback is accepted.** An explicit ANE request runs the validated
+  artifact or raises. Core ML is never allowed to move work to the CPU unnoticed.
 
 ## Quickstart
 
 ```python
 from laya_apple import Laya
 
-model = Laya.from_pretrained("convaiinnovations/laya-typed-decisions")  # device="auto"
+model = Laya.from_pretrained(
+    "convaiinnovations/laya-typed-decisions",
+    device="auto",
+)
+
 result = model.predict(
     context="The customer was charged twice for the same invoice and is frustrated.",
     questions={
-        "refund": {"type": "noul", "instructions": "Does the customer request a refund?"},
         "urgency": {
             "type": "choice",
             "instructions": "How urgent is this?",
             "criteria": ["low", "medium", "high"],
-        },
-        "satisfaction": {
-            "type": "score",
-            "instructions": "Rate the customer's satisfaction.",
-            "criteria": ["very unhappy", "unhappy", "neutral", "happy", "very happy"],
-        },
+        }
     },
 )
-print(result.answers)
-print(result.runtime)
+print(result.answers["urgency"]["choice"], result.answers["urgency"]["probabilities"])
+
+rt = result.runtime
+print(rt.backend, rt.device, rt.routing_reason, f"{rt.latency_ms:.1f} ms")
 ```
 
-Output of this exact script (MLX FP16, the `[ane]` extra installed, Apple M4 Max). The
-answers are deterministic for a given device and precision; `latency_ms` is not.
+Output on the tested machine, with the `[ane]` extra and validated artifacts:
 
 ```text
-{'refund': {'type': 'noul', 'confidence': 0.5002, 'action': {'act_probability': 1.0}, 'noul': 0.4998},
- 'urgency': {'type': 'choice', 'confidence': 0.0744, 'action': {'act_probability': 1.0}, 'choice': 'high',
-             'probabilities': {'low': 0.1702, 'medium': 0.3375, 'high': 0.4923}},
- 'satisfaction': {'type': 'score', 'confidence': 0.623, 'action': {'act_probability': 1.0}, 'score': 0.2479,
-                  'legend': {'0': 'very unhappy', '1': 'unhappy', '2': 'neutral', '3': 'happy', '4': 'very happy'},
-                  'probabilities': {'0': 0.7986, '1': 0.1756, '2': 0.0118, '3': 0.0071, '4': 0.0068}}}
-backend=mlx device=gpu reason=multiple_questions model=laya-typed-decisions L=53 q=3 latency_ms=26.15
+high {'low': 0.1713, 'medium': 0.3358, 'high': 0.4929}
+coreml ane validated_short_single_question_path 11.2 ms
 ```
 
-Three questions go to MLX (`multiple_questions`). Without the `[ane]` extra, the reason
-is `ane_runtime_unavailable` instead.
+- **Without ANE artifacts** (or without the `[ane]` extra), the same request runs on
+  MLX, and `routing_reason` says why.
+- **With `device="gpu"`,** the answer is the same decision (`high`), with probabilities
+  within 0.002. `latency_ms` varies from run to run.
+- **`result.runtime` is a `RuntimeInfo`.** It carries:
+  - `backend` (`mlx` / `coreml`), `device` (`gpu` / `ane`) and `routing_reason`;
+  - `latency_ms`, `sequence_length`, `question_count` and `dtype`;
+  - the artifact revision;
+  - under `execution="workers"`, `queue_wait_ms` and `device_ms`.
 
-The first call downloads and caches the pinned checkpoint from Hugging Face
-unless it is already cached; set `local_files_only=True` to run fully
-offline once cached (see [Offline use](#offline-use)).
+The first call downloads the pinned checkpoint from Hugging Face. After that,
+`local_files_only=True` (or `HF_HUB_OFFLINE=1`) runs fully offline. The full user guide
+is [`docs/guide.md`](docs/guide.md).
 
-### Question schema
+## Install
 
-`questions` is a dict of `{name: {"type": ..., "instructions": ..., "criteria": ...}}`,
-matching upstream Laya's schema:
+laya-apple is not published on PyPI. Install from a clone (Python 3.11–3.13, Apple
+silicon):
 
-| `type` | `criteria` | Meaning |
-|---|---|---|
-| `choice` | non-empty dict of `{label: description}`, or a list of unique label strings | pick one label |
-| `score` | non-empty list of level descriptions | pick a level, 0-indexed |
-| `noul` | optional dict `{"false": ..., "true": ...}` | yes/no |
+```bash
+git clone https://github.com/tc3oliver/laya-apple && cd laya-apple
+uv sync                                # MLX backend only
+uv sync --extra ane                    # + Neural Engine backend (coremltools 9.0)
+uv sync --extra ane --extra convert    # + building ANE artifacts on this machine
+laya-apple artifacts build laya-typed-decisions   # build + parity-validate the ANE buckets here
+```
 
-A list of plain strings is also accepted as a convenience; each string
-becomes a `noul` question named after itself:
+## Supported models
+
+| Model | Encoder | max_len | MLX (GPU) | ANE buckets, explicit `device="ane"` | ANE buckets used by `auto` |
+|---|---|---:|---|---|---|
+| [`convaiinnovations/laya`](https://huggingface.co/convaiinnovations/laya) | ModernBERT-large | 512 | FP16, FP32, any length and batch | 64, 96, 128 | 64, 96, 128 |
+| [`convaiinnovations/laya-multilingual`](https://huggingface.co/convaiinnovations/laya-multilingual) | mmBERT-base | 1024 | FP16, FP32, any length and batch | 64, 96, 128, 256 | 64, 96, 128 |
+| [`convaiinnovations/laya-typed-decisions`](https://huggingface.co/convaiinnovations/laya-typed-decisions) | ModernBERT-large | 1024 | FP16, FP32, any length and batch | 64, 96, 128 | 64, 96, 128 |
+
+**Checkpoints and artifacts:**
+- Each checkpoint is pinned to a revision and a weight hash.
+- ANE artifacts are fixed-shape and batch 1, with FP16 on `CPU_AND_NE`.
+- A request shorter than a bucket is padded to it. A request longer than every validated
+  bucket is never truncated and never padded to an unvalidated shape. It raises under
+  explicit `device="ane"`, and goes to MLX under `auto`.
+
+Revisions and the per-configuration Core ML status are in
+[`docs/support-matrix.md`](docs/support-matrix.md).
+
+## Correctness first
+
+On the tested machine (Apple M4 Max, macOS 26.6.2), the ordinary Core ML export of Laya
+is **fast on `CPU_AND_NE`, but it changes decisions**. It shows no error. laya-apple uses a
+channel-first (BC1S) rewrite of the graph instead, and registers an ANE artifact only
+after it passes the parity gate.
+
+**Definitions** (fixed before measurement,
+[methodology](research/phase-0-feasibility/methodology.md)):
+- **Probability error:** the largest |Δ| between a backend's calibrated option
+  probabilities and those of upstream Laya on PyTorch CPU FP32, over the golden rows.
+- **Hard mismatch:** the chosen option differs from upstream, *and* upstream's top-1 /
+  top-2 probability margin is at least 2× the tolerance (0.04 for FP16).
+- **Near-tie flip:** the chosen option differs inside that band. Such a flip is listed
+  row by row, never hidden, and does not fail the gate.
+- **FP16 acceptance:** probability error ≤ 0.02, action-probability error ≤ 0.02, **0
+  hard mismatches**, all outputs finite, and repeated calls bit-identical. FP32 uses a
+  1e-4 tolerance.
+
+v1.0 results against upstream PyTorch FP32 (`benchmarks/v1.0/parity/`):
+
+| Implementation | laya | laya-multilingual | laya-typed-decisions |
+|---|---|---|---|
+| Core ML ordinary graph · `CPU_AND_NE` | ❌ 12 hard (+5 near-tie), prob err 0.56 | ❌ **85 hard** (+5), prob err 1.0 | ❌ 19 hard (+4), prob err 0.42 |
+| Core ML ordinary graph · `CPU_AND_GPU` | ✅ 0 / 0, 0.0066 | ✅ 0 / 0, 0.0059 | ✅ 0 / 0, 0.0028 |
+| PyTorch MPS FP32 | ✅ 0 / 0, 3e-6 | ❌ 2 hard (NaN on 2 edge rows) | ✅ 0 / 0, 3e-6 |
+| **laya-apple MLX FP16** | ✅ 0 / 0, 0.0037 | ✅ 0 / 0, 0.0045 | ✅ 0 / 0, 0.0017 |
+| **laya-apple ANE FP16** (offered buckets) | ✅ 0 hard, **1 near-tie**, 0.012 | ✅ 0 / 0, 0.013 | ✅ 0 / 0, 0.0077 |
+
+Cells show hard mismatches / near-tie flips, then the max probability error. laya-apple
+MLX FP32 passes at ≤ 1.1e-5.
+
+- The laya ANE near-tie flip is one golden row whose upstream margin is 0.0035; it shows
+  in the L96 and L128 buckets.
+- The ordinary Core ML graph on `CPU_AND_NE` also **silently runs on the CPU** at
+  laya-typed-decisions L1024: the ANE compiler fails, and the forward pass takes 2.2 s.
+  laya-apple checks each artifact's compute plan and times every loaded bucket against
+  `CPU_ONLY` ([`docs/no-silent-fallback.md`](docs/no-silent-fallback.md)).
+
+## Single-request performance
+
+**Forward P50 in ms, one question per request.** This is the model call only, not
+end-to-end latency. All v1.0 reruns, Apple M4 Max, macOS 26.6.2. ❌ marks configurations
+that fail the parity gate above.
+
+**laya-typed-decisions**
+
+| Implementation | L64 | L128 | L256 | L512 | L1024 |
+|---|---:|---:|---:|---:|---:|
+| PyTorch CPU FP32 | 52.9 | 73.7 | 114.2 | 204.9 | 437.0 |
+| PyTorch MPS FP32 | 21.3 | 21.4 | 27.0 | 49.5 | 106.8 |
+| Core ML ordinary · `CPU_AND_NE` ❌ | 7.3 | 9.7 | 23.3 | 65.1 | 2201.8 |
+| Core ML ordinary · `CPU_AND_GPU` | 8.5 | 12.6 | 20.1 | 36.2 | 71.0 |
+| laya-apple MLX FP16 | 9.3 | 12.2 | **19.2** | **35.3** | **71.0** |
+| laya-apple ANE | **8.0** | **9.9** | — | — | — |
+
+**laya-multilingual**
+
+| Implementation | L64 | L128 | L256 | L512 | L1024 |
+|---|---:|---:|---:|---:|---:|
+| PyTorch CPU FP32 | 26.8 | 36.6 | 52.4 | 90.2 | 191.4 |
+| PyTorch MPS FP32 ❌ | 16.7 | 17.7 | 17.9 | 23.0 | 48.4 |
+| Core ML ordinary · `CPU_AND_NE` ❌ | 3.0 | 4.0 | 10.0 | 30.0 | 90.0 |
+| Core ML ordinary · `CPU_AND_GPU` | 4.7 | 6.0 | 9.2 | 15.0 | 29.2 |
+| laya-apple MLX FP16 | 5.4 | 6.4 | 8.6 | **14.9** | 29.3 |
+| laya-apple ANE | **3.4** | **4.3** | 8.3 | — | — |
+
+**laya** (max_len 512)
+
+| Implementation | L64 | L128 | L256 | L512 |
+|---|---:|---:|---:|---:|
+| PyTorch CPU FP32 | 52.9 | 73.6 | 114.6 | 204.2 |
+| PyTorch MPS FP32 | 21.4 | 21.7 | 27.0 | 49.8 |
+| Core ML ordinary · `CPU_AND_NE` ❌ | 7.4 | 9.8 | 23.3 | 65.0 |
+| Core ML ordinary · `CPU_AND_GPU` | 8.5 | 12.6 | 20.0 | 36.2 |
+| laya-apple MLX FP16 | 9.4 | 12.1 | **19.1** | **35.3** |
+| laya-apple ANE | **8.1** | **9.9** | — | — |
+
+**Reading the tables:**
+- "—" means the ANE bucket is not offered at that length.
+- The ordinary *enumerated-shape* Core ML export runs entirely on the CPU: 217 ms at L128
+  on laya.
+- **End to end** (`predict`: prompt build, tokenization, routing, inference, calibration,
+  formatting) adds 0.08–0.61 ms over the forward pass. For example, laya-typed-decisions
+  L128 under `auto` is 9.91 ms forward and 10.06 ms `predict` P50.
+
+All boundaries, P95/P99 figures and the method are in
+[`benchmarks/v1.0.md`](benchmarks/v1.0.md).
+
+## Auto routing
+
+What the measurements show:
+- **Short single-question requests can favour the ANE.** It wins at L64–L128 for every
+  model.
+- **Longer contexts favour MLX.** The ANE's attention block runs far less efficiently
+  than its matmuls. At L512 on laya-typed-decisions, the BC1S graph measured 54 ms on the
+  ANE against 35 ms on MLX (Phase -1).
+- **Multi-question requests favour MLX batching.** At L128 with 4 questions, MLX takes
+  33.2 ms. The ANE runs questions one after another at batch 1, 39.4 ms on laya in
+  Phase -1.
+
+**Measured crossover ≠ production routing threshold.** A bucket joins `auto` only if two
+things hold:
+- its artifact passed parity;
+- its ANE time beats MLX at the *previous*, shorter bucket, because a request just above
+  that bucket would otherwise run faster on MLX.
+
+The walk stops at the first bucket that fails. So laya-multilingual L256 stays
+explicit-only, even though the ANE is slightly faster at exactly 256 tokens (8.3 ms
+against 8.6 ms on MLX): it does not beat MLX at L128 (6.4 ms).
+
+With `execution="workers"`, `auto` also compares queue backlogs. A short request can then
+go to MLX when the ANE queue is longer (`ane_backlog_shorter_on_gpu`). Long and
+multi-question requests never go to the ANE. How the thresholds were derived is in
+[`docs/support-matrix.md`](docs/support-matrix.md). To calibrate another machine, see
+[`docs/guide.md`](docs/guide.md).
+
+## Heterogeneous GPU + ANE serving
 
 ```python
-model.predict(context="...", questions=["Does the customer request a refund?"])
+with Laya.from_pretrained("convaiinnovations/laya-typed-decisions", execution="workers") as model:
+    futures = [model.submit(context=c, questions=q) for c, q in requests]   # thread-safe
 ```
 
-## Devices
-
-`Laya.from_pretrained(model_id, device="auto" | "gpu" | "ane", ...)`.
-
-- `device="gpu"`: MLX only. Every request runs on the GPU.
-- `device="ane"`: Core ML / ANE only. A request that does not fit a validated
-  artifact fails loudly (`UnsupportedShapeError`, `ArtifactMissingError`, etc.)
-  — it never runs on MLX instead.
-- `device="auto"` (default): MLX for everything, except a request routes to
-  the ANE when **all** of the following hold:
-
-  1. the request has exactly one question;
-  2. the longest prompt row fits one of the model's auto-ANE buckets;
-  3. a validated artifact for that bucket is present in the cache and passes
-     its placement/parity checks at load;
-  4. the platform profile matches a validated profile (currently only Apple
-     M4 Max / macOS 26.6.2 / coremltools 9.0).
-
-  Otherwise the request runs on MLX. Every result records exactly one
-  routing reason in `result.runtime.routing_reason`:
-
-  | Reason | Meaning |
-  |---|---|
-  | `gpu_requested` | `device="gpu"` was requested |
-  | `ane_requested` | `device="ane"` was requested |
-  | `validated_short_single_question_path` | auto chose the ANE |
-  | `multiple_questions` | auto chose MLX: more than one question |
-  | `sequence_exceeds_ane_auto_range` | auto chose MLX: the longest row is above the auto buckets |
-  | `ane_artifact_unavailable` | auto chose MLX: no validated artifact for the bucket |
-  | `ane_runtime_unavailable` | auto chose MLX: coremltools is not installed |
-  | `platform_not_validated` | auto chose MLX: unknown hardware/OS profile |
-
-Auto-ANE buckets, generated from measured evidence
-(`laya_apple/data/routing.json`):
-
-| Model | Buckets for explicit `device="ane"` | Buckets used by `device="auto"` |
-|---|---|---|
-| `laya` | 64, 96, 128 | 64, 96, 128 |
-| `laya-multilingual` | 64, 96, 128, 256 | 64, 96, 128 |
-| `laya-typed-decisions` | 64, 96, 128 | 64, 96, 128 |
-
-Longer validated lengths lose to MLX on latency and are not offered by
-either explicit `device="ane"` or `auto`. Multi-question requests are never
-auto-routed to the ANE: MLX batching wins at every measured length for 4 and
-8 questions, and 2–3 questions were not measured, so they route to MLX
-conservatively.
-
-## Concurrent GPU + ANE execution
-
-By default (`execution="inline"`) a `Laya` instance runs one request at a time in the
-calling process. For serving many requests, use `execution="workers"`:
-
-```python
-from laya_apple import Laya
-
-with Laya.from_pretrained("convaiinnovations/laya-typed-decisions", execution="workers") as laya:
-    future = laya.submit(context="...", questions={...})        # concurrent.futures.Future
-    result = laya.predict(context="...", questions={...})       # thread-safe, blocking
-    # in asyncio code: result = await laya.apredict(context="...", questions={...})
-```
-
-- MLX (GPU) runs in its own worker process.
-- Core ML (ANE) runs either on a dedicated thread in your process or in its own worker
-  process. The choice is made per model from measurements (`ane_placement="auto"`), and
-  you can override it with `"thread"` or `"process"`.
-- Your process builds prompts, routes, and formats answers.
-- The two devices serve requests at the same time. Each device runs its own queue in
-  arrival order.
-- `close()` (or leaving the `with` block) finishes queued work and stops the worker.
-
-**Why this placement, and its limits.** Every alternative was measured (see
-[`research/v0.2-concurrency/`](research/v0.2-concurrency/)):
-- Both backends in one interpreter cost the GPU 9–11% of its throughput.
-- With both devices busy, a device whose requests arrive from another process runs its
-  host-side work 4–6× slower.
-- Core ML's Python `predict` holds the GIL for much of an ANE call, so running the ANE in
-  your process costs more at high short-request rates.
-- Results on the Phase -1 mix with the chosen placement (`benchmarks/v0.2.md`):
-
-  | Model | Short-stream P99 vs solo | Long stream throughput vs solo | Aggregate vs GPU-only |
-  |---|---:|---:|---:|
-  | laya-typed-decisions | +8% | −11% | 4.6× |
-  | laya | +5% | −12% | 2.9× |
-  | laya-multilingual | +99% | −13% | 3.6× |
-
-- Under open-loop load, short requests see 2.5–66× lower P99 than with GPU-only serving.
-- Complete isolation (each stream within 10% of its solo P99) was not reached on this
-  platform.
-
-**Routing with queues.** On an idle machine, `auto` behaves exactly like `inline`. When a
-device is busy, the router compares expected completion times: the device's backlog plus
-the request's measured service time. Two additional reasons can then appear:
-
-| Reason | Meaning |
-|---|---|
-| `ane_backlog_shorter_on_gpu` | a short single-question request went to MLX because the ANE queue was longer |
-| `gpu_backlog_shorter_on_ane` | a request in the tie band (an explicit-only bucket, e.g. multilingual L256) went to the ANE because the GPU queue was longer |
-
-Long requests and multi-question requests never go to the ANE under `auto`, however busy
-the GPU is. Every `RuntimeInfo` records `execution`, `queue_wait_ms` and the backlog
-estimates the router saw (`gpu_backlog_ms`, `ane_backlog_ms`).
-
-If the ANE worker process dies:
-- the request running on it raises `BackendUnavailableError`;
-- later `auto` requests run on MLX with reason `ane_runtime_unavailable`, and a warning is
-  issued once;
-- explicit `device="ane"` requests keep raising.
-
-## The ANE path: building artifacts
-
-`device="ane"` and the auto-ANE path need a Core ML artifact for the exact
-(model, revision, bucket) tuple. Artifacts are never downloaded or
-committed — build them locally:
-
-```bash
-laya-apple artifacts build laya-typed-decisions
-```
-
-This builds every offered bucket for the model (or pass `--length 64` to
-build one). Each bucket goes through:
-
-1. **layout** — the channel-first BC1S PyTorch body is checked against the
-   upstream FP32 `DecisionModel` on an exact-length row;
-2. **conversion** — traced and converted to Core ML with FP16 compute and
-   FP16 I/O, fixed shape (`B=1 × L=<bucket>`), macOS 15 deployment target;
-3. **compile** — to a `model.mlmodelc` (the intermediate `.mlpackage` is not
-   kept, since loading it recompiles for the ANE on every process — 37.8s
-   vs. 0.21s for a compiled artifact);
-4. **placement** — the Core ML compute plan on `CPU_AND_NE` must show 100%
-   of operations on the Neural Engine and 0 device transitions;
-5. **parity** — every shipped golden row that fits the bucket, checked
-   against the upstream PyTorch FP32 reference, with the unchanged Phase -1
-   gate (see [Correctness](#correctness));
-6. **atomic registration** — the artifact is built in a temporary directory
-   and renamed into place only after every step above passes. A partial or
-   failed build never appears as usable; a failure leaves the manifest under
-   `artifacts/rejected/` as evidence.
-
-Building one bucket takes 1.5–3.5 minutes on the tested hardware, including the pre-warm
-load at the registered path.
-
-Artifacts are cached under `$LAYA_APPLE_CACHE` if set, else
-`$XDG_CACHE_HOME/laya-apple`, else `~/.cache/laya-apple`. They live outside
-the source tree and are never committed to Git or redistributed with the
-package.
-
-Re-check everything already registered:
-
-```bash
-laya-apple artifacts verify
-```
-
-This reloads every cached artifact and re-checks its manifest schema,
-revision and weight hash, graph variant, bucket, compute units, parity status,
-build platform profile, file hashes and Core ML placement.
-
-At runtime the manifest, revision, profile and compute-unit checks run on every
-load. The file hash and the placement check (about 1.1 s per bucket together)
-run on first load and again whenever the artifact's files, the macOS build or
-the coremltools version change; a passing result is stamped under
-`<cache>/verified/`. `artifacts verify` ignores the stamp.
-
-**Cold start.** Loading a compiled artifact triggers Core ML's on-device ANE
-compile the first time a given artifact location is loaded (25–86 s per bucket
-on the tested machine); the system caches the result. `artifacts build` pays
-this cost once at the registered path, so later loads take 0.14–0.31 s per
-bucket. If the system evicts its cache, the next load pays it again.
-
-## Artifact lifecycle
-
-- **Concurrent builds are safe.** One build per (model, revision, bucket) runs at a time
-  across processes, under a file lock in `<cache>/artifacts/.locks/`. A second builder
-  waits, then finds the artifact already registered.
-- **Corruption is quarantined.** An artifact whose files no longer match their manifest
-  hash, or whose manifest cannot be read, is moved to `<cache>/artifacts/quarantine/` when
-  it is detected. The error names the rebuild command. Nothing corrupt stays where the
-  runtime looks.
-- **Cleanup is explicit.** `laya-apple artifacts prune` lists what it would delete and why:
-  - other revisions or weights, unregistered models, buckets no longer offered;
-  - builds from another platform profile, unvalidated or rejected builds;
-  - quarantined entries, abandoned staging directories, orphaned verification stamps.
-  Add `--yes` to delete. It only ever deletes inside the cache.
-- **Warm after eviction.** `laya-apple artifacts warm MODEL` pays Core ML's on-device ANE
-  compile ahead of the first request.
-
-**Moving artifacts between machines.** Artifacts are never downloaded. You can build them
-once and carry them to another machine yourself:
-
-```bash
-laya-apple artifacts export laya-typed-decisions --out exports/   # one .tar.gz per offered bucket
-# on the other machine:
-laya-apple artifacts import exports/laya-typed-decisions-L64.tar.gz
-```
-
-An import is registered only after the receiving machine has checked, itself:
-- the manifest against the pinned checkpoint;
-- the build platform profile;
-- the file hash;
-- the compute plan (100% ANE, 0 transitions);
-- the full parity gate against the shipped goldens (the checkpoint must be downloaded).
-
-The local results are recorded in the manifest under `imported`.
-
-**Cold start.** With `execution="workers"`, `ane_startup="background"` makes
-`from_pretrained` return as soon as MLX is ready. The ANE finishes loading behind it,
-including any on-device compile. Until it is ready, `auto` routes to MLX with reason
-`ane_starting`. `laya.wait_for_ane()` blocks until it is ready, and
-`info()["ane_ready"]` reports it. Measured start times are in
-[`benchmarks/v0.3.md`](benchmarks/v0.3.md).
-
-## Calibrating another machine
-
-The shipped routing table applies only to the profile it was measured on (SoC, macOS
-major version, coremltools version). On any other profile, `auto` uses MLX only
-(`platform_not_validated`). To enable the ANE on your machine:
-
-```bash
-laya-apple artifacts build laya-typed-decisions   # builds and parity-validates here
-laya-apple calibrate laya-typed-decisions          # measures MLX and ANE latency here
-```
-
-`calibrate` applies the same rule that produced the shipped table to local measurements.
-It writes `<cache>/profiles/<profile>.json`. Such a local profile is used only when no
-shipped profile matches the machine. `Laya.info()["routing_profile"]` reports which table
-is in effect: `shipped`, `local:<path>`, or `None` (MLX only).
-
-## No silent fallback
-
-- An explicit `device="ane"` request runs on the exact validated artifact
-  with the exact validated compute units, or it raises. It never silently
-  runs on MLX, CPU, or a different Core ML placement.
-- Under `device="auto"`, a decision to use MLX instead of the ANE is made
-  **before** the request runs, and the reason is recorded in
-  `result.runtime.routing_reason`. It is never a reaction to Core ML
-  changing placement mid-flight.
-- The Core ML compute plan is checked against the declared placement (100%
-  ANE, 0 transitions) at build time, at first load, and again after any change
-  to the artifact files, the macOS build or coremltools. A mismatch raises
-  `ComputeUnitMismatchError` instead of silently running on CPU.
-
-### Failure policy
-
-Every failure the runtime can detect is a specific exception from
-`laya_apple.errors`:
-
-| Condition | Error |
-|---|---|
-| model not registered | `UnsupportedModelError` |
-| malformed questions | `InvalidRequestError` |
-| ANE requested, request exceeds the largest offered bucket, or the model/shape pair is not validated | `UnsupportedShapeError` |
-| ANE requested, no artifact in the cache | `ArtifactMissingError` |
-| artifact built from another revision or other weights | `ArtifactRevisionError` |
-| artifact files do not match their manifest hash | `ArtifactIntegrityError` |
-| artifact has no passing parity record | `ArtifactParityError` |
-| requested compute units differ from the validated ones, or the loaded compute plan is not 100% ANE / 0 transitions | `ComputeUnitMismatchError` |
-| MLX or coremltools unavailable for the requested device | `BackendUnavailableError` |
-| offline and not cached | `BackendUnavailableError` (with download instructions) |
-
-## CLI reference
-
-The `--offline` flag is **global** and must come before the subcommand:
-
-```bash
-laya-apple --offline predict laya-typed-decisions --context "..." --questions '{...}'
-```
-
-Commands:
-
-```text
-laya-apple predict MODEL --context TEXT --questions JSON [--device auto|gpu|ane] [--dtype float16|float32]
-laya-apple info [MODEL]
-laya-apple download MODEL...
-laya-apple artifacts build MODEL [--length L ...] [--force] [--skip-existing]
-laya-apple artifacts list
-laya-apple artifacts verify [MODEL] [--length L ...]
-laya-apple artifacts warm [MODEL] [--length L ...]
-laya-apple artifacts prune [--yes]
-laya-apple artifacts export MODEL [--length L ...] [--out DIR]
-laya-apple artifacts import ARCHIVE.tar.gz [--force]
-laya-apple calibrate [MODEL ...] [--warmup N] [--iters N]
-laya-apple parity MODEL [--device gpu|ane] [--dtype float16|float32]
-laya-apple benchmark MODEL [--device auto|gpu|ane] [--lengths L ...] [--questions N] [--warmup N] [--iters N] [--output FILE]
-```
-
-`--context` and `--questions` each accept inline text/JSON, `@file` to read
-from a file, or `-` to read from stdin.
-
-Example:
-
-```bash
-laya-apple --offline predict laya-typed-decisions \
-  --context "The customer was charged twice." \
-  --questions '{"refund": {"type": "noul", "instructions": "Does the customer request a refund?"}}'
-```
-
-```bash
-laya-apple --offline info laya-typed-decisions
-```
-
-## Offline use
-
-Once checkpoints (and, if used, ANE artifacts) are cached, no network access
-is needed. Three equivalent ways to force this:
-
-- `Laya.from_pretrained(model_id, local_files_only=True)`
-- `HF_HUB_OFFLINE=1` in the environment
-- `laya-apple --offline <subcommand> ...` on the CLI
-
-Running offline against an uncached checkpoint raises
-`BackendUnavailableError` with download instructions instead of hanging or
-silently going online.
-
-## Runtime diagnostics
-
-Every `Result.runtime` (a `RuntimeInfo`) records:
-
-- `backend` (`mlx` / `coreml`) and `device` (`gpu` / `ane`);
-- `model` and `model_revision`;
-- `sequence_length` (longest prompt row, in tokens) and `question_count`;
-- `routing_reason`;
-- `artifact_revision` (the ANE artifact hash, or `mlx:<weights sha256 prefix>`);
-- `compute_units` and `buckets` (Core ML only);
-- `dtype`;
-- `latency_ms`, from the call to the result (queueing included);
-- `execution` (`inline` / `workers`); with workers, `queue_wait_ms` and the
-  `gpu_backlog_ms` / `ane_backlog_ms` estimates the router used.
-
-## Correctness
-
-The semantic reference is unmodified upstream Laya
-(`NandhaKishorM/laya@573e5b6`) running PyTorch on CPU in FP32. MLX and Core
-ML are validated backends, not references. The parity gate requires
-calibrated-probability max error ≤ 0.02 (FP16) and 0 hard decision
-mismatches.
-
-MLX FP16 parity measured for this release:
-
-| Model | Rows | Max probability error | Hard mismatches |
-|---|---:|---:|---:|
-| `laya` | 163 | 0.0037 | 0 |
-| `laya-multilingual` | 187 | 0.0045 | 0 |
-| `laya-typed-decisions` | 187 | 0.0017 | 0 |
-
-Run the gate yourself: `laya-apple parity laya-typed-decisions --device gpu`.
-
-## Performance
-
-Measured for this release (Apple M4 Max, macOS 26.6.2). Model-only forward P50 in ms, one
-question, exact-length requests. Full tables with P99, end-to-end and load times:
-[`benchmarks/v0.1.md`](benchmarks/v0.1.md).
-
-| Model | MLX L128 | ANE L128 | MLX at max_len | `auto` at L128 |
-|---|---:|---:|---:|---|
-| `laya` | 12.27 | 9.89 | 35.26 (L512) | ANE, 9.91 |
-| `laya-multilingual` | 6.46 | 4.31 | 29.27 (L1024) | ANE, 4.35 |
-| `laya-typed-decisions` | 12.26 | 9.88 | 71.02 (L1024) | ANE, 9.87 |
-
-- The ANE's advantage is narrow: 1.15–1.63× over MLX, only for short single-question
-  requests. The GPU wins by 1.5–2.8× at long lengths, and MLX batching wins for
-  multi-question requests.
-- End-to-end overhead (prompt, routing, formatting) is 0.02–0.76 ms.
-- Loading a model takes 0.15–0.39 s on MLX alone, and 1.5–1.7 s with ANE artifacts. That
-  includes a one-time ~1.1 s coremltools import; each bucket then loads in 0.14–0.31 s.
+- **GPU-only:** every request queues on the GPU.
+- **GPU + ANE:**
+  - short single-question requests are served by the ANE;
+  - long and multi-question requests keep running on the GPU at the same time;
+  - short requests no longer wait behind long ones (less head-of-line blocking), and both
+    engines do useful work.
+
+**Closed-loop mix, v1.0.** One short stream and one long stream, one client thread each,
+through one `Laya` instance:
+
+| Model (short / long tokens) | GPU-only req/s | GPU + ANE req/s | Multiplier | Short-stream P99, ms | Answer mismatches |
+|---|---:|---:|---:|---:|---:|
+| laya (128 / 512) | 41.9 | 122.5 | **2.92×** | 48.1 → 11.2 | 0 |
+| laya-multilingual (96 / 1024) | 55.7 | 241.8 | **4.34×** | 36.5 → 6.9 | 0 |
+| laya-typed-decisions (128 / 1024) | 24.0 | 109.6 | **4.57×** | 84.3 → 11.9 | 0 |
+
+**Open-loop arrivals, v1.0.** P99 is measured from arrival, including queueing, for
+short single-question requests. The rates are the higher of the two offered rates per
+model:
+
+| Model | Poisson, GPU-only → GPU + ANE | Bursty, GPU-only → GPU + ANE |
+|---|---:|---:|
+| laya (43.1 / 46.2 req/s) | 170.7 → 30.3 ms | 1538.0 → 108.5 ms |
+| laya-multilingual (80.5 / 83.8 req/s) | 283.9 → 16.3 ms | 2052.3 → 29.6 ms |
+| laya-typed-decisions (33.4 / 35.8 req/s) | 319.4 → 27.3 ms | 1592.9 → 79.5 ms |
+
+- At these rates, long-request P99 also drops, because the GPU no longer serves the
+  short traffic.
+- All three models had 0 answer mismatches.
+- [`examples/heterogeneous_routing.py`](examples/heterogeneous_routing.py) prints backend,
+  device and routing reason for each request in a mixed batch.
+
+### Methodology
+
+- **Machine:** Apple M4 Max, macOS 26.6.2 (25G83), MLX 0.32.2, coremltools 9.0, Python
+  3.12.14. The machine was quiet, with nothing else using the GPU or ANE.
+- **Heterogeneous configuration:** `device="auto"`, `execution="workers"`. The GPU runs in
+  a worker process. The ANE runs on a dispatcher thread (laya, laya-typed-decisions) or in
+  a worker process (laya-multilingual), chosen per model from measurements.
+- **GPU-only baseline:** `device="gpu"`, `execution="workers"`, with both streams on one
+  MLX worker queue.
+- **Closed loop:**
+  - 20 s windows, 3 cycles in alternating order, median over cycles;
+  - 5 warm-up predictions per request type per instance before measuring.
+- **Open loop:**
+  - Poisson arrivals, plus a bursty variant (1 s at 3× the rate, then 2 s idle, with the
+    same mean);
+  - mix: 60% short 1-question, 20% medium, 10% long, 10% short 4-question;
+  - 20 s per rate, with the same arrival sequence for both configurations;
+  - latency from arrival to result, queueing included.
+- **Correctness:** every answer is compared with the inline answer from the device that
+  served it.
+- **Single-request latency:**
+  - one fresh process per configuration;
+  - 10 warm-up and 50 timed iterations;
+  - two passes, the second in reverse order.
+- **Reproducibility:** the v1.0 re-run reproduced the v0.1 figures within ±1.8% over 50
+  configurations.
+
+Full method, tables and raw data: [`benchmarks/v1.0.md`](benchmarks/v1.0.md),
+[`docs/benchmarks.md`](docs/benchmarks.md).
+
+## Safety and fallback behaviour
+
+- **Explicit ANE requests never fall back silently.**
+  - `device="ane"` runs the exact validated artifact on `CPU_AND_NE` in FP16, or it
+    raises.
+  - It raises `UnsupportedShapeError` for a request longer than every validated bucket,
+    `ArtifactMissingError` for a missing artifact, and `ComputeUnitMismatchError` when the
+    compute plan or the runtime probe shows the model is not on the Neural Engine.
+- **Unsupported or unvalidated ANE paths fail loudly.** Every load checks the artifact:
+  - the manifest schema, revision, weight hash and file hash;
+  - the build platform, compute plan and parity record;
+  - a timing probe against `CPU_ONLY`.
+
+  A corrupt artifact is quarantined, and a failed build is never registered.
+- **Unknown or unvalidated platforms default to MLX.** On a machine whose SoC, macOS major
+  version or coremltools version has no validated profile, `auto` uses MLX only
+  (`platform_not_validated`). `laya-apple calibrate` can build that machine's profile.
+- **A failing device stays failed.** A dead worker fails its requests. Nothing is
+  re-run on the other device.
+
+Every path is listed with its test in
+[`docs/no-silent-fallback.md`](docs/no-silent-fallback.md).
 
 ## Limitations
 
-- Validated only on Apple M4 Max, macOS 26.6.2, coremltools 9.0. Other
-  Apple Silicon/macOS combinations are expected to run MLX correctly but are
-  unvalidated; the ANE path requires validation on the specific machine.
-- The ANE path is `B=1` only. Multi-question requests never auto-route to
-  the ANE; with explicit `device="ane"` their questions run one after
-  another. Batched (`B>1`) artifacts are not offered: their parity is
-  unmeasured.
-- `device="auto"` never uses the ANE above L128 for `laya` and
-  `laya-typed-decisions`, or above L128 for `laya-multilingual` (its longer
-  L256 bucket is explicit-only).
-- With the default `execution="inline"`, a `Laya` instance runs one request at a time;
-  use `execution="workers"` for concurrent GPU + ANE serving.
-- Core ML `ALL` and `CPU_ONLY` compute-unit configurations are never used in
-  production; both were shown incorrect or unstable on the ANE/CPU paths in
-  Phase -1.
-- No energy or power measurements are made or claimed.
+- **One test machine.** Every benchmark comes from one Apple M4 Max on macOS 26.6.2.
+- **Routing thresholds are not portable.** Do not assume the same thresholds on another
+  Apple SoC. There, `auto` stays on MLX until the ANE artifacts are built and calibrated
+  on that machine.
+- **Long contexts stay on MLX,** which is faster than the ANE there. The ANE path is
+  batch 1 only.
+- **Isolation between the two engines is partial.**
+  - Each stream's P99 under concurrency is above its solo value
+    ([`benchmarks/v0.2.md`](benchmarks/v0.2.md)).
+  - With the ANE on a thread, heavy Python work in the calling thread slows it (GIL).
+- **Cold start on a fresh artifact location** costs 3–5 minutes of Core ML compile per
+  model. Build and import pre-warm it, and `ane_startup="background"` serves on MLX in
+  the meantime ([`benchmarks/v0.3.md`](benchmarks/v0.3.md)).
+- **`choice` decisions can depend on option order.** This is a property of upstream Laya:
+  - upstream changes its decision under permutation in 35% of the test cases for
+    laya-typed-decisions, and 22.5% for laya;
+  - laya-apple MLX FP32 reproduces upstream exactly, permutation by permutation
+    ([`research/option-order/`](research/option-order/)).
+- **Not yet measured:** energy use, quantized artifacts and cross-SoC validation.
+
+## Reproduction
+
+- [`research/phase-0-feasibility/`](research/phase-0-feasibility/) holds the feasibility
+  study:
+  - conversion scripts (`scripts/convert_ane.py`, `scripts/convert_coreml.py`);
+  - the parity methodology;
+  - the raw data behind the routing table.
+- [`benchmarks/`](benchmarks/) holds the per-release reports. `benchmarks/v1.0/` is the raw
+  v1.0 data, and [`scripts/v1_report.py`](scripts/v1_report.py) renders every table
+  above from it.
+- [`docs/benchmarks.md`](docs/benchmarks.md) lists the commands to reproduce every report.
+- [`laya_apple/conversion/`](laya_apple/conversion/) is the production artifact build,
+  with its parity gate.
+
+## Documentation
+
+- [`docs/guide.md`](docs/guide.md) is the user guide:
+  - the question schema and devices;
+  - workers mode;
+  - artifacts: build, verify, prune, export/import and provenance;
+  - calibration, the CLI, the failure policy and diagnostics.
+- [`docs/api.md`](docs/api.md) covers the stable public API and the deprecation policy.
+- [`docs/compatibility.md`](docs/compatibility.md) says what is tested, expected and
+  unknown.
+- [`docs/support-matrix.md`](docs/support-matrix.md) lists models, revisions and Core ML
+  configuration status.
+- [`CHANGELOG.md`](CHANGELOG.md).
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) for:
+- development setup and the test tiers;
+- the artifact release policy;
+- the rules every change keeps: parity tolerances are never loosened, no silent fallback,
+  and no committed model artifacts.
+
+## Security
+
+See [`SECURITY.md`](SECURITY.md) for supported versions and how to report a
+vulnerability privately.
 
 ## License and attribution
 
-Apache-2.0. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for adapted
-components and their upstream revisions. Model weights are not included or
-redistributed; they are downloaded from the pinned Hugging Face revisions
-listed in `docs/support-matrix.md`. This is an independent project, not an
-official Convai Innovations, Apple, or MLX release.
-
-## More
-
-- [`docs/DEVELOPMENT_PLAN.md`](docs/DEVELOPMENT_PLAN.md) — architecture,
-  routing derivation, correctness policy, and roadmap.
-- [`docs/support-matrix.md`](docs/support-matrix.md) — platform and model
-  support matrix.
-- [`docs/compatibility.md`](docs/compatibility.md) — what is tested, expected
-  and unknown, and what happens on an untested machine.
-- [`docs/api.md`](docs/api.md) — the stable public API and the deprecation
-  policy.
-- [`docs/no-silent-fallback.md`](docs/no-silent-fallback.md) — every path that
-  could run a request somewhere other than recorded, and the test that pins it.
-- [`docs/benchmarks.md`](docs/benchmarks.md) — how to reproduce every benchmark.
-- [`research/phase-0-feasibility/`](research/phase-0-feasibility/) — the
-  measurements this project is built on.
+Apache-2.0. See [`LICENSE`](LICENSE) and [`NOTICE`](NOTICE) for adapted components and
+their upstream revisions.
+- Model weights are not included or redistributed. They are downloaded from the pinned
+  Hugging Face revisions.
+- This is an independent project, not an official release of Convai Innovations, Apple
+  or MLX.

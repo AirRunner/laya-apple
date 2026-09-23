@@ -85,6 +85,30 @@ These are enforced by tests and reviewed as blocking, not stylistic:
   by Semantic Versioning as of 1.0. Read the deprecation policy in
   [`docs/api.md`](docs/api.md) before changing or removing any of them.
 
+## Artifact release policy
+
+An ANE artifact configuration can ship only if it passes the same correctness gate as
+the shipped ones. That applies to a new graph variant, a new bucket, a new compute-unit
+setting, and any quantized or otherwise optimized export.
+
+**The gate**, all on the tested profile:
+- a 100% ANE compute plan with 0 device transitions;
+- the runtime placement probe;
+- the full parity gate against the upstream PyTorch FP32 goldens, with FP16
+  probability error ≤ 0.02 and 0 hard mismatches.
+
+**Other rules:**
+- **Failed variants stay research.** A variant that fails, such as a 4-, 6- or 8-bit
+  quantization, or a graph that is faster but numerically off, is recorded under
+  `research/` with its raw data. It is never registered, offered or routed to.
+- **Fixed shapes only.** The ANE runs fixed-shape buckets that each passed parity. A
+  request that fits no validated bucket raises `UnsupportedShapeError`. Dynamic or
+  enumerated shapes are not offered unless they are re-validated on the current runtime.
+  On the tested profile they ran entirely on the CPU.
+- **Routing changes need evidence.** A change to routing thresholds or auto buckets
+  needs new measurements, derived with `laya_apple/derivation.py` and recorded in
+  `CHANGELOG.md`.
+
 ## Commits and pull requests
 
 - Write commit subjects in the imperative mood ("Add X", not "Added X" or "Adds X"),

@@ -1,6 +1,6 @@
 [project]
 name = "laya-apple"
-version = "0.3.0"
+version = "1.0.0"
 description = "Apple-native inference runtime for Laya with MLX GPU and Apple Neural Engine acceleration."
 readme = "README.md"
 license = "Apache-2.0"
@@ -9,11 +9,21 @@ authors = [
     { name = "oliver", email = "tc3oliver@gmail.com" }
 ]
 requires-python = ">=3.11,<3.14"
+keywords = ["apple-silicon", "mlx", "coreml", "neural-engine", "inference", "laya"]
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
     "Operating System :: MacOS",
+    "Operating System :: MacOS :: MacOS X",
+    "Environment :: GPU",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Typing :: Typed",
 ]
 # MLX is the default backend, so it is the only engine in the base install.
 dependencies = [
@@ -38,6 +48,10 @@ dev = ["pytest>=8", "ruff>=0.12", "psutil>=6"]
 laya-apple = "laya_apple.cli:main"
 
 [project.urls]
+Homepage = "https://github.com/tc3oliver/laya-apple"
+Documentation = "https://github.com/tc3oliver/laya-apple#readme"
+Changelog = "https://github.com/tc3oliver/laya-apple/blob/main/CHANGELOG.md"
+Issues = "https://github.com/tc3oliver/laya-apple/issues"
 Repository = "https://github.com/tc3oliver/laya-apple"
 Upstream = "https://github.com/NandhaKishorM/laya"
 

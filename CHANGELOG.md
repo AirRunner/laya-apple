@@ -5,6 +5,63 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.0] - 2026-09-23
+
+First stable release. There are no breaking changes since 0.3.0; one CLI flag is added.
+This release declares what is stable and re-runs the full comparative benchmark suite.
+
+### Stable
+
+The following now follow Semantic Versioning, with the deprecation policy in
+[`docs/api.md`](docs/api.md):
+- the public Python API: `Laya`, `Result`, `RuntimeInfo`, and the exception hierarchy;
+- the stable `info()` keys and the routing-reason strings;
+- the CLI and its exit codes;
+- the artifact manifest (`format_version: 1`, `laya_apple/data/manifest.schema.json`);
+- the export archive and the local-profile format.
+
+### Added
+
+- `docs/compatibility.md`: what is tested, expected and unknown for each dimension, and
+  what happens on an untested machine.
+- `docs/benchmarks.md`: how to reproduce every benchmark report.
+- `benchmarks/v1.0.md`: v0.1 single-request latency and the v0.2 concurrency exit-gate
+  mix, re-run on the release code and compared figure by figure with the recorded data
+  (`scripts/compare_bench.py`).
+- `scripts/release_gate.py --soak SECONDS`: the v1.0 gate includes the 600 s sustained
+  load.
+- `laya-apple artifacts list --capabilities`: one provenance record per registered
+  artifact. It covers:
+  - model and revision, the source weight hash, and the conversion revision;
+  - graph, bucket, compute target, precision and platform;
+  - the parity result and the artifact checksum;
+  - whether `auto` offers the bucket.
+- `examples/heterogeneous_routing.py`: a mixed batch served concurrently, showing backend,
+  device and routing reason for each request.
+- **Option-order robustness check** (`scripts/option_order.py`, `research/option-order/`,
+  `tests/integration/test_option_order.py`):
+  - `choice` decisions depend on option order in upstream Laya itself;
+  - laya-apple MLX FP32 reproduces upstream permutation by permutation, and FP16/ANE
+    differ only inside the near-tie band;
+  - this is documented as a known limitation of the model.
+- **The v1.0 comparative benchmark suite:**
+  - `scripts/bench_v1.sh` measures upstream PyTorch CPU/MPS and the ordinary Core ML
+    graph, with their parity, and open-loop serving;
+  - `scripts/v1_report.py` renders every table in the README and `benchmarks/v1.0.md`
+    from the raw data.
+- `CONTRIBUTING.md` gains an artifact release policy: a quantized or other optimized
+  variant ships only if it passes the unchanged correctness gate, and failed variants stay
+  research.
+
+### Changed
+
+- The README positions laya-apple as a correctness-validated heterogeneous runtime. Every
+  headline figure comes from the v1.0 re-run. The usage reference moved to
+  `docs/guide.md`.
+- The Phase -1 parity script can write a re-run elsewhere (`PARITY_OUT`), so the recorded
+  evidence is never overwritten.
+- Research scripts default to a portable cache location.
+
 ## [0.3.0] - 2026-09-23
 
 ### Added
@@ -158,7 +215,7 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Documentation: README, this changelog, `docs/support-matrix.md`,
   `LICENSE`/`NOTICE`.
 
-### Release gate (DEVELOPMENT_PLAN.md §12.2), Apple M4 Max / macOS 26.6.2
+### Release gate, Apple M4 Max / macOS 26.6.2
 
 1. **Clean install:** base and `[ane]` in fresh venvs on Python 3.11, 3.12 and 3.13.
 2. **README quickstart:** runs unchanged, offline, in all six environments.
