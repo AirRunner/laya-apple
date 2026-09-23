@@ -1,0 +1,141 @@
+name: Release
+
+# Publishes to PyPI with Trusted Publishing (GitHub OIDC); no PyPI token or password is
+# stored anywhere. See docs/publishing.md.
+#
+# - Pushing a version tag (vX.Y.Z) builds and publishes that tag.
+# - workflow_dispatch builds and publishes an EXISTING version tag. It is for tags created
+#   before this workflow existed (their commit does not contain this file, so pushing them
+#   again would not run it); it only runs from main and never creates or moves a tag.
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing version tag to publish, e.g. v1.0.1"
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and check distributions
+    # Apple silicon runner: the import check needs MLX, which is darwin/arm64 only.
+    runs-on: macos-14
+    steps:
+      - name: Resolve the tag
+        id: tag
+        env:
+          EVENT: ${{ github.event_name }}
+          REF: ${{ github.ref }}
+          PUSHED_TAG: ${{ github.ref_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          if [ "$EVENT" = workflow_dispatch ]; then
+            if [ "$REF" != refs/heads/main ]; then
+              echo "::error::Manual releases must be dispatched from main (got $REF)"; exit 1
+            fi
+            tag="$INPUT_TAG"
+          else
+            tag="$PUSHED_TAG"
+          fi
+          if ! printf '%s' "$tag" | grep -Eq '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "::error::'$tag' is not a vX.Y.Z tag"; exit 1
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: refs/tags/${{ steps.tag.outputs.tag }}
+          persist-credentials: false
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+
+      - name: Tag matches the package version
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          version=$(uv run --no-project --python 3.12 python -c 'import tomllib; print(tomllib.load(open("pyproject.toml", "rb"))["project"]["version"])')
+          if [ "v$version" != "$TAG" ]; then
+            echo "::error::pyproject.toml version $version does not match tag $TAG"; exit 1
+          fi
+
+      - name: Build
+        run: uv build
+
+      - name: Check distribution contents
+        run: |
+          ls dist
+          test "$(ls dist/*.whl | wc -l)" -eq 1
+          test "$(ls dist/*.tar.gz | wc -l)" -eq 1
+          files=$( (unzip -Z1 dist/*.whl; tar tzf dist/*.tar.gz) )
+          # Only the package, its metadata and the license/readme files ship.
+          if printf '%s\n' "$files" | grep -E '(^|/)(benchmarks|research|tests|scripts|examples|hardware-results|docs)/|\.mlmodelc|\.mlpackage'; then
+            echo "::error::unexpected files in the distributions"; exit 1
+          fi
+          for f in LICENSE NOTICE; do
+            printf '%s\n' "$files" | grep -q "dist-info/licenses/$f" || { echo "::error::$f missing from wheel"; exit 1; }
+          done
+          mkdir -p "$RUNNER_TEMP/unpacked"
+          unzip -q dist/*.whl -d "$RUNNER_TEMP/unpacked"
+          tar xzf dist/*.tar.gz -C "$RUNNER_TEMP/unpacked"
+          if grep -rIlE '/Users/|/Volumes/|/home/runner' "$RUNNER_TEMP/unpacked"; then
+            echo "::error::local paths in the distributions"; exit 1
+          fi
+
+      - name: Check metadata
+        run: uvx twine check --strict dist/*
+
+      - name: Import the built wheel
+        env:
+          HF_HUB_OFFLINE: "1"
+        run: |
+          uv venv "$RUNNER_TEMP/wheel-venv"
+          uv pip install --python "$RUNNER_TEMP/wheel-venv/bin/python" dist/*.whl
+          cd "$RUNNER_TEMP"
+          "$RUNNER_TEMP/wheel-venv/bin/python" - <<'EOF'
+          import importlib.resources as r
+          import laya_apple
+          from laya_apple import Laya, LayaAppleError  # noqa: F401
+          assert "site-packages" in laya_apple.__file__, laya_apple.__file__
+          data = {p.name for p in r.files("laya_apple.data").iterdir()}
+          assert {"routing.json", "placement.json", "manifest.schema.json"} <= data, data
+          print("laya-apple", laya_apple.__version__, "imports from", laya_apple.__file__)
+          EOF
+          "$RUNNER_TEMP/wheel-venv/bin/laya-apple" --help > /dev/null
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          if-no-files-found: error
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    # Never from a fork or a copy of this workflow in another repository.
+    if: github.repository == 'tc3oliver/laya-apple'
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/project/laya-apple/
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Publish with Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@release/v1

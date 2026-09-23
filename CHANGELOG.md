@@ -5,6 +5,15 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Added
+
+- **PyPI release workflow** (`.github/workflows/release.yml`), using Trusted Publishing
+  with GitHub OIDC; no API token is stored. It builds on an Apple silicon runner, checks
+  that the tag matches the package version, rejects distributions that contain
+  benchmarks, research, tests or local paths, and imports the built wheel in a clean
+  environment before the `pypi` environment publishes it. How to use it:
+  [`docs/publishing.md`](docs/publishing.md).
+
 ### Notes
 
 - **History was rewritten on 2026-09-23 before publication:**

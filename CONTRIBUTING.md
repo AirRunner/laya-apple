@@ -2,8 +2,12 @@
 
 ## Dev setup
 
+To work on laya-apple, or to run it from source (Apple silicon, Python 3.11–3.13):
+
 ```bash
 git clone https://github.com/tc3oliver/laya-apple && cd laya-apple
+uv sync --extra ane --extra convert          # run from source: MLX + Neural Engine + artifact builds
+uv run laya-apple artifacts build laya-typed-decisions   # optional: build + parity-validate ANE artifacts here (~5 min)
 uv sync --extra dev                          # tests, ruff, psutil
 uv sync --extra dev --extra ane              # + Neural Engine backend (coremltools==9.0)
 uv sync --extra dev --extra ane --extra convert     # + building ANE artifacts (torch==2.7.0)
@@ -95,6 +99,10 @@ pytest markers, and (optionally) a soak test. See `--help` for the current flags
 including `--quick` (skip the install matrix and slow markers) and `--soak SECONDS`. Run
 it before proposing a release, not as a substitute for the fast suite during normal
 development.
+
+Publishing to PyPI is automated by `.github/workflows/release.yml` with Trusted
+Publishing; how to build locally and cut a release is in
+[`docs/publishing.md`](docs/publishing.md).
 
 ## How to run parity checks
 

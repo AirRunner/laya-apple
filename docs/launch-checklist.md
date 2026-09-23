@@ -50,6 +50,6 @@ were deliberately left undone here:
   never run with `--apply` here.
 - **Creating the GitHub release from `docs/releases/v1.0.0.md`.** A release is a
   GitHub-side action distinct from the git tag.
-- **PyPI publishing decision.** `laya-apple` is not on PyPI today (`README.md`'s
-  "Install" section installs from a clone only). Whether to publish is a maintainer
-  decision, not evaluated here.
+- **PyPI publishing.** Decided: publish with Trusted Publishing from
+  `.github/workflows/release.yml`, no API token. The PyPI trusted-publisher registration
+  and the first run are maintainer actions; see [`publishing.md`](publishing.md).
