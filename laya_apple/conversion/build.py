@@ -132,21 +132,34 @@ def build(spec: ModelSpec, length: int, *, local_files_only: bool = False, force
             f"{spec.name} L{length} is not a validated ANE configuration; offered buckets: {list(spec.ane_buckets)}"
         )
     try:
-        import coremltools as ct
-        import torch
+        import coremltools  # noqa: F401
+        import torch  # noqa: F401
     except ImportError as e:
         raise ArtifactError(
             "building artifacts needs: the [ane] and [convert] extras (uv sync --extra ane --extra convert)"
         ) from e
 
-    from ..backends.coreml_ane import HostWeights, ane_features
-    from ..parity import evaluate
-    from .bc1s import ConvBody
-    from .torch_reference import load_model
+    from ..lifecycle import build_lock
 
     final = artifact_dir(spec, length)
     if final.exists() and not force:
         raise ArtifactError(f"{final} already exists; pass force=True (--force) to rebuild")
+    with build_lock(spec, length, log=_log):
+        if final.exists() and not force:  # another process registered it while we waited
+            _log(f"{final} was built by another process")
+            return final
+        return _build_locked(spec, length, final, local_files_only=local_files_only, force=force)
+
+
+def _build_locked(spec: ModelSpec, length: int, final: Path, *, local_files_only: bool, force: bool) -> Path:
+    import coremltools as ct
+    import torch
+
+    from ..backends.coreml_ane import HostWeights
+    from ..parity.ane import ane_parity
+    from .bc1s import ConvBody
+    from .torch_reference import load_model
+
     t_start = time.perf_counter()
     ckpt = checkpoint_path(spec, local_files_only=local_files_only)
     verify_weights(spec, ckpt)
@@ -159,6 +172,7 @@ def build(spec: ModelSpec, length: int, *, local_files_only: bool = False, force
     staging_root = artifacts_root() / ".staging"
     staging_root.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix=f"{spec.name}-L{length}-", dir=staging_root))
+    (stage / "BUILDING.json").write_text(json.dumps({"pid": os.getpid()}))
     try:
         _log(f"{spec.name} L{length}: loading PyTorch FP32 reference")
         torch.set_num_threads(max(1, (os.cpu_count() or 8) // 2))
@@ -246,34 +260,10 @@ def build(spec: ModelSpec, length: int, *, local_files_only: bool = False, force
             _reject(spec, length, manifest, f"placement: {e}")
             raise
 
-        t = time.perf_counter()
-        model = ct.models.CompiledMLModel(str(stage / COMPILED), compute_units=ct.ComputeUnit.CPU_AND_NE)
-        timings["first_load_s"] = time.perf_counter() - t
-
-        def forward(items):
-            logits = np.full((len(items), ANE_MAX_OPTIONS), -1e4, np.float32)
-            acts = []
-            for r, it in enumerate(items):
-                feats = ane_features(
-                    [it], length, 1, host.embedding, host.type_embedding, host.window(length), tok.pad_token_id
-                )
-                lg, ac = host.tail(model.predict(feats), [it])
-                logits[r] = lg[0]
-                acts.append(ac[0])
-            return logits, np.stack(acts)
-
         _log("parity gate against the PyTorch FP32 goldens")
         t = time.perf_counter()
-        parity = evaluate(
-            spec.name,
-            cfg,
-            forward,
-            precision=ANE_PRECISION,
-            max_len=length,
-            prepare=lambda s, q: prepare(tok, cfg, s, q).items,
-        )
+        parity = ane_parity(spec, stage / COMPILED, length, ckpt)
         timings["parity_s"] = time.perf_counter() - t
-        parity["reference"] = "upstream laya 0.3.5 (NandhaKishorM/laya@573e5b6), PyTorch CPU FP32"
         manifest["parity"] = parity
         _log(
             f"parity rows={parity['rows']} prob={parity['prob_max_abs']:.4f} act={parity['action_prob_max_abs']:.4f} "

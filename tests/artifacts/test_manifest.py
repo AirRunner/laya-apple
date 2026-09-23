@@ -27,6 +27,11 @@ def test_valid_manifest_passes(manifest_factory):
     verify_manifest(SPEC, BUCKET, manifest_factory(SPEC, BUCKET))
 
 
+def test_non_dict_manifest_raises_integrity_error_not_attribute_error():
+    with pytest.raises(ArtifactIntegrityError):
+        verify_manifest(SPEC, BUCKET, ["not", "a", "manifest"])
+
+
 def test_bad_format_raises_integrity_error(manifest_factory, delete_key):
     with pytest.raises(ArtifactIntegrityError):
         verify_manifest(SPEC, BUCKET, manifest_factory(SPEC, BUCKET, format="something-else"))

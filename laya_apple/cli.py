@@ -13,6 +13,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from pathlib import Path
 
 
 def _json(obj):
@@ -29,10 +30,22 @@ def _read_arg(value: str):
     return value
 
 
-def cmd_predict(a):
+def _from_pretrained(model, **kwargs):
+    """Laya.from_pretrained, with argument-validation ValueErrors reported as CLI errors
+    rather than tracebacks (LayaAppleError subclasses already are and pass through)."""
     from . import Laya
+    from .errors import LayaAppleError
 
-    laya = Laya.from_pretrained(a.model, device=a.device, dtype=a.dtype, local_files_only=a.offline)
+    try:
+        return Laya.from_pretrained(model, **kwargs)
+    except ValueError as e:
+        if isinstance(e, LayaAppleError):
+            raise
+        raise LayaAppleError(str(e)) from e
+
+
+def cmd_predict(a):
+    laya = _from_pretrained(a.model, device=a.device, dtype=a.dtype, local_files_only=a.offline)
     questions = json.loads(_read_arg(a.questions))
     context = _read_arg(a.context)
     try:
@@ -109,7 +122,48 @@ def cmd_artifacts(a):
             ]
         )
         return 0
+    if a.action == "import":
+        from .lifecycle import import_artifact
+
+        if not a.model:
+            raise SystemExit("artifacts import needs an archive path: laya-apple artifacts import ARCHIVE.tar.gz")
+        print(import_artifact(Path(a.model), local_files_only=a.offline, force=a.force))
+        return 0
+    if a.action == "prune":
+        from .lifecycle import plan_prune, prune
+
+        plan = plan_prune()
+        total = sum(x["bytes"] for x in plan)
+        for x in plan:
+            print(
+                f"{'remove' if a.yes else 'would remove'}  {x['bytes'] / 1e6:9.1f} MB  {x['reason']:<60}  {x['path']}"
+            )
+        if not plan:
+            print("nothing to prune")
+        elif a.yes:
+            removed = prune(plan)
+            print(f"removed {len(removed)} entries, {total / 1e9:.2f} GB")
+        else:
+            print(f"{len(plan)} entries, {total / 1e9:.2f} GB; rerun with --yes to delete")
+        return 0
     specs = [resolve(a.model)] if a.model else list(models().values())
+    if a.action == "export":
+        from .lifecycle import export_artifact
+
+        if not a.model:
+            raise SystemExit("artifacts export needs MODEL [--length L ...] [--out DIR]")
+        out = Path(a.out or ".")
+        out.mkdir(parents=True, exist_ok=True)
+        for length in a.length or specs[0].ane_buckets:
+            print(export_artifact(specs[0], length, out / f"{specs[0].name}-L{length}"))
+        return 0
+    if a.action == "warm":
+        from .lifecycle import warm
+
+        for spec in specs:
+            for b, sec in warm(spec, a.length).items():
+                print(f"{spec.name} L{b}: loaded in {sec:.2f} s")
+        return 0
     if a.action == "build":
         from .conversion.build import build
 
@@ -144,12 +198,11 @@ def _artifact_ok(spec, length) -> bool:
 
 
 def cmd_parity(a):
-    from . import Laya
     from .parity import evaluate
     from .registry import resolve
 
     spec = resolve(a.model)
-    laya = Laya.from_pretrained(spec.name, device=a.device, dtype=a.dtype, local_files_only=a.offline)
+    laya = _from_pretrained(spec.name, device=a.device, dtype=a.dtype, local_files_only=a.offline)
     backend = laya.ane if a.device == "ane" else laya.mlx
     precision = "float16" if a.device == "ane" else a.dtype
     max_len = max(backend.buckets) if a.device == "ane" else None
@@ -192,6 +245,24 @@ def cmd_benchmark(a):
     _json(out)
 
 
+def cmd_calibrate(a):
+    from .profiles import calibrate
+    from .registry import models, resolve
+
+    specs = [resolve(m) for m in a.models] if a.models else list(models().values())
+    out = {}
+    for spec in specs:
+        entry = calibrate(
+            spec, warmup=a.warmup, iters=a.iters, local_files_only=a.offline, log=lambda m: print(m, file=sys.stderr)
+        )
+        out[spec.name] = {
+            "auto_ane_buckets": entry["auto_ane_buckets"],
+            "shipped_auto_ane_buckets": list(spec.auto_ane_buckets),
+            "profile": entry["path"],
+        }
+    _json(out)
+
+
 def build_parser():
     p = argparse.ArgumentParser(prog="laya-apple", description=__doc__.split("\n")[0])
     p.add_argument("--offline", action="store_true", help="never touch the network (local_files_only)")
@@ -213,12 +284,14 @@ def build_parser():
     s.add_argument("models", nargs="*")
     s.set_defaults(fn=cmd_download)
 
-    s = sub.add_parser("artifacts", help="build, list or verify ANE artifacts")
-    s.add_argument("action", choices=["build", "list", "verify"])
-    s.add_argument("model", nargs="?")
+    s = sub.add_parser("artifacts", help="build, list, verify, warm or prune ANE artifacts")
+    s.add_argument("action", choices=["build", "list", "verify", "warm", "prune", "export", "import"])
+    s.add_argument("model", nargs="?", help="model id (import: the .tar.gz archive)")
     s.add_argument("--length", type=int, action="append")
     s.add_argument("--force", action="store_true")
     s.add_argument("--skip-existing", action="store_true")
+    s.add_argument("--yes", action="store_true", help="prune: actually delete (default is a dry run)")
+    s.add_argument("--out", help="export: output directory")
     s.set_defaults(fn=cmd_artifacts)
 
     s = sub.add_parser("parity", help="run the parity gate against the shipped goldens")
@@ -226,6 +299,12 @@ def build_parser():
     s.add_argument("--device", default="gpu", choices=["gpu", "ane"])
     s.add_argument("--dtype", default="float16", choices=["float16", "float32"])
     s.set_defaults(fn=cmd_parity)
+
+    s = sub.add_parser("calibrate", help="measure this machine and write a local routing profile")
+    s.add_argument("models", nargs="*")
+    s.add_argument("--warmup", type=int, default=5)
+    s.add_argument("--iters", type=int, default=30)
+    s.set_defaults(fn=cmd_calibrate)
 
     s = sub.add_parser("benchmark", help="warm latency on exact-length requests")
     s.add_argument("model")

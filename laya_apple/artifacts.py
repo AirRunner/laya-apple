@@ -21,6 +21,7 @@ from functools import cache
 from pathlib import Path
 
 from .errors import (
+    ArtifactError,
     ArtifactIntegrityError,
     ArtifactMissingError,
     ArtifactParityError,
@@ -30,6 +31,7 @@ from .errors import (
 )
 from .hub import cache_root
 from .registry import ANE_COMPUTE_UNITS, ANE_GRAPH, ANE_MAX_OPTIONS, ANE_PRECISION, ModelSpec
+from .schema import manifest_errors
 
 MANIFEST_FORMAT = "laya-apple-artifact"
 MANIFEST_VERSION = 1
@@ -121,10 +123,23 @@ class Manifest:
 
 def verify_manifest(spec: ModelSpec, bucket: int, data: dict, *, compute_units: str = ANE_COMPUTE_UNITS) -> Manifest:
     """Pure validation of a manifest against what is requested. Raises on any mismatch."""
+    if not isinstance(data, dict):
+        raise ArtifactIntegrityError(f"manifest is not a JSON object (got {type(data).__name__})")
     if data.get("format") != MANIFEST_FORMAT or data.get("format_version") != MANIFEST_VERSION:
         raise ArtifactIntegrityError(
             f"unsupported manifest format {data.get('format')!r}/{data.get('format_version')!r}"
         )
+    problems = manifest_errors(data)
+    try:
+        manifest = _verify_fields(spec, bucket, data, compute_units)
+    except (TypeError, ValueError, AttributeError):
+        manifest = None  # malformed values; the schema errors below say which
+    if problems or manifest is None:
+        raise ArtifactIntegrityError("manifest does not match the format_version 1 schema: " + "; ".join(problems[:5]))
+    return manifest
+
+
+def _verify_fields(spec: ModelSpec, bucket: int, data: dict, compute_units: str) -> Manifest:
     src, art = data.get("source", {}), data.get("artifact", {})
     if src.get("model") != spec.name or src.get("repo") != spec.repo:
         raise ArtifactRevisionError(f"artifact is for {src.get('repo')!r}, not {spec.repo!r}")
@@ -279,7 +294,14 @@ def load_verified(spec: ModelSpec, bucket: int, *, compute_units: str = ANE_COMP
             "the ANE path needs coremltools: install the [ane] extra (uv sync --extra ane)"
         ) from e
     d = artifact_dir(spec, bucket)
-    manifest = verify_manifest(spec, bucket, read_manifest(spec, bucket), compute_units=compute_units)
+    try:
+        data = read_manifest(spec, bucket)
+    except ArtifactIntegrityError as e:
+        raise _quarantined(spec, bucket, d, e) from e
+    try:
+        manifest = verify_manifest(spec, bucket, data, compute_units=compute_units)
+    except ArtifactIntegrityError as e:
+        raise _quarantined(spec, bucket, d, e) from e
     profile = platform_profile()
     verify_profile(manifest.data, profile)
     key, stamp = _stamp_key(manifest, d, compute_units, profile), _stamp_path(d)
@@ -290,7 +312,19 @@ def load_verified(spec: ModelSpec, bucket: int, *, compute_units: str = ANE_COMP
         except (OSError, ValueError):
             cached = False
     if not cached:
-        verify_files(manifest, d)
+        try:
+            verify_files(manifest, d)
+        except ArtifactIntegrityError as e:
+            # A hash mismatch can be a race: --force or import can swap the directory's
+            # contents between our manifest read and our hash. Re-read and re-hash once
+            # before quarantining a freshly (re)built artifact.
+            try:
+                data2 = read_manifest(spec, bucket)
+                manifest2 = verify_manifest(spec, bucket, data2, compute_units=compute_units)
+                verify_files(manifest2, d)
+            except ArtifactError:
+                raise _quarantined(spec, bucket, d, e) from e
+            manifest = manifest2
         placement = compute_plan_summary(d / COMPILED, compute_units)
         check_ane_placement(placement)
         stamp.parent.mkdir(parents=True, exist_ok=True)
@@ -299,6 +333,17 @@ def load_verified(spec: ModelSpec, bucket: int, *, compute_units: str = ANE_COMP
         os.replace(tmp, stamp)
     model = ct.models.CompiledMLModel(str(d / COMPILED), compute_units=getattr(ct.ComputeUnit, compute_units))
     return model, manifest
+
+
+def _quarantined(spec: ModelSpec, bucket: int, directory: Path, error: ArtifactIntegrityError):
+    """Move a corrupt artifact aside and return an error that says where and how to rebuild."""
+    from .lifecycle import quarantine
+
+    moved = quarantine(directory, str(error))
+    where = f"; moved to {moved}" if moved else ""
+    return ArtifactIntegrityError(
+        f"{error}{where}. Rebuild it with: laya-apple artifacts build {spec.name} --length {bucket}"
+    )
 
 
 def list_artifacts() -> list[dict]:

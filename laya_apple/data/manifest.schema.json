@@ -1,0 +1,76 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://github.com/tc3oliver/laya-apple/manifest.schema.json",
+ "title": "laya-apple ANE artifact manifest, format_version 1",
+ "description": "Stable from laya-apple 1.0. Additive fields do not change format_version; readers ignore fields they do not know. Removing or changing the meaning of a field listed here requires a new format_version.",
+ "type": "object",
+ "required": ["format", "format_version", "status", "source", "artifact", "placement", "parity", "integrity", "platform"],
+ "properties": {
+  "format": {"const": "laya-apple-artifact"},
+  "format_version": {"const": 1},
+  "status": {"enum": ["validated", "rejected"]},
+  "created_at": {"type": "string"},
+  "source": {
+   "type": "object",
+   "required": ["model", "repo", "revision", "weights_sha256"],
+   "properties": {
+    "model": {"type": "string", "minLength": 1},
+    "repo": {"type": "string", "minLength": 1},
+    "revision": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "weights_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+   }
+  },
+  "conversion": {"type": "object"},
+  "artifact": {
+   "type": "object",
+   "required": ["graph", "length", "batch", "precision", "max_options"],
+   "properties": {
+    "graph": {"type": "string"},
+    "length": {"type": "integer", "minimum": 1},
+    "batch": {"type": "integer", "minimum": 1},
+    "precision": {"type": "string"},
+    "max_options": {"type": "integer", "minimum": 1},
+    "inputs": {"type": "array", "items": {"type": "string"}},
+    "outputs": {"type": "array", "items": {"type": "string"}}
+   }
+  },
+  "placement": {
+   "type": "object",
+   "required": ["compute_units"],
+   "properties": {
+    "compute_units": {"type": "string"},
+    "transitions": {"type": "integer", "minimum": 0}
+   }
+  },
+  "platform": {
+   "type": "object",
+   "required": ["soc", "macos", "coremltools"],
+   "properties": {
+    "soc": {"type": "string"},
+    "macos": {"type": "string"},
+    "macos_build": {"type": "string"},
+    "coremltools": {"type": "string"}
+   }
+  },
+  "parity": {
+   "type": "object",
+   "required": ["passed"],
+   "properties": {
+    "passed": {"type": "boolean"},
+    "tolerance": {"type": "number"},
+    "hard_mismatches": {"type": "integer", "minimum": 0},
+    "prob_max_abs": {"type": "number"}
+   }
+  },
+  "integrity": {
+   "type": "object",
+   "required": ["artifact_sha256"],
+   "properties": {
+    "artifact_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "tree_hash": {"type": "string"}
+   }
+  },
+  "timings": {"type": "object"},
+  "imported": {"type": "object"}
+ }
+}
