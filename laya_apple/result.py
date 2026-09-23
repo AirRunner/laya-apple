@@ -21,6 +21,11 @@ class RuntimeInfo:
     compute_units: str | None = None  # Core ML only
     buckets: tuple = ()  # Core ML only: fixed length used per question
     dtype: str | None = None
+    execution: str = "inline"  # "inline" | "workers"
+    queue_wait_ms: float | None = None  # workers: time queued before the device started it
+    device_ms: float | None = None  # workers: time inside the backend's forward, in the worker
+    gpu_backlog_ms: float | None = None  # workers: backlog estimates seen by the router
+    ane_backlog_ms: float | None = None
 
     def __str__(self) -> str:
         return (

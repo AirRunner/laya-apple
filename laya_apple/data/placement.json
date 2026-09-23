@@ -1,0 +1,80 @@
+{
+ "generated_by": "scripts/derive_placement.py",
+ "rule": "the placement with the lower short-stream P99 under the heterogeneous mix\n(the isolation objective, DEVELOPMENT_PLAN.md \u00a77.1); ties within 5% go to the higher\naggregate throughput, then to \"thread\" (one process fewer).",
+ "evidence": {
+  "placement-laya-thread.json": "a4e33dd4dacf6349720547cfe3fb457230f4c92f0a85d66b6f492c6e326db9b7",
+  "placement-laya-process.json": "a08442ab9d1117ef63ddc7438fe4950a911d637da021b79f54e0535ef8288d52",
+  "placement-laya-multilingual-thread.json": "c4fead29bf38ed7aa09e88642883b52ac8179e160c9cd778b5dd34d6e0681e41",
+  "placement-laya-multilingual-process.json": "0254afef2894b762af38135aefbe48ac26fad643d8f7a64db990f0f02c3e7b35",
+  "placement-laya-typed-decisions-thread.json": "3f9e0a8bfb363883b984270bc589c554fede2534e4441743feffe96cbc8a6048",
+  "placement-laya-typed-decisions-process.json": "b1211ed3b1bd8090d740ee9570ff7be7c818881a4f30fca1166d746e26e8b05b"
+ },
+ "models": {
+  "laya": {
+   "ane": "thread",
+   "gpu": "process",
+   "measured": {
+    "thread": {
+     "short_p99_ms": 10.829425207339227,
+     "short_req_s": 98.03538925640983,
+     "long_p99_ms": 42.092532456154004,
+     "long_req_s": 24.585315498248043,
+     "aggregate_req_s": 122.62070475465788,
+     "mismatches": 0
+    },
+    "process": {
+     "short_p99_ms": 12.850802126340566,
+     "short_req_s": 98.16163271147587,
+     "long_p99_ms": 41.60428202711046,
+     "long_req_s": 27.762323981968077,
+     "aggregate_req_s": 125.92395669344396,
+     "mismatches": 0
+    }
+   }
+  },
+  "laya-multilingual": {
+   "ane": "process",
+   "gpu": "process",
+   "measured": {
+    "thread": {
+     "short_p99_ms": 10.626513586612418,
+     "short_req_s": 158.23014573984463,
+     "long_p99_ms": 41.77034116582945,
+     "long_req_s": 26.534782302314134,
+     "aggregate_req_s": 184.76492804215877,
+     "mismatches": 0
+    },
+    "process": {
+     "short_p99_ms": 8.466308051720265,
+     "short_req_s": 169.28822811937778,
+     "long_p99_ms": 36.81576821487397,
+     "long_req_s": 28.978765870276725,
+     "aggregate_req_s": 198.2669939896545,
+     "mismatches": 0
+    }
+   }
+  },
+  "laya-typed-decisions": {
+   "ane": "thread",
+   "gpu": "process",
+   "measured": {
+    "thread": {
+     "short_p99_ms": 11.144723948091269,
+     "short_req_s": 98.012285279179,
+     "long_p99_ms": 81.95193116785958,
+     "long_req_s": 12.348852482842723,
+     "aggregate_req_s": 110.36113776202171,
+     "mismatches": 0
+    },
+    "process": {
+     "short_p99_ms": 20.065432470291853,
+     "short_req_s": 71.18059409527098,
+     "long_p99_ms": 83.25100824818946,
+     "long_req_s": 12.391168401046702,
+     "aggregate_req_s": 83.57176249631767,
+     "mismatches": 0
+    }
+   }
+  }
+ }
+}

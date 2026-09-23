@@ -101,40 +101,32 @@ class HostWeights:
         return logits, act.astype(np.float32)
 
 
-class ANEBackend:
+class ANEShapes:
+    """Which rows an ANE backend can serve, and with which artifact.
+
+    Shared by the in-process backend and the parent-side view of an ANE worker process
+    (laya_apple.executor), so both refuse the same requests with the same errors before
+    any work runs.
+    """
+
     name = "coreml"
     device = "ane"
     compute_units = ANE_COMPUTE_UNITS
 
-    def __init__(self, spec: ModelSpec, checkpoint: Path, pad_id: int, local_attention: int, buckets, *, strict=True):
-        """Load and verify every offered bucket.
-
-        strict (explicit device="ane"): a missing bucket is recorded and raised when a
-        request needs it; any other verification failure raises now, as does having no
-        usable bucket at all. Non-strict (device="auto"): every artifact failure is recorded
-        and the bucket is simply not offered to auto routing.
-        """
-        self.spec, self.pad_id = spec, pad_id
-        self.host = HostWeights(checkpoint, local_attention)
-        self.models, self.manifests, self.load_errors = {}, {}, {}
-        self.offered = tuple(sorted(buckets))
-        tolerated = ArtifactMissingError if strict else ArtifactError
-        for b in self.offered:
-            try:
-                self.models[b], self.manifests[b] = load_verified(spec, b)
-            except tolerated as e:
-                self.load_errors[b] = e
-        if strict and not self.models:
-            raise next(iter(self.load_errors.values()))
+    def __init__(self, spec: ModelSpec, offered, artifact_sha256: dict, load_errors: dict):
+        self.spec = spec
+        self.offered = tuple(sorted(offered))
+        self.artifact_sha256 = dict(artifact_sha256)
+        self.load_errors = dict(load_errors)
 
     @property
     def buckets(self) -> tuple:
-        return tuple(sorted(self.models))
+        return tuple(sorted(self.artifact_sha256))
 
     def bucket_for(self, n_tokens: int) -> int:
         for b in self.offered:
             if n_tokens <= b:
-                if b not in self.models:
+                if b not in self.artifact_sha256:
                     raise self.load_errors[b]
                 return b
         raise UnsupportedShapeError(
@@ -153,7 +145,30 @@ class ANEBackend:
         return buckets
 
     def artifact_revision(self, items) -> str:
-        return ",".join(f"L{b}:{self.manifests[b].artifact_sha256[:12]}" for b in sorted(set(self.check(items))))
+        return ",".join(f"L{b}:{self.artifact_sha256[b][:12]}" for b in sorted(set(self.check(items))))
+
+
+class ANEBackend(ANEShapes):
+    def __init__(self, spec: ModelSpec, checkpoint: Path, pad_id: int, local_attention: int, buckets, *, strict=True):
+        """Load and verify every offered bucket.
+
+        strict (explicit device="ane"): a missing bucket is recorded and raised when a
+        request needs it; any other verification failure raises now, as does having no
+        usable bucket at all. Non-strict (device="auto"): every artifact failure is recorded
+        and the bucket is simply not offered to auto routing.
+        """
+        self.pad_id = pad_id
+        self.host = HostWeights(checkpoint, local_attention)
+        self.models, self.manifests, load_errors = {}, {}, {}
+        tolerated = ArtifactMissingError if strict else ArtifactError
+        for b in sorted(buckets):
+            try:
+                self.models[b], self.manifests[b] = load_verified(spec, b)
+            except tolerated as e:
+                load_errors[b] = e
+        if strict and not self.models:
+            raise next(iter(load_errors.values()))
+        super().__init__(spec, buckets, {b: m.artifact_sha256 for b, m in self.manifests.items()}, load_errors)
 
     def forward(self, items):
         buckets = self.check(items)
