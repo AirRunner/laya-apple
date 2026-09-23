@@ -54,6 +54,7 @@ markers = [
     "integration: needs downloaded checkpoints (HF cache)",
     "parity: full parity against the PyTorch FP32 goldens (slow, needs checkpoints)",
     "ane: needs coremltools and built ANE artifacts",
+    "stress: long-running reliability/soak tests (LAYA_APPLE_STRESS=1)",
 ]
 
 [tool.ruff]
