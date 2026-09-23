@@ -13,8 +13,8 @@ build/
 *.safetensors
 *.gguf
 *.npz
-models/
-weights/
+/models/
+/weights/
 
 # Benchmark raw output
 benchmarks/results/

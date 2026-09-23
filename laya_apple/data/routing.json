@@ -1,0 +1,160 @@
+{
+ "generated_by": "scripts/derive_routing.py",
+ "rule": ", over the ANE buckets in the registry (sorted b1 < b2 < ...):\n  a bucket b_i joins auto routing iff\n    (1) the BC1S ANE graph passed parity at b_i on CPU_AND_NE, and\n    (2) ANE forward P50 at b_i  <  MLX FP16 forward P50 at b_{i-1}\n        (a request just above b_{i-1} is padded to b_i on the ANE but costs about MLX(b_{i-1})\n         on the GPU, so this is the conservative comparison; for b_1 the comparison is\n         against MLX(b_1) because no shorter MLX length was measured),\n  and routing stops at the first bucket that fails.\nMulti-question requests are never auto-routed to the ANE: with 4 and 8 questions MLX was\nfaster at every measured length, and 2-3 questions were not measured.",
+ "evidence": {
+  "latency.jsonl": "3688a0dd9f88b38d2b2f75f8a00a68aaab5bf262eb1e7b8009a21384577a8376",
+  "environment.json": "687a3ec6f20101cc69df11f44c816178418d0e5744560ce0391fa4331e2be34b",
+  "parity/laya": "0a5a100f2f50b125da7076c792b4cf9cf5360d705d8224d99d890e55a2d0cf8a",
+  "parity/laya-multilingual": "5e621d00be9178ea21ca0ca4bda875b6701662ca96540430d857bd211f3d0519",
+  "parity/laya-typed-decisions": "98935b744b1367ee58d04388575e0e41ff0f7387c4c5295293c7eb6a250388d9"
+ },
+ "hardware": "Apple M4 Max, macOS 26.6.2 (Phase -1); thresholds are not validated elsewhere",
+ "validated_profiles": [
+  {
+   "soc": "Apple M4 Max",
+   "macos": "26.6.2",
+   "coremltools": "9.0"
+  }
+ ],
+ "models": {
+  "laya": {
+   "ane_buckets": [
+    64,
+    96,
+    128
+   ],
+   "auto_ane_buckets": [
+    64,
+    96,
+    128
+   ],
+   "auto_ane_max_len": 128,
+   "auto_ane_max_questions": 1,
+   "decisions": [
+    {
+     "bucket": 64,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.00933087152072301,
+     "ane_p50_ms": 8.100666499999999,
+     "mlx_p50_ms_at": 64,
+     "mlx_p50_ms": 9.4024585,
+     "auto": true
+    },
+    {
+     "bucket": 96,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.009234677547451775,
+     "ane_p50_ms": 8.997479,
+     "mlx_p50_ms_at": 64,
+     "mlx_p50_ms": 9.4024585,
+     "auto": true
+    },
+    {
+     "bucket": 128,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.01215065788183145,
+     "ane_p50_ms": 9.8614165,
+     "mlx_p50_ms_at": 96,
+     "mlx_p50_ms": 11.592895500000001,
+     "auto": true
+    }
+   ]
+  },
+  "laya-multilingual": {
+   "ane_buckets": [
+    64,
+    96,
+    128,
+    256
+   ],
+   "auto_ane_buckets": [
+    64,
+    96,
+    128
+   ],
+   "auto_ane_max_len": 128,
+   "auto_ane_max_questions": 1,
+   "decisions": [
+    {
+     "bucket": 64,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.007930902595345929,
+     "ane_p50_ms": 3.4301250000000003,
+     "mlx_p50_ms_at": 64,
+     "mlx_p50_ms": 5.4168745,
+     "auto": true
+    },
+    {
+     "bucket": 96,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.012800862258820267,
+     "ane_p50_ms": 3.8522085,
+     "mlx_p50_ms_at": 64,
+     "mlx_p50_ms": 5.4168745,
+     "auto": true
+    },
+    {
+     "bucket": 128,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.01054108015753863,
+     "ane_p50_ms": 4.3110420000000005,
+     "mlx_p50_ms_at": 96,
+     "mlx_p50_ms": 6.361146,
+     "auto": true
+    },
+    {
+     "bucket": 256,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.006624078925383081,
+     "ane_p50_ms": 8.348604,
+     "mlx_p50_ms_at": 128,
+     "mlx_p50_ms": 6.4681665,
+     "auto": false
+    }
+   ]
+  },
+  "laya-typed-decisions": {
+   "ane_buckets": [
+    64,
+    96,
+    128
+   ],
+   "auto_ane_buckets": [
+    64,
+    96,
+    128
+   ],
+   "auto_ane_max_len": 128,
+   "auto_ane_max_questions": 1,
+   "decisions": [
+    {
+     "bucket": 64,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.004626551731036654,
+     "ane_p50_ms": 8.074645499999999,
+     "mlx_p50_ms_at": 64,
+     "mlx_p50_ms": 9.3909375,
+     "auto": true
+    },
+    {
+     "bucket": 96,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.004629080340655012,
+     "ane_p50_ms": 9.017771,
+     "mlx_p50_ms_at": 64,
+     "mlx_p50_ms": 9.3909375,
+     "auto": true
+    },
+    {
+     "bucket": 128,
+     "parity_pass": true,
+     "parity_prob_max_abs": 0.007666298291743701,
+     "ane_p50_ms": 9.9307295,
+     "mlx_p50_ms_at": 96,
+     "mlx_p50_ms": 11.566958,
+     "auto": true
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,46 @@
+"""Backend-normalised result and per-call runtime diagnostics."""
+
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass, field
+
+
+@dataclass(frozen=True)
+class RuntimeInfo:
+    """Everything needed to explain how one request was executed."""
+
+    backend: str  # "mlx" | "coreml"
+    device: str  # "gpu" | "ane"
+    model: str
+    model_revision: str
+    sequence_length: int  # longest prompt row, tokens
+    question_count: int
+    routing_reason: str
+    artifact_revision: str  # ANE: artifact tree hash; MLX: "mlx:<weights sha256[:12]>"
+    latency_ms: float
+    compute_units: str | None = None  # Core ML only
+    buckets: tuple = ()  # Core ML only: fixed length used per question
+    dtype: str | None = None
+
+    def __str__(self) -> str:
+        return (
+            f"backend={self.backend} device={self.device} reason={self.routing_reason} "
+            f"model={self.model} L={self.sequence_length} q={self.question_count} "
+            f"latency_ms={self.latency_ms:.2f}"
+        )
+
+
+@dataclass(frozen=True)
+class Result:
+    answers: dict
+    usage: dict
+    runtime: RuntimeInfo
+    model: str = "laya-rl-agent"
+    extra: dict = field(default_factory=dict)
+
+    def to_dict(self) -> dict:
+        """Upstream-compatible dict (model/answers/usage) plus a `runtime` block."""
+        out = {"model": self.model, "answers": self.answers, "usage": self.usage}
+        out["runtime"] = asdict(self.runtime)
+        out["runtime"]["buckets"] = list(self.runtime.buckets)
+        return out
