@@ -10,7 +10,7 @@ of short, single-question, fixed-shape requests.
 
 ## Status
 
-v0.1. Tested only on **Apple M4 Max, macOS 26.6.2**, with MLX 0.32.2 and
+v0.2. Tested only on **Apple M4 Max, macOS 26.6.2**, with MLX 0.32.2 and
 coremltools 9.0. Other Apple Silicon and macOS versions are expected to run
 the MLX backend correctly but are not validated; the ANE path is validated
 only on the tested profile (see `docs/support-matrix.md`).
@@ -140,6 +140,67 @@ either explicit `device="ane"` or `auto`. Multi-question requests are never
 auto-routed to the ANE: MLX batching wins at every measured length for 4 and
 8 questions, and 2–3 questions were not measured, so they route to MLX
 conservatively.
+
+## Concurrent GPU + ANE execution
+
+By default (`execution="inline"`) a `Laya` instance runs one request at a time in the
+calling process. For serving many requests, use `execution="workers"`:
+
+```python
+from laya_apple import Laya
+
+with Laya.from_pretrained("convaiinnovations/laya-typed-decisions", execution="workers") as laya:
+    future = laya.submit(context="...", questions={...})        # concurrent.futures.Future
+    result = laya.predict(context="...", questions={...})       # thread-safe, blocking
+    # in asyncio code: result = await laya.apredict(context="...", questions={...})
+```
+
+- MLX (GPU) runs in its own worker process.
+- Core ML (ANE) runs either on a dedicated thread in your process or in its own worker
+  process. The choice is made per model from measurements (`ane_placement="auto"`), and
+  you can override it with `"thread"` or `"process"`.
+- Your process builds prompts, routes, and formats answers.
+- The two devices serve requests at the same time. Each device runs its own queue in
+  arrival order.
+- `close()` (or leaving the `with` block) finishes queued work and stops the worker.
+
+**Why this placement, and its limits.** Every alternative was measured (see
+[`research/v0.2-concurrency/`](research/v0.2-concurrency/)):
+- Both backends in one interpreter cost the GPU 9–11% of its throughput.
+- With both devices busy, a device whose requests arrive from another process runs its
+  host-side work 4–6× slower.
+- Core ML's Python `predict` holds the GIL for much of an ANE call, so running the ANE in
+  your process costs more at high short-request rates.
+- Results on the Phase -1 mix with the chosen placement (`benchmarks/v0.2.md`):
+
+  | Model | Short-stream P99 vs solo | Long stream throughput vs solo | Aggregate vs GPU-only |
+  |---|---:|---:|---:|
+  | laya-typed-decisions | +8% | −11% | 4.6× |
+  | laya | +5% | −12% | 2.9× |
+  | laya-multilingual | +99% | −13% | 3.6× |
+
+- Under open-loop load, short requests see 2.5–66× lower P99 than with GPU-only serving.
+- Complete isolation (each stream within 10% of its solo P99) was not reached on this
+  platform.
+
+**Routing with queues.** On an idle machine, `auto` behaves exactly like `inline`. When a
+device is busy, the router compares expected completion times: the device's backlog plus
+the request's measured service time. Two additional reasons can then appear:
+
+| Reason | Meaning |
+|---|---|
+| `ane_backlog_shorter_on_gpu` | a short single-question request went to MLX because the ANE queue was longer |
+| `gpu_backlog_shorter_on_ane` | a request in the tie band (an explicit-only bucket, e.g. multilingual L256) went to the ANE because the GPU queue was longer |
+
+Long requests and multi-question requests never go to the ANE under `auto`, however busy
+the GPU is. Every `RuntimeInfo` records `execution`, `queue_wait_ms` and the backlog
+estimates the router saw (`gpu_backlog_ms`, `ane_backlog_ms`).
+
+If the ANE worker process dies:
+- the request running on it raises `BackendUnavailableError`;
+- later `auto` requests run on MLX with reason `ane_runtime_unavailable`, and a warning is
+  issued once;
+- explicit `device="ane"` requests keep raising.
 
 ## The ANE path: building artifacts
 
@@ -293,7 +354,9 @@ Every `Result.runtime` (a `RuntimeInfo`) records:
 - `artifact_revision` (the ANE artifact hash, or `mlx:<weights sha256 prefix>`);
 - `compute_units` and `buckets` (Core ML only);
 - `dtype`;
-- `latency_ms`.
+- `latency_ms`, from the call to the result (queueing included);
+- `execution` (`inline` / `workers`); with workers, `queue_wait_ms` and the
+  `gpu_backlog_ms` / `ane_backlog_ms` estimates the router used.
 
 ## Correctness
 
@@ -344,8 +407,8 @@ question, exact-length requests. Full tables with P99, end-to-end and load times
 - `device="auto"` never uses the ANE above L128 for `laya` and
   `laya-typed-decisions`, or above L128 for `laya-multilingual` (its longer
   L256 bucket is explicit-only).
-- No concurrency support until v0.2: a `Laya` instance serializes requests
-  internally.
+- With the default `execution="inline"`, a `Laya` instance runs one request at a time;
+  use `execution="workers"` for concurrent GPU + ANE serving.
 - Core ML `ALL` and `CPU_ONLY` compute-unit configurations are never used in
   production; both were shown incorrect or unstable on the ANE/CPU paths in
   Phase -1.

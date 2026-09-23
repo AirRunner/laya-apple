@@ -5,6 +5,57 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-09-23
+
+### Added
+
+- **`execution="workers"`: heterogeneous GPU + ANE serving.**
+  - MLX runs in a worker process. Core ML runs either on a dispatcher thread in the
+    caller's process or in a worker process, chosen per model from measurements
+    (`ane_placement="auto"`, `laya_apple/data/placement.json`,
+    `scripts/derive_placement.py`).
+  - Each device has its own FIFO queue.
+  - `Laya.submit()` returns a `concurrent.futures.Future`. `Laya.apredict()` is
+    awaitable. `predict()` is thread-safe. `Laya.close()` and the context-manager form
+    stop the workers.
+  - Workers start as `python -m laya_apple.executor` over an authenticated AF_UNIX
+    connection, so the caller's `__main__` is never re-imported.
+  - Workers load in parallel and warm every compiled shape before serving.
+- **Queue-aware, isolation-first routing** (`laya_apple/scheduling.py`).
+  - Expected completion is the device backlog plus a measured service time (Phase -1
+    forward P50s, now in `routing.json` as `service_ms`).
+  - It is identical to the v0.1 rule on an idle machine, which is tested exhaustively.
+  - New reasons: `ane_backlog_shorter_on_gpu` and `gpu_backlog_shorter_on_ane` (the
+    tie-band bucket, loaded in workers mode).
+  - Long and multi-question requests never go to the ANE.
+- **`RuntimeInfo` fields:** `execution`, `queue_wait_ms`, `device_ms`, and the
+  `gpu_backlog_ms` / `ane_backlog_ms` values the router saw.
+- **Failure handling:**
+  - A dead GPU worker fails its requests loudly. Nothing is moved to the other device.
+  - A dead ANE worker process is reported as `ane_runtime_unavailable` under `auto`, with
+    one warning.
+  - `close()` fails any still-queued request instead of leaving it pending.
+- **Benchmarks and research:**
+  - `scripts/bench_concurrency.py` covers the closed-loop exit-gate mix plus open-loop
+    Poisson and bursty mixed workloads. Every answer is checked against the inline result
+    for the same device.
+  - `benchmarks/v0.2.md` is the release report.
+  - `research/v0.2-concurrency/` holds the step-1 gate and the request-driven findings.
+
+### Changed
+
+- Vendored model code is excluded from `ruff format` so it stays byte-identical to its
+  upstream revision.
+
+### Known limitations
+
+- **Isolation is partial for request-driven serving** on the tested platform:
+  - The step-1 criterion "each stream's P99 within 10% of solo" was not met by any of the
+    tested designs; the measured values are in `benchmarks/v0.2.md`.
+  - With both devices busy, a device fed over IPC runs its host-side work several times
+    slower.
+  - Core ML's Python `predict` holds the GIL for much of an ANE call.
+
 ## [0.1.0] - 2026-09-23
 
 ### Added

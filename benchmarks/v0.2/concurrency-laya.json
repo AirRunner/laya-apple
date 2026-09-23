@@ -1,0 +1,616 @@
+{
+ "experiment": "v0.2 heterogeneous execution release benchmark",
+ "args": {
+  "model": "laya",
+  "short": 128,
+  "long": 512,
+  "medium": 256,
+  "seconds": 20,
+  "cycles": 3,
+  "open_seconds": 20,
+  "rates": [
+   25.0,
+   45.0
+  ],
+  "output": "benchmarks/v0.2/concurrency-laya.json",
+  "part": "b",
+  "ane_placement": "auto"
+ },
+ "laya_apple": "0.1.0",
+ "platform": {
+  "soc": "Apple M4 Max",
+  "macos": "26.6.2",
+  "macos_build": "25G83",
+  "coremltools": "9.0",
+  "python": "3.12.14"
+ },
+ "time": "2026-09-23T04:33:19.509457+00:00",
+ "load_s_two_workers_instances": 1.783760958001949,
+ "auto_info": {
+  "model": "laya",
+  "repo": "convaiinnovations/laya",
+  "revision": "c5d78730f3493e4fe16d61507ef4b78eef7318cf",
+  "device": "auto",
+  "execution": "workers",
+  "ane_placement": "thread",
+  "dtype": "float16",
+  "mlx": true,
+  "ane_buckets": [
+   64,
+   96,
+   128
+  ],
+  "ane_load_errors": {},
+  "auto_ane": {
+   "unavailable": null,
+   "buckets": [
+    64,
+    96,
+    128
+   ],
+   "tie_buckets": []
+  }
+ },
+ "part_b": {
+  "poisson@25": {
+   "auto": {
+    "offered_req_s": 23.95,
+    "completed": 479,
+    "makespan_s": 19.976530833053403,
+    "completed_req_s": 23.978137345421406,
+    "classes": {
+     "short_1q": {
+      "n": 305,
+      "p50_ms": 14.722833060659468,
+      "p95_ms": 24.47833339683712,
+      "p99_ms": 32.0140096638351,
+      "mean_ms": 16.080309386120835,
+      "max_ms": 38.194458931684494,
+      "devices": {
+       "ane": 289,
+       "gpu": 16
+      },
+      "reasons": {
+       "validated_short_single_question_path": 289,
+       "ane_backlog_shorter_on_gpu": 16
+      },
+      "mismatches": 0
+     },
+     "medium_1q": {
+      "n": 78,
+      "p50_ms": 29.79702048469335,
+      "p95_ms": 57.958222349407144,
+      "p99_ms": 63.88288191170432,
+      "mean_ms": 32.1109508528398,
+      "max_ms": 64.36666601803154,
+      "devices": {
+       "gpu": 78
+      },
+      "reasons": {
+       "sequence_exceeds_ane_auto_range": 78
+      },
+      "mismatches": 0
+     },
+     "long_1q": {
+      "n": 51,
+      "p50_ms": 43.75291697215289,
+      "p95_ms": 72.89697852684185,
+      "p99_ms": 78.24031251948327,
+      "mean_ms": 49.44026210874903,
+      "max_ms": 80.21112496498972,
+      "devices": {
+       "gpu": 51
+      },
+      "reasons": {
+       "sequence_exceeds_ane_auto_range": 51
+      },
+      "mismatches": 0
+     },
+     "short_4q": {
+      "n": 45,
+      "p50_ms": 41.20433295611292,
+      "p95_ms": 67.33416642528026,
+      "p99_ms": 95.75446501839906,
+      "mean_ms": 46.320687976872755,
+      "max_ms": 96.36150009464473,
+      "devices": {
+       "gpu": 45
+      },
+      "reasons": {
+       "multiple_questions": 45
+      },
+      "mismatches": 0
+     }
+    }
+   },
+   "gpu_only": {
+    "offered_req_s": 23.95,
+    "completed": 479,
+    "makespan_s": 19.980401249951683,
+    "completed_req_s": 23.973492524388533,
+    "classes": {
+     "short_1q": {
+      "n": 305,
+      "p50_ms": 21.964082960039377,
+      "p95_ms": 62.68741679377857,
+      "p99_ms": 78.83094931486981,
+      "mean_ms": 26.50351938028194,
+      "max_ms": 82.34216703567654,
+      "devices": {
+       "gpu": 305
+      },
+      "reasons": {
+       "gpu_requested": 305
+      },
+      "mismatches": 0
+     },
+     "medium_1q": {
+      "n": 78,
+      "p50_ms": 29.44172901334241,
+      "p95_ms": 59.92012689239345,
+      "p99_ms": 71.8085113633424,
+      "mean_ms": 32.190120671517576,
+      "max_ms": 72.02462502755225,
+      "devices": {
+       "gpu": 78
+      },
+      "reasons": {
+       "gpu_requested": 78
+      },
+      "mismatches": 0
+     },
+     "long_1q": {
+      "n": 51,
+      "p50_ms": 47.64895897824317,
+      "p95_ms": 80.29687497764826,
+      "p99_ms": 90.19824949791655,
+      "mean_ms": 51.62572959328399,
+      "max_ms": 92.48433297034353,
+      "devices": {
+       "gpu": 51
+      },
+      "reasons": {
+       "gpu_requested": 51
+      },
+      "mismatches": 0
+     },
+     "short_4q": {
+      "n": 45,
+      "p50_ms": 41.929999948479235,
+      "p95_ms": 83.00894962158054,
+      "p99_ms": 90.74436655268076,
+      "mean_ms": 48.5958925422488,
+      "max_ms": 95.37362505216151,
+      "devices": {
+       "gpu": 45
+      },
+      "reasons": {
+       "gpu_requested": 45
+      },
+      "mismatches": 0
+     }
+    }
+   }
+  },
+  "bursty@25": {
+   "auto": {
+    "offered_req_s": 25.15,
+    "completed": 503,
+    "makespan_s": 19.072833667043597,
+    "completed_req_s": 26.372588823502703,
+    "classes": {
+     "short_1q": {
+      "n": 319,
+      "p50_ms": 10.577541077509522,
+      "p95_ms": 30.831508361734443,
+      "p99_ms": 69.60412266897033,
+      "mean_ms": 14.350490052279284,
+      "max_ms": 85.25304100476205,
+      "devices": {
+       "ane": 297,
+       "gpu": 22
+      },
+      "reasons": {
+       "validated_short_single_question_path": 297,
+       "ane_backlog_shorter_on_gpu": 22
+      },
+      "mismatches": 0
+     },
+     "medium_1q": {
+      "n": 87,
+      "p50_ms": 50.54379196371883,
+      "p95_ms": 142.90202117990705,
+      "p99_ms": 210.9727197000757,
+      "mean_ms": 61.41525337970334,
+      "max_ms": 227.3719160584733,
+      "devices": {
+       "gpu": 87
+      },
+      "reasons": {
+       "sequence_exceeds_ane_auto_range": 87
+      },
+      "mismatches": 0
+     },
+     "long_1q": {
+      "n": 51,
+      "p50_ms": 72.43387494236231,
+      "p95_ms": 153.1352085294202,
+      "p99_ms": 179.8893334926106,
+      "mean_ms": 82.98600410047334,
+      "max_ms": 190.94174995552748,
+      "devices": {
+       "gpu": 51
+      },
+      "reasons": {
+       "sequence_exceeds_ane_auto_range": 51
+      },
+      "mismatches": 0
+     },
+     "short_4q": {
+      "n": 46,
+      "p50_ms": 59.68320806277916,
+      "p95_ms": 116.44963582511991,
+      "p99_ms": 148.54200257104822,
+      "mean_ms": 64.29713128296578,
+      "max_ms": 149.11408396437764,
+      "devices": {
+       "gpu": 46
+      },
+      "reasons": {
+       "multiple_questions": 46
+      },
+      "mismatches": 0
+     }
+    }
+   },
+   "gpu_only": {
+    "offered_req_s": 25.15,
+    "completed": 503,
+    "makespan_s": 19.25799787498545,
+    "completed_req_s": 26.11901835617894,
+    "classes": {
+     "short_1q": {
+      "n": 319,
+      "p50_ms": 193.15891701262444,
+      "p95_ms": 361.3625161000527,
+      "p99_ms": 414.9799386085942,
+      "mean_ms": 184.28365830594797,
+      "max_ms": 432.5647500809282,
+      "devices": {
+       "gpu": 319
+      },
+      "reasons": {
+       "gpu_requested": 319
+      },
+      "mismatches": 0
+     },
+     "medium_1q": {
+      "n": 87,
+      "p50_ms": 200.5026249680668,
+      "p95_ms": 372.66718322644016,
+      "p99_ms": 399.2534258472733,
+      "mean_ms": 190.20015234395262,
+      "max_ms": 406.31879202555865,
+      "devices": {
+       "gpu": 87
+      },
+      "reasons": {
+       "gpu_requested": 87
+      },
+      "mismatches": 0
+     },
+     "long_1q": {
+      "n": 51,
+      "p50_ms": 167.78608306776732,
+      "p95_ms": 303.11891704332083,
+      "p99_ms": 405.67158348858356,
+      "mean_ms": 178.93251472417558,
+      "max_ms": 426.90779198892415,
+      "devices": {
+       "gpu": 51
+      },
+      "reasons": {
+       "gpu_requested": 51
+      },
+      "mismatches": 0
+     },
+     "short_4q": {
+      "n": 46,
+      "p50_ms": 177.57847951725125,
+      "p95_ms": 409.9628124968149,
+      "p99_ms": 435.3783399390521,
+      "mean_ms": 191.41798727113107,
+      "max_ms": 448.82420904468745,
+      "devices": {
+       "gpu": 46
+      },
+      "reasons": {
+       "gpu_requested": 46
+      },
+      "mismatches": 0
+     }
+    }
+   }
+  },
+  "poisson@45": {
+   "auto": {
+    "offered_req_s": 43.1,
+    "completed": 862,
+    "makespan_s": 20.01091812492814,
+    "completed_req_s": 43.0764842781593,
+    "classes": {
+     "short_1q": {
+      "n": 539,
+      "p50_ms": 10.947040980681777,
+      "p95_ms": 21.874504222068936,
+      "p99_ms": 35.93335499288515,
+      "mean_ms": 12.789221723470664,
+      "max_ms": 87.98274991568178,
+      "devices": {
+       "ane": 516,
+       "gpu": 23
+      },
+      "reasons": {
+       "validated_short_single_question_path": 516,
+       "ane_backlog_shorter_on_gpu": 23
+      },
+      "mismatches": 0
+     },
+     "medium_1q": {
+      "n": 142,
+      "p50_ms": 30.916083022020757,
+      "p95_ms": 86.95056102005765,
+      "p99_ms": 101.61283395951614,
+      "mean_ms": 40.739965106977124,
+      "max_ms": 105.91116698924452,
+      "devices": {
+       "gpu": 142
+      },
+      "reasons": {
+       "sequence_exceeds_ane_auto_range": 142
+      },
+      "mismatches": 0
+     },
+     "long_1q": {
+      "n": 86,
+      "p50_ms": 54.1982080321759,
+      "p95_ms": 89.34744779253379,
+      "p99_ms": 102.27139813941905,
+      "mean_ms": 57.68967682338688,
+      "max_ms": 104.76250003557652,
+      "devices": {
+       "gpu": 86
+      },
+      "reasons": {
+       "sequence_exceeds_ane_auto_range": 86
+      },
+      "mismatches": 0
+     },
+     "short_4q": {
+      "n": 95,
+      "p50_ms": 44.30324991699308,
+      "p95_ms": 98.55582142481579,
+      "p99_ms": 115.04572749836372,
+      "mean_ms": 53.73510484289574,
+      "max_ms": 123.29387501813471,
+      "devices": {
+       "gpu": 95
+      },
+      "reasons": {
+       "multiple_questions": 95
+      },
+      "mismatches": 0
+     }
+    }
+   },
+   "gpu_only": {
+    "offered_req_s": 43.1,
+    "completed": 862,
+    "makespan_s": 20.01491004100535,
+    "completed_req_s": 43.067892797618676,
+    "classes": {
+     "short_1q": {
+      "n": 539,
+      "p50_ms": 38.684792001731694,
+      "p95_ms": 130.68203355651343,
+      "p99_ms": 171.84544394956902,
+      "mean_ms": 50.11764677467796,
+      "max_ms": 196.80683291517198,
+      "devices": {
+       "gpu": 539
+      },
+      "reasons": {
+       "gpu_requested": 539
+      },
+      "mismatches": 0
+     },
+     "medium_1q": {
+      "n": 142,
+      "p50_ms": 44.642207969445735,
+      "p95_ms": 140.84656665800134,
+      "p99_ms": 177.33363901963463,
+      "mean_ms": 58.675897036331484,
+      "max_ms": 203.94820906221867,
+      "devices": {
+       "gpu": 142
+      },
+      "reasons": {
+       "gpu_requested": 142
+      },
+      "mismatches": 0
+     },
+     "long_1q": {
+      "n": 86,
+      "p50_ms": 63.34337446605787,
+      "p95_ms": 132.4531672289595,
+      "p99_ms": 158.3982526557522,
+      "mean_ms": 70.71179939098224,
+      "max_ms": 188.5168330045417,
+      "devices": {
+       "gpu": 86
+      },
+      "reasons": {
+       "gpu_requested": 86
+      },
+      "mismatches": 0
+     },
+     "short_4q": {
+      "n": 95,
+      "p50_ms": 54.81245799455792,
+      "p95_ms": 138.66662057116628,
+      "p99_ms": 154.20841050334286,
+      "mean_ms": 67.11556441640775,
+      "max_ms": 202.56674999836832,
+      "devices": {
+       "gpu": 95
+      },
+      "reasons": {
+       "gpu_requested": 95
+      },
+      "mismatches": 0
+     }
+    }
+   }
+  },
+  "bursty@45": {
+   "auto": {
+    "offered_req_s": 46.25,
+    "completed": 925,
+    "makespan_s": 19.646757125039585,
+    "completed_req_s": 47.08156130362589,
+    "classes": {
+     "short_1q": {
+      "n": 582,
+      "p50_ms": 21.006479510106146,
+      "p95_ms": 82.98599165864287,
+      "p99_ms": 103.04490213864482,
+      "mean_ms": 31.174068595202723,
+      "max_ms": 118.82508301641792,
+      "devices": {
+       "ane": 568,
+       "gpu": 14
+      },
+      "reasons": {
+       "validated_short_single_question_path": 568,
+       "ane_backlog_shorter_on_gpu": 14
+      },
+      "mismatches": 0
+     },
+     "medium_1q": {
+      "n": 152,
+      "p50_ms": 351.59193800063804,
+      "p95_ms": 607.5105097610501,
+      "p99_ms": 677.1588113671171,
+      "mean_ms": 342.0764999732216,
+      "max_ms": 700.6542909657583,
+      "devices": {
+       "gpu": 152
+      },
+      "reasons": {
+       "sequence_exceeds_ane_auto_range": 152
+      },
+      "mismatches": 0
+     },
+     "long_1q": {
+      "n": 90,
+      "p50_ms": 342.4391665030271,
+      "p95_ms": 613.5892565536778,
+      "p99_ms": 648.6598848633002,
+      "mean_ms": 340.7588643591023,
+      "max_ms": 681.3559998990968,
+      "devices": {
+       "gpu": 90
+      },
+      "reasons": {
+       "sequence_exceeds_ane_auto_range": 90
+      },
+      "mismatches": 0
+     },
+     "short_4q": {
+      "n": 101,
+      "p50_ms": 358.2639580126852,
+      "p95_ms": 607.6489170081913,
+      "p99_ms": 654.0019590174779,
+      "mean_ms": 352.0866047918317,
+      "max_ms": 693.312665913254,
+      "devices": {
+       "gpu": 101
+      },
+      "reasons": {
+       "multiple_questions": 101
+      },
+      "mismatches": 0
+     }
+    }
+   },
+   "gpu_only": {
+    "offered_req_s": 46.25,
+    "completed": 925,
+    "makespan_s": 20.612770917010494,
+    "completed_req_s": 44.875092423243906,
+    "classes": {
+     "short_1q": {
+      "n": 582,
+      "p50_ms": 718.2383750332519,
+      "p95_ms": 1368.7654214329082,
+      "p99_ms": 1548.1197544396855,
+      "mean_ms": 714.0292618821753,
+      "max_ms": 1606.3872500089929,
+      "devices": {
+       "gpu": 582
+      },
+      "reasons": {
+       "gpu_requested": 582
+      },
+      "mismatches": 0
+     },
+     "medium_1q": {
+      "n": 152,
+      "p50_ms": 709.3448960222304,
+      "p95_ms": 1411.8977645703126,
+      "p99_ms": 1567.121284812456,
+      "mean_ms": 710.820912835372,
+      "max_ms": 1616.694041993469,
+      "devices": {
+       "gpu": 152
+      },
+      "reasons": {
+       "gpu_requested": 152
+      },
+      "mismatches": 0
+     },
+     "long_1q": {
+      "n": 90,
+      "p50_ms": 667.866603937,
+      "p95_ms": 1378.3694876765367,
+      "p99_ms": 1512.4429780512583,
+      "mean_ms": 704.9797782545081,
+      "max_ms": 1536.73508297652,
+      "devices": {
+       "gpu": 90
+      },
+      "reasons": {
+       "gpu_requested": 90
+      },
+      "mismatches": 0
+     },
+     "short_4q": {
+      "n": 101,
+      "p50_ms": 704.5041249366477,
+      "p95_ms": 1352.6097090216354,
+      "p99_ms": 1543.8135829754174,
+      "mean_ms": 712.9920783722405,
+      "max_ms": 1595.304665970616,
+      "devices": {
+       "gpu": 101
+      },
+      "reasons": {
+       "gpu_requested": 101
+      },
+      "mismatches": 0
+     }
+    }
+   }
+  }
+ }
+}
