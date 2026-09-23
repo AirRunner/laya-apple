@@ -27,6 +27,9 @@ import json
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from laya_apple.derivation import derive_model  # noqa: E402
+
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "research/phase-0-feasibility"
 OUT = ROOT / "laya_apple/data/routing.json"
@@ -96,37 +99,16 @@ def derive() -> dict:
         out["evidence"][f"parity/{model}"] = sha256(parity_file)
         by_len = parity["summary"]["by_length"]
         tol = parity["tolerance"]["probability"]
-        decisions, auto = [], []
-        stopped = False
-        for i, b in enumerate(buckets):
-            cell = by_len.get(str(b), {})
-            parity_ok = bool(cell) and cell["hard_mismatches"] == 0 and cell["prob_max_abs"] <= tol
-            ane = p50(rows, model, is_ane, b)
-            ref_len = buckets[i - 1] if i else b
-            mlx = p50(rows, model, is_mlx, ref_len)
-            faster = ane is not None and mlx is not None and ane < mlx
-            ok = parity_ok and faster and not stopped
-            decisions.append(
-                {
-                    "bucket": b,
-                    "parity_pass": parity_ok,
-                    "parity_prob_max_abs": cell.get("prob_max_abs"),
-                    "ane_p50_ms": ane,
-                    "mlx_p50_ms_at": ref_len,
-                    "mlx_p50_ms": mlx,
-                    "auto": ok,
-                }
-            )
-            if ok:
-                auto.append(b)
-            else:
-                stopped = True
+        cells = {b: by_len.get(str(b), {}) for b in buckets}
+        par = {
+            b: (bool(c) and c["hard_mismatches"] == 0 and c["prob_max_abs"] <= tol, c.get("prob_max_abs"))
+            for b, c in cells.items()
+        }
+        ane = {b: p50(rows, model, is_ane, b) for b in buckets}
+        mlx = {b: p50(rows, model, is_mlx, b) for b in buckets}
+        derived = derive_model(buckets, par, ane, mlx)
         out["models"][model] = {
-            "ane_buckets": [b for b, d in zip(buckets, decisions) if d["parity_pass"]],
-            "auto_ane_buckets": auto,
-            "auto_ane_max_len": max(auto) if auto else 0,
-            "auto_ane_max_questions": 1,
-            "decisions": decisions,
+            **derived,
             # Phase -1 forward P50s; v0.2 routing uses them as service-time estimates only.
             "service_ms": {"gpu": service_table(rows, model, is_mlx), "ane": service_table(rows, model, is_ane)},
         }
