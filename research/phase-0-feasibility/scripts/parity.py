@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import sys
 import time
 import traceback
@@ -200,7 +201,9 @@ def main():
         out["passed"] = False
     safe = label.replace("=", "-").replace(",", "_")
     out = _finite_json(out)
-    save_json(RAW / "parity" / args.model / f"{safe}.json", out)
+    # PARITY_OUT redirects a re-run (e.g. benchmarks/v1.0/parity) so recorded evidence is kept.
+    out_root = Path(os.environ["PARITY_OUT"]) if os.environ.get("PARITY_OUT") else RAW / "parity"
+    save_json(out_root / args.model / f"{safe}.json", out)
     s = out.get("summary", {})
     print(
         f"{args.model} {label}: passed={out['passed']} status={out['status']} "

@@ -27,9 +27,9 @@ os.environ.setdefault("TQDM_DISABLE", "1")
 RESEARCH = Path(__file__).resolve().parents[1]
 RAW = RESEARCH / "raw"
 REPORTS = RESEARCH / "reports"
-# Converted packages are reproducible and large, so they live on the data volume.
+# Converted packages are reproducible and large; set LAYA_APPLE_ARTIFACTS to put them on a data volume.
 ARTIFACTS = Path(
-    os.environ.get("LAYA_APPLE_ARTIFACTS", "<data>/models-experimental/laya-apple")
+    os.environ.get("LAYA_APPLE_ARTIFACTS", str(Path.home() / ".cache" / "laya-apple-research"))
 )
 
 # Hugging Face revisions. `laya` is pinned to the revision the MLX and Core ML ports

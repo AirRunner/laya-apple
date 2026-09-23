@@ -1,0 +1,13 @@
+kind            tokens  backend  device  routing_reason                        queue_wait_ms  device_ms  latency_ms
+--------------  ------  -------  ------  ------------------------------------  -------------  ---------  ----------
+short/1q        45      coreml   ane     validated_short_single_question_path  1.4            8.8        10.4      
+short/1q        39      mlx      gpu     ane_backlog_shorter_on_gpu            1.4            16.7       18.9      
+short/1q        30      coreml   ane     validated_short_single_question_path  10.2           8.4        18.7      
+long/1q         900     mlx      gpu     sequence_exceeds_ane_auto_range       18.1           68.1       87.1      
+multi-question  200     mlx      gpu     multiple_questions                    85.8           54.1       140.8     
+
+totals per device (sum of latency_ms):
+  ane: 29.1 ms
+  gpu: 246.8 ms
+
+(wall time: 3.23 s)

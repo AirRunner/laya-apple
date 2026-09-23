@@ -1,0 +1,18 @@
+{
+ "precision": "float16",
+ "tolerance": 0.02,
+ "rows": 187,
+ "skipped_rows": 0,
+ "token_mismatch_cases": 0,
+ "prob_max_abs": 0.00451778070059905,
+ "action_prob_max_abs": 0.0,
+ "logit_max_abs": 0.1142578125,
+ "hard_mismatches": 0,
+ "near_tie_flips": [],
+ "all_finite": true,
+ "repeat_identical": true,
+ "passed": true,
+ "model": "laya-multilingual",
+ "device": "gpu",
+ "artifact_revision": null
+}

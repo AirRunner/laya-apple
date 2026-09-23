@@ -1,0 +1,29 @@
+{
+ "precision": "float16",
+ "tolerance": 0.02,
+ "rows": 112,
+ "skipped_rows": 51,
+ "token_mismatch_cases": 0,
+ "prob_max_abs": 0.01215065788183145,
+ "action_prob_max_abs": 0.0,
+ "logit_max_abs": 0.46543312072753906,
+ "hard_mismatches": 0,
+ "near_tie_flips": [
+  {
+   "case": "lang-fr",
+   "row": 0,
+   "tokens": 69,
+   "ref_margin": 0.0034966281565775303
+  }
+ ],
+ "all_finite": true,
+ "repeat_identical": true,
+ "passed": true,
+ "model": "laya",
+ "device": "ane",
+ "artifact_revision": {
+  "64": "f6263eb65898fd68cdba234366112261957d667ecb5b1037ee55b1cba2333d4d",
+  "96": "1d0eb7da10157e750acb3af3a85db6bbe082957e55725593b87f708bf54217a9",
+  "128": "85ee23bf8edc58ca5dbaef1c7765e0aa595a017e2ae5051b88d8c5b82aaae89a"
+ }
+}
