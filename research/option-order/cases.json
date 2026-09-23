@@ -1,0 +1,3786 @@
+{
+ "generated_by": "scripts/option_order.py generate_cases",
+ "seed": 20260923,
+ "cases": [
+  {
+   "name": "action-c0",
+   "context": "A customer named Priya wrote in after her package arrived three days late and slightly damaged. She asked what could be done and mentioned she has been a member for two years.",
+   "instructions": "What is the most fitting next action?",
+   "labels": [
+    "acknowledge",
+    "investigate",
+    "escalate",
+    "resolve",
+    "close"
+   ],
+   "values": {
+    "acknowledge": "send a brief confirmation it was received",
+    "investigate": "look deeper before deciding anything",
+    "escalate": "hand it to someone with more authority",
+    "resolve": "take the concrete fix now",
+    "close": "no further action is needed"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     0,
+     3,
+     4,
+     2,
+     1
+    ],
+    [
+     3,
+     2,
+     4,
+     1,
+     0
+    ],
+    [
+     1,
+     3,
+     2,
+     0,
+     4
+    ],
+    [
+     4,
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     4,
+     2,
+     0,
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "action-c1",
+   "context": "During a routine review, an engineer noticed that a background job had been silently failing for a week, though no user-facing errors were reported yet.",
+   "instructions": "What is the most fitting next action?",
+   "labels": [
+    "acknowledge",
+    "investigate",
+    "escalate",
+    "resolve",
+    "close"
+   ],
+   "values": {
+    "acknowledge": "send a brief confirmation it was received",
+    "investigate": "look deeper before deciding anything",
+    "escalate": "hand it to someone with more authority",
+    "resolve": "take the concrete fix now",
+    "close": "no further action is needed"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     2,
+     1,
+     3,
+     0,
+     4
+    ],
+    [
+     3,
+     4,
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     4,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     4,
+     3
+    ],
+    [
+     4,
+     0,
+     3,
+     1,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "action-c2",
+   "context": "A short note arrived from a new subscriber asking how to change the delivery address on their account before the next shipment goes out.",
+   "instructions": "What is the most fitting next action?",
+   "labels": [
+    "acknowledge",
+    "investigate",
+    "escalate",
+    "resolve",
+    "close"
+   ],
+   "values": {
+    "acknowledge": "send a brief confirmation it was received",
+    "investigate": "look deeper before deciding anything",
+    "escalate": "hand it to someone with more authority",
+    "resolve": "take the concrete fix now",
+    "close": "no further action is needed"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     1,
+     4,
+     3,
+     0,
+     2
+    ],
+    [
+     3,
+     2,
+     0,
+     1,
+     4
+    ],
+    [
+     0,
+     4,
+     1,
+     2,
+     3
+    ],
+    [
+     3,
+     2,
+     4,
+     1,
+     0
+    ],
+    [
+     1,
+     0,
+     2,
+     4,
+     3
+    ]
+   ]
+  },
+  {
+   "name": "action-c3",
+   "context": "The weekly report showed unusually high server load overnight, but response times stayed within the normal range throughout.",
+   "instructions": "What is the most fitting next action?",
+   "labels": [
+    "acknowledge",
+    "investigate",
+    "escalate",
+    "resolve",
+    "close"
+   ],
+   "values": {
+    "acknowledge": "send a brief confirmation it was received",
+    "investigate": "look deeper before deciding anything",
+    "escalate": "hand it to someone with more authority",
+    "resolve": "take the concrete fix now",
+    "close": "no further action is needed"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     0,
+     3,
+     2,
+     1,
+     4
+    ],
+    [
+     4,
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     3,
+     1,
+     0,
+     2,
+     4
+    ],
+    [
+     3,
+     4,
+     2,
+     1,
+     0
+    ],
+    [
+     4,
+     1,
+     3,
+     0,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "action-c4",
+   "context": "A student emailed the help desk saying the practice exam timer stopped working halfway through, and she wants to know if her progress was saved.",
+   "instructions": "What is the most fitting next action?",
+   "labels": [
+    "acknowledge",
+    "investigate",
+    "escalate",
+    "resolve",
+    "close"
+   ],
+   "values": {
+    "acknowledge": "send a brief confirmation it was received",
+    "investigate": "look deeper before deciding anything",
+    "escalate": "hand it to someone with more authority",
+    "resolve": "take the concrete fix now",
+    "close": "no further action is needed"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     4,
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     1,
+     2,
+     0,
+     3,
+     4
+    ],
+    [
+     3,
+     1,
+     2,
+     4,
+     0
+    ],
+    [
+     2,
+     3,
+     1,
+     0,
+     4
+    ],
+    [
+     2,
+     0,
+     4,
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "category-c0",
+   "context": "A customer named Priya wrote in after her package arrived three days late and slightly damaged. She asked what could be done and mentioned she has been a member for two years.",
+   "instructions": "Which category best describes this item?",
+   "labels": [
+    "billing",
+    "technical",
+    "account",
+    "product",
+    "other"
+   ],
+   "values": {
+    "billing": "charges, invoices or payments",
+    "technical": "errors or broken functionality",
+    "account": "login, profile or permissions",
+    "product": "a question about features or usage",
+    "other": "does not fit the other categories"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     2,
+     4,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     3,
+     4,
+     1,
+     0
+    ],
+    [
+     3,
+     2,
+     1,
+     4,
+     0
+    ],
+    [
+     4,
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     3,
+     4,
+     1,
+     0,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "category-c1",
+   "context": "During a routine review, an engineer noticed that a background job had been silently failing for a week, though no user-facing errors were reported yet.",
+   "instructions": "Which category best describes this item?",
+   "labels": [
+    "billing",
+    "technical",
+    "account",
+    "product",
+    "other"
+   ],
+   "values": {
+    "billing": "charges, invoices or payments",
+    "technical": "errors or broken functionality",
+    "account": "login, profile or permissions",
+    "product": "a question about features or usage",
+    "other": "does not fit the other categories"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     2,
+     4,
+     3,
+     0,
+     1
+    ],
+    [
+     3,
+     4,
+     2,
+     1,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1,
+     4
+    ],
+    [
+     3,
+     2,
+     4,
+     1,
+     0
+    ],
+    [
+     4,
+     0,
+     2,
+     3,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "category-c2",
+   "context": "A short note arrived from a new subscriber asking how to change the delivery address on their account before the next shipment goes out.",
+   "instructions": "Which category best describes this item?",
+   "labels": [
+    "billing",
+    "technical",
+    "account",
+    "product",
+    "other"
+   ],
+   "values": {
+    "billing": "charges, invoices or payments",
+    "technical": "errors or broken functionality",
+    "account": "login, profile or permissions",
+    "product": "a question about features or usage",
+    "other": "does not fit the other categories"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     2,
+     4,
+     0,
+     1,
+     3
+    ],
+    [
+     4,
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0,
+     4
+    ],
+    [
+     3,
+     2,
+     0,
+     4,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2,
+     4
+    ]
+   ]
+  },
+  {
+   "name": "category-c3",
+   "context": "The weekly report showed unusually high server load overnight, but response times stayed within the normal range throughout.",
+   "instructions": "Which category best describes this item?",
+   "labels": [
+    "billing",
+    "technical",
+    "account",
+    "product",
+    "other"
+   ],
+   "values": {
+    "billing": "charges, invoices or payments",
+    "technical": "errors or broken functionality",
+    "account": "login, profile or permissions",
+    "product": "a question about features or usage",
+    "other": "does not fit the other categories"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     1,
+     0,
+     3,
+     2,
+     4
+    ],
+    [
+     4,
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     4,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     4,
+     2,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     4,
+     1
+    ]
+   ]
+  },
+  {
+   "name": "category-c4",
+   "context": "A student emailed the help desk saying the practice exam timer stopped working halfway through, and she wants to know if her progress was saved.",
+   "instructions": "Which category best describes this item?",
+   "labels": [
+    "billing",
+    "technical",
+    "account",
+    "product",
+    "other"
+   ],
+   "values": {
+    "billing": "charges, invoices or payments",
+    "technical": "errors or broken functionality",
+    "account": "login, profile or permissions",
+    "product": "a question about features or usage",
+    "other": "does not fit the other categories"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3,
+     4
+    ],
+    [
+     0,
+     3,
+     4,
+     2,
+     1
+    ],
+    [
+     2,
+     1,
+     3,
+     0,
+     4
+    ],
+    [
+     3,
+     4,
+     1,
+     2,
+     0
+    ],
+    [
+     0,
+     3,
+     1,
+     4,
+     2
+    ],
+    [
+     3,
+     1,
+     0,
+     4,
+     2
+    ]
+   ]
+  },
+  {
+   "name": "channel-c0",
+   "context": "A customer named Priya wrote in after her package arrived three days late and slightly damaged. She asked what could be done and mentioned she has been a member for two years.",
+   "instructions": "Which channel would best fit a reply?",
+   "labels": [
+    "email",
+    "chat",
+    "phone",
+    "in_person"
+   ],
+   "values": {
+    "email": "a written, asynchronous reply",
+    "chat": "a quick back-and-forth message",
+    "phone": "a spoken conversation",
+    "in_person": "a face-to-face meeting"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "channel-c1",
+   "context": "During a routine review, an engineer noticed that a background job had been silently failing for a week, though no user-facing errors were reported yet.",
+   "instructions": "Which channel would best fit a reply?",
+   "labels": [
+    "email",
+    "chat",
+    "phone",
+    "in_person"
+   ],
+   "values": {
+    "email": "a written, asynchronous reply",
+    "chat": "a quick back-and-forth message",
+    "phone": "a spoken conversation",
+    "in_person": "a face-to-face meeting"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "channel-c2",
+   "context": "A short note arrived from a new subscriber asking how to change the delivery address on their account before the next shipment goes out.",
+   "instructions": "Which channel would best fit a reply?",
+   "labels": [
+    "email",
+    "chat",
+    "phone",
+    "in_person"
+   ],
+   "values": {
+    "email": "a written, asynchronous reply",
+    "chat": "a quick back-and-forth message",
+    "phone": "a spoken conversation",
+    "in_person": "a face-to-face meeting"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "channel-c3",
+   "context": "The weekly report showed unusually high server load overnight, but response times stayed within the normal range throughout.",
+   "instructions": "Which channel would best fit a reply?",
+   "labels": [
+    "email",
+    "chat",
+    "phone",
+    "in_person"
+   ],
+   "values": {
+    "email": "a written, asynchronous reply",
+    "chat": "a quick back-and-forth message",
+    "phone": "a spoken conversation",
+    "in_person": "a face-to-face meeting"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "channel-c4",
+   "context": "A student emailed the help desk saying the practice exam timer stopped working halfway through, and she wants to know if her progress was saved.",
+   "instructions": "Which channel would best fit a reply?",
+   "labels": [
+    "email",
+    "chat",
+    "phone",
+    "in_person"
+   ],
+   "values": {
+    "email": "a written, asynchronous reply",
+    "chat": "a quick back-and-forth message",
+    "phone": "a spoken conversation",
+    "in_person": "a face-to-face meeting"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "confidence-c0",
+   "context": "A customer named Priya wrote in after her package arrived three days late and slightly damaged. She asked what could be done and mentioned she has been a member for two years.",
+   "instructions": "How confident does the writer sound?",
+   "labels": [
+    "unsure",
+    "moderate",
+    "confident"
+   ],
+   "values": {
+    "unsure": "hesitant or asking for guidance",
+    "moderate": "reasonably sure but open to input",
+    "confident": "clearly certain about what they want"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "confidence-c1",
+   "context": "During a routine review, an engineer noticed that a background job had been silently failing for a week, though no user-facing errors were reported yet.",
+   "instructions": "How confident does the writer sound?",
+   "labels": [
+    "unsure",
+    "moderate",
+    "confident"
+   ],
+   "values": {
+    "unsure": "hesitant or asking for guidance",
+    "moderate": "reasonably sure but open to input",
+    "confident": "clearly certain about what they want"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "confidence-c2",
+   "context": "A short note arrived from a new subscriber asking how to change the delivery address on their account before the next shipment goes out.",
+   "instructions": "How confident does the writer sound?",
+   "labels": [
+    "unsure",
+    "moderate",
+    "confident"
+   ],
+   "values": {
+    "unsure": "hesitant or asking for guidance",
+    "moderate": "reasonably sure but open to input",
+    "confident": "clearly certain about what they want"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "confidence-c3",
+   "context": "The weekly report showed unusually high server load overnight, but response times stayed within the normal range throughout.",
+   "instructions": "How confident does the writer sound?",
+   "labels": [
+    "unsure",
+    "moderate",
+    "confident"
+   ],
+   "values": {
+    "unsure": "hesitant or asking for guidance",
+    "moderate": "reasonably sure but open to input",
+    "confident": "clearly certain about what they want"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "confidence-c4",
+   "context": "A student emailed the help desk saying the practice exam timer stopped working halfway through, and she wants to know if her progress was saved.",
+   "instructions": "How confident does the writer sound?",
+   "labels": [
+    "unsure",
+    "moderate",
+    "confident"
+   ],
+   "values": {
+    "unsure": "hesitant or asking for guidance",
+    "moderate": "reasonably sure but open to input",
+    "confident": "clearly certain about what they want"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "priority-c0",
+   "context": "A customer named Priya wrote in after her package arrived three days late and slightly damaged. She asked what could be done and mentioned she has been a member for two years.",
+   "instructions": "How urgent is this item?",
+   "labels": [
+    "low",
+    "medium",
+    "high",
+    "critical"
+   ],
+   "values": {
+    "low": "can be handled whenever convenient",
+    "medium": "should be looked at this week",
+    "high": "should be looked at today",
+    "critical": "needs immediate attention"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "priority-c1",
+   "context": "During a routine review, an engineer noticed that a background job had been silently failing for a week, though no user-facing errors were reported yet.",
+   "instructions": "How urgent is this item?",
+   "labels": [
+    "low",
+    "medium",
+    "high",
+    "critical"
+   ],
+   "values": {
+    "low": "can be handled whenever convenient",
+    "medium": "should be looked at this week",
+    "high": "should be looked at today",
+    "critical": "needs immediate attention"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "priority-c2",
+   "context": "A short note arrived from a new subscriber asking how to change the delivery address on their account before the next shipment goes out.",
+   "instructions": "How urgent is this item?",
+   "labels": [
+    "low",
+    "medium",
+    "high",
+    "critical"
+   ],
+   "values": {
+    "low": "can be handled whenever convenient",
+    "medium": "should be looked at this week",
+    "high": "should be looked at today",
+    "critical": "needs immediate attention"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "priority-c3",
+   "context": "The weekly report showed unusually high server load overnight, but response times stayed within the normal range throughout.",
+   "instructions": "How urgent is this item?",
+   "labels": [
+    "low",
+    "medium",
+    "high",
+    "critical"
+   ],
+   "values": {
+    "low": "can be handled whenever convenient",
+    "medium": "should be looked at this week",
+    "high": "should be looked at today",
+    "critical": "needs immediate attention"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "priority-c4",
+   "context": "A student emailed the help desk saying the practice exam timer stopped working halfway through, and she wants to know if her progress was saved.",
+   "instructions": "How urgent is this item?",
+   "labels": [
+    "low",
+    "medium",
+    "high",
+    "critical"
+   ],
+   "values": {
+    "low": "can be handled whenever convenient",
+    "medium": "should be looked at this week",
+    "high": "should be looked at today",
+    "critical": "needs immediate attention"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "route-c0",
+   "context": "A customer named Priya wrote in after her package arrived three days late and slightly damaged. She asked what could be done and mentioned she has been a member for two years.",
+   "instructions": "Which team should this be routed to?",
+   "labels": [
+    "support",
+    "engineering",
+    "sales"
+   ],
+   "values": {
+    "support": "customer service and account issues",
+    "engineering": "technical bugs and system behavior",
+    "sales": "purchasing, pricing and renewals"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "route-c1",
+   "context": "During a routine review, an engineer noticed that a background job had been silently failing for a week, though no user-facing errors were reported yet.",
+   "instructions": "Which team should this be routed to?",
+   "labels": [
+    "support",
+    "engineering",
+    "sales"
+   ],
+   "values": {
+    "support": "customer service and account issues",
+    "engineering": "technical bugs and system behavior",
+    "sales": "purchasing, pricing and renewals"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "route-c2",
+   "context": "A short note arrived from a new subscriber asking how to change the delivery address on their account before the next shipment goes out.",
+   "instructions": "Which team should this be routed to?",
+   "labels": [
+    "support",
+    "engineering",
+    "sales"
+   ],
+   "values": {
+    "support": "customer service and account issues",
+    "engineering": "technical bugs and system behavior",
+    "sales": "purchasing, pricing and renewals"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "route-c3",
+   "context": "The weekly report showed unusually high server load overnight, but response times stayed within the normal range throughout.",
+   "instructions": "Which team should this be routed to?",
+   "labels": [
+    "support",
+    "engineering",
+    "sales"
+   ],
+   "values": {
+    "support": "customer service and account issues",
+    "engineering": "technical bugs and system behavior",
+    "sales": "purchasing, pricing and renewals"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "route-c4",
+   "context": "A student emailed the help desk saying the practice exam timer stopped working halfway through, and she wants to know if her progress was saved.",
+   "instructions": "Which team should this be routed to?",
+   "labels": [
+    "support",
+    "engineering",
+    "sales"
+   ],
+   "values": {
+    "support": "customer service and account issues",
+    "engineering": "technical bugs and system behavior",
+    "sales": "purchasing, pricing and renewals"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "sentiment-c0",
+   "context": "A customer named Priya wrote in after her package arrived three days late and slightly damaged. She asked what could be done and mentioned she has been a member for two years.",
+   "instructions": "What is the overall tone of this message?",
+   "labels": [
+    "positive",
+    "neutral",
+    "negative"
+   ],
+   "values": {
+    "positive": "satisfied or appreciative",
+    "neutral": "matter-of-fact, no strong feeling",
+    "negative": "frustrated or unhappy"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "sentiment-c1",
+   "context": "During a routine review, an engineer noticed that a background job had been silently failing for a week, though no user-facing errors were reported yet.",
+   "instructions": "What is the overall tone of this message?",
+   "labels": [
+    "positive",
+    "neutral",
+    "negative"
+   ],
+   "values": {
+    "positive": "satisfied or appreciative",
+    "neutral": "matter-of-fact, no strong feeling",
+    "negative": "frustrated or unhappy"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "sentiment-c2",
+   "context": "A short note arrived from a new subscriber asking how to change the delivery address on their account before the next shipment goes out.",
+   "instructions": "What is the overall tone of this message?",
+   "labels": [
+    "positive",
+    "neutral",
+    "negative"
+   ],
+   "values": {
+    "positive": "satisfied or appreciative",
+    "neutral": "matter-of-fact, no strong feeling",
+    "negative": "frustrated or unhappy"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "sentiment-c3",
+   "context": "The weekly report showed unusually high server load overnight, but response times stayed within the normal range throughout.",
+   "instructions": "What is the overall tone of this message?",
+   "labels": [
+    "positive",
+    "neutral",
+    "negative"
+   ],
+   "values": {
+    "positive": "satisfied or appreciative",
+    "neutral": "matter-of-fact, no strong feeling",
+    "negative": "frustrated or unhappy"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "sentiment-c4",
+   "context": "A student emailed the help desk saying the practice exam timer stopped working halfway through, and she wants to know if her progress was saved.",
+   "instructions": "What is the overall tone of this message?",
+   "labels": [
+    "positive",
+    "neutral",
+    "negative"
+   ],
+   "values": {
+    "positive": "satisfied or appreciative",
+    "neutral": "matter-of-fact, no strong feeling",
+    "negative": "frustrated or unhappy"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2
+    ],
+    [
+     0,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2
+    ],
+    [
+     1,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1
+    ],
+    [
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "timeframe-c0",
+   "context": "A customer named Priya wrote in after her package arrived three days late and slightly damaged. She asked what could be done and mentioned she has been a member for two years.",
+   "instructions": "Over what timeframe does this apply?",
+   "labels": [
+    "immediate",
+    "this_week",
+    "this_month",
+    "no_deadline"
+   ],
+   "values": {
+    "immediate": "needs to happen right away",
+    "this_week": "should happen within a few days",
+    "this_month": "has some weeks of room",
+    "no_deadline": "no particular deadline mentioned"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "timeframe-c1",
+   "context": "During a routine review, an engineer noticed that a background job had been silently failing for a week, though no user-facing errors were reported yet.",
+   "instructions": "Over what timeframe does this apply?",
+   "labels": [
+    "immediate",
+    "this_week",
+    "this_month",
+    "no_deadline"
+   ],
+   "values": {
+    "immediate": "needs to happen right away",
+    "this_week": "should happen within a few days",
+    "this_month": "has some weeks of room",
+    "no_deadline": "no particular deadline mentioned"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "timeframe-c2",
+   "context": "A short note arrived from a new subscriber asking how to change the delivery address on their account before the next shipment goes out.",
+   "instructions": "Over what timeframe does this apply?",
+   "labels": [
+    "immediate",
+    "this_week",
+    "this_month",
+    "no_deadline"
+   ],
+   "values": {
+    "immediate": "needs to happen right away",
+    "this_week": "should happen within a few days",
+    "this_month": "has some weeks of room",
+    "no_deadline": "no particular deadline mentioned"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "timeframe-c3",
+   "context": "The weekly report showed unusually high server load overnight, but response times stayed within the normal range throughout.",
+   "instructions": "Over what timeframe does this apply?",
+   "labels": [
+    "immediate",
+    "this_week",
+    "this_month",
+    "no_deadline"
+   ],
+   "values": {
+    "immediate": "needs to happen right away",
+    "this_week": "should happen within a few days",
+    "this_month": "has some weeks of room",
+    "no_deadline": "no particular deadline mentioned"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  },
+  {
+   "name": "timeframe-c4",
+   "context": "A student emailed the help desk saying the practice exam timer stopped working halfway through, and she wants to know if her progress was saved.",
+   "instructions": "Over what timeframe does this apply?",
+   "labels": [
+    "immediate",
+    "this_week",
+    "this_month",
+    "no_deadline"
+   ],
+   "values": {
+    "immediate": "needs to happen right away",
+    "this_week": "should happen within a few days",
+    "this_month": "has some weeks of room",
+    "no_deadline": "no particular deadline mentioned"
+   },
+   "permutations": [
+    [
+     0,
+     1,
+     2,
+     3
+    ],
+    [
+     0,
+     1,
+     3,
+     2
+    ],
+    [
+     0,
+     2,
+     1,
+     3
+    ],
+    [
+     0,
+     2,
+     3,
+     1
+    ],
+    [
+     0,
+     3,
+     1,
+     2
+    ],
+    [
+     0,
+     3,
+     2,
+     1
+    ],
+    [
+     1,
+     0,
+     2,
+     3
+    ],
+    [
+     1,
+     0,
+     3,
+     2
+    ],
+    [
+     1,
+     2,
+     0,
+     3
+    ],
+    [
+     1,
+     2,
+     3,
+     0
+    ],
+    [
+     1,
+     3,
+     0,
+     2
+    ],
+    [
+     1,
+     3,
+     2,
+     0
+    ],
+    [
+     2,
+     0,
+     1,
+     3
+    ],
+    [
+     2,
+     0,
+     3,
+     1
+    ],
+    [
+     2,
+     1,
+     0,
+     3
+    ],
+    [
+     2,
+     1,
+     3,
+     0
+    ],
+    [
+     2,
+     3,
+     0,
+     1
+    ],
+    [
+     2,
+     3,
+     1,
+     0
+    ],
+    [
+     3,
+     0,
+     1,
+     2
+    ],
+    [
+     3,
+     0,
+     2,
+     1
+    ],
+    [
+     3,
+     1,
+     0,
+     2
+    ],
+    [
+     3,
+     1,
+     2,
+     0
+    ],
+    [
+     3,
+     2,
+     0,
+     1
+    ],
+    [
+     3,
+     2,
+     1,
+     0
+    ]
+   ]
+  }
+ ]
+}

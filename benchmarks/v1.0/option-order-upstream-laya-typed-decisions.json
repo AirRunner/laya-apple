@@ -1,0 +1,7918 @@
+{
+ "tool": "upstream",
+ "reference": "unmodified upstream Laya, torch CPU float32",
+ "model": "laya-typed-decisions",
+ "cases": [
+  {
+   "name": "action-c0",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "acknowledge": 0.3506,
+      "investigate": 0.211,
+      "escalate": 0.1048,
+      "resolve": 0.2301,
+      "close": 0.1035
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      4,
+      2,
+      1
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "acknowledge": 0.3693,
+      "resolve": 0.2732,
+      "close": 0.0943,
+      "escalate": 0.1066,
+      "investigate": 0.1566
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      4,
+      1,
+      0
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "resolve": 0.2072,
+      "escalate": 0.1164,
+      "close": 0.1042,
+      "investigate": 0.1992,
+      "acknowledge": 0.373
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "investigate": 0.161,
+      "resolve": 0.2724,
+      "escalate": 0.1113,
+      "acknowledge": 0.3559,
+      "close": 0.0994
+     }
+    },
+    {
+     "order": [
+      4,
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "close": 0.1739,
+      "resolve": 0.2396,
+      "investigate": 0.1778,
+      "escalate": 0.0928,
+      "acknowledge": 0.316
+     }
+    },
+    {
+     "order": [
+      4,
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "close": 0.1393,
+      "escalate": 0.1181,
+      "acknowledge": 0.2884,
+      "resolve": 0.2618,
+      "investigate": 0.1924
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.08460000000000001
+  },
+  {
+   "name": "action-c1",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "investigate",
+     "probabilities": {
+      "acknowledge": 0.219,
+      "investigate": 0.415,
+      "escalate": 0.1406,
+      "resolve": 0.1404,
+      "close": 0.085
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0,
+      4
+     ],
+     "chosen": "investigate",
+     "probabilities": {
+      "escalate": 0.1372,
+      "investigate": 0.4118,
+      "resolve": 0.1266,
+      "acknowledge": 0.2456,
+      "close": 0.0788
+     }
+    },
+    {
+     "order": [
+      3,
+      4,
+      0,
+      1,
+      2
+     ],
+     "chosen": "investigate",
+     "probabilities": {
+      "resolve": 0.1201,
+      "close": 0.0874,
+      "acknowledge": 0.2509,
+      "investigate": 0.3864,
+      "escalate": 0.1553
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      4,
+      3,
+      1
+     ],
+     "chosen": "investigate",
+     "probabilities": {
+      "acknowledge": 0.2346,
+      "escalate": 0.1643,
+      "close": 0.0916,
+      "resolve": 0.1233,
+      "investigate": 0.3862
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      4,
+      3
+     ],
+     "chosen": "investigate",
+     "probabilities": {
+      "escalate": 0.1394,
+      "investigate": 0.3941,
+      "acknowledge": 0.2462,
+      "close": 0.0963,
+      "resolve": 0.124
+     }
+    },
+    {
+     "order": [
+      4,
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "investigate",
+     "probabilities": {
+      "close": 0.1192,
+      "acknowledge": 0.244,
+      "resolve": 0.1417,
+      "investigate": 0.365,
+      "escalate": 0.1301
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.04999999999999999
+  },
+  {
+   "name": "action-c2",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "acknowledge": 0.4314,
+      "investigate": 0.1396,
+      "escalate": 0.1374,
+      "resolve": 0.2301,
+      "close": 0.0615
+     }
+    },
+    {
+     "order": [
+      1,
+      4,
+      3,
+      0,
+      2
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "investigate": 0.117,
+      "close": 0.0957,
+      "resolve": 0.2898,
+      "acknowledge": 0.3679,
+      "escalate": 0.1296
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "resolve": 0.2421,
+      "escalate": 0.1593,
+      "acknowledge": 0.3503,
+      "investigate": 0.1412,
+      "close": 0.1072
+     }
+    },
+    {
+     "order": [
+      0,
+      4,
+      1,
+      2,
+      3
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "acknowledge": 0.4114,
+      "close": 0.0805,
+      "investigate": 0.1353,
+      "escalate": 0.1697,
+      "resolve": 0.2031
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      4,
+      1,
+      0
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "resolve": 0.2377,
+      "escalate": 0.1559,
+      "close": 0.0623,
+      "investigate": 0.1458,
+      "acknowledge": 0.3983
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      4,
+      3
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "investigate": 0.1536,
+      "acknowledge": 0.3657,
+      "escalate": 0.1665,
+      "close": 0.0617,
+      "resolve": 0.2525
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.0867
+  },
+  {
+   "name": "action-c3",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "acknowledge": 0.4722,
+      "investigate": 0.2744,
+      "escalate": 0.0976,
+      "resolve": 0.0747,
+      "close": 0.0811
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "acknowledge": 0.3952,
+      "resolve": 0.0794,
+      "escalate": 0.0778,
+      "investigate": 0.186,
+      "close": 0.2617
+     }
+    },
+    {
+     "order": [
+      4,
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "close": 0.1734,
+      "acknowledge": 0.4429,
+      "escalate": 0.0803,
+      "investigate": 0.1848,
+      "resolve": 0.1185
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "resolve": 0.0885,
+      "investigate": 0.2593,
+      "acknowledge": 0.4744,
+      "escalate": 0.0761,
+      "close": 0.1017
+     }
+    },
+    {
+     "order": [
+      3,
+      4,
+      2,
+      1,
+      0
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "resolve": 0.1059,
+      "close": 0.068,
+      "escalate": 0.0991,
+      "investigate": 0.2459,
+      "acknowledge": 0.4812
+     }
+    },
+    {
+     "order": [
+      4,
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "close": 0.1742,
+      "investigate": 0.181,
+      "resolve": 0.1853,
+      "acknowledge": 0.4018,
+      "escalate": 0.0577
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.19369999999999998
+  },
+  {
+   "name": "action-c4",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "investigate",
+     "probabilities": {
+      "acknowledge": 0.3116,
+      "investigate": 0.3264,
+      "escalate": 0.1433,
+      "resolve": 0.1425,
+      "close": 0.0762
+     }
+    },
+    {
+     "order": [
+      4,
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "close": 0.0933,
+      "investigate": 0.2683,
+      "resolve": 0.1797,
+      "escalate": 0.1319,
+      "acknowledge": 0.3268
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "investigate": 0.2988,
+      "escalate": 0.1397,
+      "acknowledge": 0.3491,
+      "resolve": 0.1454,
+      "close": 0.0671
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      4,
+      0
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "resolve": 0.1363,
+      "investigate": 0.322,
+      "escalate": 0.1401,
+      "close": 0.0664,
+      "acknowledge": 0.3352
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0,
+      4
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "escalate": 0.1204,
+      "resolve": 0.1403,
+      "investigate": 0.3038,
+      "acknowledge": 0.3479,
+      "close": 0.0876
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      4,
+      3,
+      1
+     ],
+     "chosen": "acknowledge",
+     "probabilities": {
+      "escalate": 0.1281,
+      "acknowledge": 0.3256,
+      "close": 0.0803,
+      "resolve": 0.1647,
+      "investigate": 0.3013
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.05810000000000004
+  },
+  {
+   "name": "category-c0",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "billing": 0.0531,
+      "technical": 0.1654,
+      "account": 0.1656,
+      "product": 0.2364,
+      "other": 0.3795
+     }
+    },
+    {
+     "order": [
+      2,
+      4,
+      0,
+      1,
+      3
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "account": 0.2493,
+      "other": 0.2698,
+      "billing": 0.0592,
+      "technical": 0.1685,
+      "product": 0.2532
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      4,
+      1,
+      0
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "account": 0.2255,
+      "product": 0.25,
+      "other": 0.3182,
+      "technical": 0.1352,
+      "billing": 0.0712
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      4,
+      0
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "product": 0.2735,
+      "account": 0.1851,
+      "technical": 0.1871,
+      "other": 0.2953,
+      "billing": 0.0589
+     }
+    },
+    {
+     "order": [
+      4,
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "other": 0.3251,
+      "technical": 0.1615,
+      "product": 0.2792,
+      "billing": 0.066,
+      "account": 0.1682
+     }
+    },
+    {
+     "order": [
+      3,
+      4,
+      1,
+      0,
+      2
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "product": 0.2676,
+      "other": 0.3622,
+      "technical": 0.1513,
+      "billing": 0.0583,
+      "account": 0.1605
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.10970000000000002
+  },
+  {
+   "name": "category-c1",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "billing": 0.0393,
+      "technical": 0.5038,
+      "account": 0.0504,
+      "product": 0.2072,
+      "other": 0.1993
+     }
+    },
+    {
+     "order": [
+      2,
+      4,
+      3,
+      0,
+      1
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "account": 0.0471,
+      "other": 0.1721,
+      "product": 0.21,
+      "billing": 0.056,
+      "technical": 0.5148
+     }
+    },
+    {
+     "order": [
+      3,
+      4,
+      2,
+      1,
+      0
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "product": 0.2171,
+      "other": 0.1777,
+      "account": 0.0591,
+      "technical": 0.4904,
+      "billing": 0.0557
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1,
+      4
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "account": 0.0453,
+      "product": 0.1834,
+      "billing": 0.0482,
+      "technical": 0.5323,
+      "other": 0.1909
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      4,
+      1,
+      0
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "product": 0.2144,
+      "account": 0.0511,
+      "other": 0.2018,
+      "technical": 0.4774,
+      "billing": 0.0553
+     }
+    },
+    {
+     "order": [
+      4,
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "other": 0.1712,
+      "billing": 0.0454,
+      "account": 0.0491,
+      "product": 0.2243,
+      "technical": 0.5101
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.054900000000000004
+  },
+  {
+   "name": "category-c2",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "billing": 0.0498,
+      "technical": 0.1333,
+      "account": 0.1072,
+      "product": 0.2607,
+      "other": 0.4491
+     }
+    },
+    {
+     "order": [
+      2,
+      4,
+      0,
+      1,
+      3
+     ],
+     "chosen": "product",
+     "probabilities": {
+      "account": 0.1302,
+      "other": 0.2788,
+      "billing": 0.0592,
+      "technical": 0.1598,
+      "product": 0.372
+     }
+    },
+    {
+     "order": [
+      4,
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "other": 0.3477,
+      "product": 0.3285,
+      "billing": 0.0538,
+      "technical": 0.15,
+      "account": 0.1201
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0,
+      4
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "technical": 0.1624,
+      "product": 0.2862,
+      "account": 0.1053,
+      "billing": 0.0505,
+      "other": 0.3957
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      4,
+      1
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "product": 0.3088,
+      "account": 0.1163,
+      "billing": 0.0511,
+      "other": 0.3324,
+      "technical": 0.1914
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2,
+      4
+     ],
+     "chosen": "other",
+     "probabilities": {
+      "product": 0.3212,
+      "technical": 0.1496,
+      "billing": 0.0507,
+      "account": 0.1064,
+      "other": 0.372
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.1703
+  },
+  {
+   "name": "category-c3",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "billing": 0.0392,
+      "technical": 0.4345,
+      "account": 0.0552,
+      "product": 0.2029,
+      "other": 0.2683
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2,
+      4
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "technical": 0.4611,
+      "billing": 0.0455,
+      "product": 0.1973,
+      "account": 0.0617,
+      "other": 0.2344
+     }
+    },
+    {
+     "order": [
+      4,
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "other": 0.288,
+      "product": 0.2306,
+      "technical": 0.382,
+      "billing": 0.044,
+      "account": 0.0554
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      4,
+      0,
+      2
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "technical": 0.4177,
+      "product": 0.2468,
+      "other": 0.2384,
+      "billing": 0.0422,
+      "account": 0.055
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      4,
+      2,
+      0
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "technical": 0.4346,
+      "product": 0.2386,
+      "other": 0.2208,
+      "account": 0.0605,
+      "billing": 0.0455
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      4,
+      1
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "account": 0.0555,
+      "product": 0.2045,
+      "billing": 0.0478,
+      "other": 0.2572,
+      "technical": 0.4351
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.0791
+  },
+  {
+   "name": "category-c4",
+   "k": 5,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3,
+      4
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "billing": 0.0343,
+      "technical": 0.456,
+      "account": 0.0577,
+      "product": 0.237,
+      "other": 0.215
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      4,
+      2,
+      1
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "billing": 0.0342,
+      "product": 0.2162,
+      "other": 0.2256,
+      "account": 0.0591,
+      "technical": 0.4649
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0,
+      4
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "account": 0.0544,
+      "technical": 0.4567,
+      "product": 0.2316,
+      "billing": 0.0353,
+      "other": 0.2219
+     }
+    },
+    {
+     "order": [
+      3,
+      4,
+      1,
+      2,
+      0
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "product": 0.2477,
+      "other": 0.2361,
+      "technical": 0.4224,
+      "account": 0.0577,
+      "billing": 0.036
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      4,
+      2
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "billing": 0.0342,
+      "product": 0.207,
+      "technical": 0.503,
+      "other": 0.2019,
+      "account": 0.0539
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      4,
+      2
+     ],
+     "chosen": "technical",
+     "probabilities": {
+      "product": 0.232,
+      "technical": 0.4843,
+      "billing": 0.0364,
+      "other": 0.1917,
+      "account": 0.0556
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.0806
+  },
+  {
+   "name": "channel-c0",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5578,
+      "chat": 0.2568,
+      "phone": 0.1133,
+      "in_person": 0.0722
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5584,
+      "chat": 0.2539,
+      "in_person": 0.0728,
+      "phone": 0.1149
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5207,
+      "phone": 0.1241,
+      "chat": 0.2837,
+      "in_person": 0.0715
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5058,
+      "phone": 0.1017,
+      "in_person": 0.0657,
+      "chat": 0.3268
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5159,
+      "in_person": 0.0672,
+      "chat": 0.2925,
+      "phone": 0.1244
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.4898,
+      "in_person": 0.0653,
+      "phone": 0.1204,
+      "chat": 0.3245
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2828,
+      "email": 0.5018,
+      "phone": 0.1384,
+      "in_person": 0.077
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.3125,
+      "email": 0.4552,
+      "in_person": 0.0835,
+      "phone": 0.1488
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2779,
+      "phone": 0.123,
+      "email": 0.5197,
+      "in_person": 0.0794
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2095,
+      "phone": 0.1112,
+      "in_person": 0.081,
+      "email": 0.5983
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2477,
+      "in_person": 0.0742,
+      "email": 0.5108,
+      "phone": 0.1674
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.1963,
+      "in_person": 0.0682,
+      "phone": 0.153,
+      "email": 0.5825
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1044,
+      "email": 0.5344,
+      "chat": 0.2879,
+      "in_person": 0.0733
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.0984,
+      "email": 0.4587,
+      "in_person": 0.0661,
+      "chat": 0.3768
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1114,
+      "chat": 0.3309,
+      "email": 0.4798,
+      "in_person": 0.0779
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1087,
+      "chat": 0.2339,
+      "in_person": 0.0723,
+      "email": 0.585
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1022,
+      "in_person": 0.0713,
+      "email": 0.4702,
+      "chat": 0.3562
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1028,
+      "in_person": 0.0655,
+      "chat": 0.2798,
+      "email": 0.5518
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.07,
+      "email": 0.4577,
+      "chat": 0.3333,
+      "phone": 0.139
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0638,
+      "email": 0.4467,
+      "phone": 0.1463,
+      "chat": 0.3433
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0617,
+      "chat": 0.2484,
+      "email": 0.5511,
+      "phone": 0.1389
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0569,
+      "chat": 0.2048,
+      "phone": 0.1295,
+      "email": 0.6088
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0624,
+      "phone": 0.1227,
+      "email": 0.5079,
+      "chat": 0.3069
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0582,
+      "phone": 0.111,
+      "chat": 0.2572,
+      "email": 0.5737
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.18050000000000002
+  },
+  {
+   "name": "channel-c1",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "email": 0.2205,
+      "chat": 0.2676,
+      "phone": 0.2627,
+      "in_person": 0.2492
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "in_person",
+     "probabilities": {
+      "email": 0.2272,
+      "chat": 0.2619,
+      "in_person": 0.283,
+      "phone": 0.2279
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "phone",
+     "probabilities": {
+      "email": 0.2199,
+      "phone": 0.2901,
+      "chat": 0.2853,
+      "in_person": 0.2047
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "email": 0.235,
+      "phone": 0.2551,
+      "in_person": 0.1945,
+      "chat": 0.3154
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "email": 0.2247,
+      "in_person": 0.2427,
+      "chat": 0.3105,
+      "phone": 0.2222
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "email": 0.2295,
+      "in_person": 0.2225,
+      "phone": 0.2443,
+      "chat": 0.3036
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "chat": 0.2907,
+      "email": 0.2376,
+      "phone": 0.2375,
+      "in_person": 0.2343
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "chat": 0.3157,
+      "email": 0.2282,
+      "in_person": 0.2381,
+      "phone": 0.2181
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "chat": 0.3054,
+      "phone": 0.2437,
+      "email": 0.2456,
+      "in_person": 0.2053
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "chat": 0.3006,
+      "phone": 0.209,
+      "in_person": 0.1905,
+      "email": 0.2999
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "chat": 0.3008,
+      "in_person": 0.1926,
+      "email": 0.287,
+      "phone": 0.2196
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "chat": 0.3137,
+      "in_person": 0.1863,
+      "phone": 0.2089,
+      "email": 0.2911
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "phone",
+     "probabilities": {
+      "phone": 0.2851,
+      "email": 0.2194,
+      "chat": 0.2839,
+      "in_person": 0.2115
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "phone": 0.2543,
+      "email": 0.2368,
+      "in_person": 0.179,
+      "chat": 0.33
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "phone": 0.2644,
+      "chat": 0.2905,
+      "email": 0.2397,
+      "in_person": 0.2054
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.2418,
+      "chat": 0.2671,
+      "in_person": 0.1846,
+      "email": 0.3064
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "phone": 0.2364,
+      "in_person": 0.2044,
+      "email": 0.271,
+      "chat": 0.2882
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.2273,
+      "in_person": 0.1997,
+      "chat": 0.2735,
+      "email": 0.2995
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "in_person": 0.2334,
+      "email": 0.2502,
+      "chat": 0.2905,
+      "phone": 0.2259
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "in_person": 0.2122,
+      "email": 0.2463,
+      "phone": 0.2464,
+      "chat": 0.2952
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.1987,
+      "chat": 0.2692,
+      "email": 0.3049,
+      "phone": 0.2271
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.185,
+      "chat": 0.2812,
+      "phone": 0.2203,
+      "email": 0.3135
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "in_person": 0.21,
+      "phone": 0.2246,
+      "email": 0.274,
+      "chat": 0.2914
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "in_person": 0.1927,
+      "phone": 0.2164,
+      "chat": 0.2956,
+      "email": 0.2953
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.10399999999999998
+  },
+  {
+   "name": "channel-c2",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.3808,
+      "chat": 0.2944,
+      "phone": 0.2426,
+      "in_person": 0.0822
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.3439,
+      "chat": 0.3201,
+      "in_person": 0.0882,
+      "phone": 0.2478
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "email": 0.3092,
+      "phone": 0.2442,
+      "chat": 0.3685,
+      "in_person": 0.078
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "email": 0.3236,
+      "phone": 0.2117,
+      "in_person": 0.0765,
+      "chat": 0.3882
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.3555,
+      "in_person": 0.0792,
+      "chat": 0.3175,
+      "phone": 0.2477
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "email": 0.3032,
+      "in_person": 0.0709,
+      "phone": 0.2366,
+      "chat": 0.3892
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2793,
+      "email": 0.3833,
+      "phone": 0.2558,
+      "in_person": 0.0816
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.3012,
+      "email": 0.3714,
+      "in_person": 0.0838,
+      "phone": 0.2436
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2871,
+      "phone": 0.2407,
+      "email": 0.3917,
+      "in_person": 0.0805
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2698,
+      "phone": 0.2107,
+      "in_person": 0.0895,
+      "email": 0.43
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2614,
+      "in_person": 0.0718,
+      "email": 0.4341,
+      "phone": 0.2327
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2732,
+      "in_person": 0.0765,
+      "phone": 0.2495,
+      "email": 0.4008
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.2385,
+      "email": 0.3657,
+      "chat": 0.3191,
+      "in_person": 0.0766
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "chat",
+     "probabilities": {
+      "phone": 0.2265,
+      "email": 0.3332,
+      "in_person": 0.0729,
+      "chat": 0.3673
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.2333,
+      "chat": 0.3092,
+      "email": 0.3818,
+      "in_person": 0.0757
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.213,
+      "chat": 0.2907,
+      "in_person": 0.0791,
+      "email": 0.4171
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.2165,
+      "in_person": 0.0706,
+      "email": 0.3719,
+      "chat": 0.3409
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.2004,
+      "in_person": 0.0697,
+      "chat": 0.2796,
+      "email": 0.4503
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0701,
+      "email": 0.393,
+      "chat": 0.3106,
+      "phone": 0.2263
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0665,
+      "email": 0.3606,
+      "phone": 0.232,
+      "chat": 0.3409
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0642,
+      "chat": 0.2526,
+      "email": 0.4534,
+      "phone": 0.2298
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0653,
+      "chat": 0.259,
+      "phone": 0.2496,
+      "email": 0.426
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0685,
+      "phone": 0.2196,
+      "email": 0.385,
+      "chat": 0.3268
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0644,
+      "phone": 0.2072,
+      "chat": 0.3118,
+      "email": 0.4166
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.1502
+  },
+  {
+   "name": "channel-c3",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5004,
+      "chat": 0.2398,
+      "phone": 0.1652,
+      "in_person": 0.0946
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.4991,
+      "chat": 0.2385,
+      "in_person": 0.098,
+      "phone": 0.1644
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.493,
+      "phone": 0.1446,
+      "chat": 0.2713,
+      "in_person": 0.0911
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.4924,
+      "phone": 0.1467,
+      "in_person": 0.0942,
+      "chat": 0.2667
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5042,
+      "in_person": 0.0952,
+      "chat": 0.2508,
+      "phone": 0.1498
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.4881,
+      "in_person": 0.0928,
+      "phone": 0.1506,
+      "chat": 0.2686
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2467,
+      "email": 0.5096,
+      "phone": 0.1524,
+      "in_person": 0.0913
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2602,
+      "email": 0.4992,
+      "in_person": 0.0908,
+      "phone": 0.1498
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2185,
+      "phone": 0.1469,
+      "email": 0.5485,
+      "in_person": 0.0861
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.1877,
+      "phone": 0.1191,
+      "in_person": 0.0905,
+      "email": 0.6027
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2327,
+      "in_person": 0.0923,
+      "email": 0.5425,
+      "phone": 0.1325
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.2076,
+      "in_person": 0.086,
+      "phone": 0.1603,
+      "email": 0.5462
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1247,
+      "email": 0.5445,
+      "chat": 0.2443,
+      "in_person": 0.0865
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.134,
+      "email": 0.5212,
+      "in_person": 0.086,
+      "chat": 0.2587
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1107,
+      "chat": 0.2716,
+      "email": 0.5338,
+      "in_person": 0.0839
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.096,
+      "chat": 0.2177,
+      "in_person": 0.0837,
+      "email": 0.6026
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1062,
+      "in_person": 0.0865,
+      "email": 0.5623,
+      "chat": 0.2449
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.1,
+      "in_person": 0.0817,
+      "chat": 0.2354,
+      "email": 0.5829
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0899,
+      "email": 0.5413,
+      "chat": 0.2408,
+      "phone": 0.1279
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0879,
+      "email": 0.5059,
+      "phone": 0.1377,
+      "chat": 0.2685
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0831,
+      "chat": 0.2549,
+      "email": 0.5308,
+      "phone": 0.1312
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0777,
+      "chat": 0.2203,
+      "phone": 0.1456,
+      "email": 0.5564
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0808,
+      "phone": 0.1401,
+      "email": 0.5407,
+      "chat": 0.2384
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0776,
+      "phone": 0.1274,
+      "chat": 0.2508,
+      "email": 0.5442
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.11460000000000004
+  },
+  {
+   "name": "channel-c4",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5325,
+      "chat": 0.2442,
+      "phone": 0.1322,
+      "in_person": 0.0912
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.4581,
+      "chat": 0.2723,
+      "in_person": 0.0886,
+      "phone": 0.181
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5562,
+      "phone": 0.1157,
+      "chat": 0.2495,
+      "in_person": 0.0786
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.5396,
+      "phone": 0.103,
+      "in_person": 0.0675,
+      "chat": 0.2899
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.4284,
+      "in_person": 0.083,
+      "chat": 0.3341,
+      "phone": 0.1545
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "email": 0.4418,
+      "in_person": 0.069,
+      "phone": 0.1487,
+      "chat": 0.3404
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.1466,
+      "email": 0.6723,
+      "phone": 0.1134,
+      "in_person": 0.0678
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.1677,
+      "email": 0.6082,
+      "in_person": 0.0755,
+      "phone": 0.1486
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.1419,
+      "phone": 0.1039,
+      "email": 0.6876,
+      "in_person": 0.0665
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.1377,
+      "phone": 0.1125,
+      "in_person": 0.0637,
+      "email": 0.6861
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.1844,
+      "in_person": 0.0724,
+      "email": 0.5956,
+      "phone": 0.1476
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "chat": 0.1506,
+      "in_person": 0.0604,
+      "phone": 0.2042,
+      "email": 0.5848
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.0812,
+      "email": 0.6556,
+      "chat": 0.1964,
+      "in_person": 0.0668
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.0725,
+      "email": 0.6334,
+      "in_person": 0.0556,
+      "chat": 0.2385
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.0637,
+      "chat": 0.1645,
+      "email": 0.7118,
+      "in_person": 0.0599
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.0863,
+      "chat": 0.163,
+      "in_person": 0.0587,
+      "email": 0.692
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.0663,
+      "in_person": 0.0557,
+      "email": 0.6732,
+      "chat": 0.2048
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "phone": 0.0724,
+      "in_person": 0.0549,
+      "chat": 0.2069,
+      "email": 0.6658
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0597,
+      "email": 0.5826,
+      "chat": 0.2361,
+      "phone": 0.1216
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0485,
+      "email": 0.6337,
+      "phone": 0.1086,
+      "chat": 0.2093
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0539,
+      "chat": 0.1844,
+      "email": 0.6456,
+      "phone": 0.1161
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0487,
+      "chat": 0.1634,
+      "phone": 0.1644,
+      "email": 0.6234
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0472,
+      "phone": 0.1249,
+      "email": 0.6364,
+      "chat": 0.1915
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "email",
+     "probabilities": {
+      "in_person": 0.0472,
+      "phone": 0.1178,
+      "chat": 0.1889,
+      "email": 0.646
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.2834
+  },
+  {
+   "name": "confidence-c0",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.2471,
+      "moderate": 0.4683,
+      "confident": 0.2845
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.2584,
+      "confident": 0.2584,
+      "moderate": 0.4832
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "moderate": 0.487,
+      "unsure": 0.2502,
+      "confident": 0.2628
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "moderate": 0.5035,
+      "confident": 0.2916,
+      "unsure": 0.2049
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.2065,
+      "unsure": 0.2761,
+      "moderate": 0.5174
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.2646,
+      "moderate": 0.5318,
+      "unsure": 0.2037
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.08510000000000004
+  },
+  {
+   "name": "confidence-c1",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.3448,
+      "moderate": 0.5168,
+      "confident": 0.1383
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.2986,
+      "confident": 0.1325,
+      "moderate": 0.569
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "moderate": 0.5376,
+      "unsure": 0.3235,
+      "confident": 0.1389
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "moderate": 0.5186,
+      "confident": 0.1268,
+      "unsure": 0.3546
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.1163,
+      "unsure": 0.3249,
+      "moderate": 0.5588
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.1097,
+      "moderate": 0.5447,
+      "unsure": 0.3457
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.05600000000000005
+  },
+  {
+   "name": "confidence-c2",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.3299,
+      "moderate": 0.5188,
+      "confident": 0.1513
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.3245,
+      "confident": 0.1592,
+      "moderate": 0.5163
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "moderate": 0.5062,
+      "unsure": 0.3422,
+      "confident": 0.1516
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "moderate": 0.5218,
+      "confident": 0.1594,
+      "unsure": 0.3188
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.1593,
+      "unsure": 0.3219,
+      "moderate": 0.5188
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.1464,
+      "moderate": 0.5468,
+      "unsure": 0.3068
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.04059999999999997
+  },
+  {
+   "name": "confidence-c3",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "confident",
+     "probabilities": {
+      "unsure": 0.1196,
+      "moderate": 0.4106,
+      "confident": 0.4698
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.1248,
+      "confident": 0.431,
+      "moderate": 0.4441
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "confident",
+     "probabilities": {
+      "moderate": 0.4057,
+      "unsure": 0.1186,
+      "confident": 0.4757
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "confident",
+     "probabilities": {
+      "moderate": 0.4351,
+      "confident": 0.4498,
+      "unsure": 0.1151
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.4373,
+      "unsure": 0.1252,
+      "moderate": 0.4376
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.4278,
+      "moderate": 0.4563,
+      "unsure": 0.1159
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.05059999999999998
+  },
+  {
+   "name": "confidence-c4",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.3378,
+      "moderate": 0.4937,
+      "confident": 0.1686
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "unsure": 0.33,
+      "confident": 0.1418,
+      "moderate": 0.5282
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "moderate": 0.5048,
+      "unsure": 0.3508,
+      "confident": 0.1444
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "moderate": 0.5231,
+      "confident": 0.1378,
+      "unsure": 0.3391
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.126,
+      "unsure": 0.361,
+      "moderate": 0.5129
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "moderate",
+     "probabilities": {
+      "confident": 0.1206,
+      "moderate": 0.5074,
+      "unsure": 0.372
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.048
+  },
+  {
+   "name": "priority-c0",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3746,
+      "medium": 0.4241,
+      "high": 0.1059,
+      "critical": 0.0955
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3769,
+      "medium": 0.4218,
+      "critical": 0.0927,
+      "high": 0.1086
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3651,
+      "high": 0.1273,
+      "medium": 0.4101,
+      "critical": 0.0975
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3555,
+      "high": 0.1182,
+      "critical": 0.0984,
+      "medium": 0.4279
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.369,
+      "critical": 0.1126,
+      "medium": 0.3991,
+      "high": 0.1192
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3464,
+      "critical": 0.0958,
+      "high": 0.1286,
+      "medium": 0.4291
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4009,
+      "low": 0.4005,
+      "high": 0.1073,
+      "critical": 0.0912
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4092,
+      "low": 0.3877,
+      "critical": 0.0932,
+      "high": 0.1099
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "medium": 0.3637,
+      "high": 0.1199,
+      "low": 0.4204,
+      "critical": 0.096
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "medium": 0.362,
+      "high": 0.1008,
+      "critical": 0.1029,
+      "low": 0.4342
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "medium": 0.3714,
+      "critical": 0.1077,
+      "low": 0.3926,
+      "high": 0.1283
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "medium": 0.3585,
+      "critical": 0.0905,
+      "high": 0.12,
+      "low": 0.4311
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1214,
+      "low": 0.3811,
+      "medium": 0.411,
+      "critical": 0.0865
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.124,
+      "low": 0.3516,
+      "critical": 0.0992,
+      "medium": 0.4252
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1182,
+      "medium": 0.4204,
+      "low": 0.3724,
+      "critical": 0.0889
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.0982,
+      "medium": 0.4123,
+      "critical": 0.0996,
+      "low": 0.3899
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1187,
+      "critical": 0.0954,
+      "low": 0.3564,
+      "medium": 0.4296
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.0984,
+      "critical": 0.1004,
+      "medium": 0.4239,
+      "low": 0.3773
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "critical": 0.0998,
+      "low": 0.4116,
+      "medium": 0.393,
+      "high": 0.0957
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.0965,
+      "low": 0.3716,
+      "high": 0.1198,
+      "medium": 0.4121
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1029,
+      "medium": 0.4112,
+      "low": 0.3754,
+      "high": 0.1105
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "critical": 0.0969,
+      "medium": 0.3804,
+      "high": 0.1007,
+      "low": 0.422
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.0881,
+      "high": 0.1254,
+      "low": 0.3531,
+      "medium": 0.4334
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.09,
+      "high": 0.1094,
+      "medium": 0.4187,
+      "low": 0.3819
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.08779999999999999
+  },
+  {
+   "name": "priority-c1",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2563,
+      "medium": 0.4597,
+      "high": 0.1383,
+      "critical": 0.1457
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2793,
+      "medium": 0.4552,
+      "critical": 0.1578,
+      "high": 0.1078
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2414,
+      "high": 0.1507,
+      "medium": 0.4454,
+      "critical": 0.1624
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2471,
+      "high": 0.1267,
+      "critical": 0.1858,
+      "medium": 0.4404
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.241,
+      "critical": 0.1884,
+      "medium": 0.4391,
+      "high": 0.1315
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2512,
+      "critical": 0.1558,
+      "high": 0.141,
+      "medium": 0.4519
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4392,
+      "low": 0.2582,
+      "high": 0.1458,
+      "critical": 0.1568
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.45,
+      "low": 0.2728,
+      "critical": 0.1564,
+      "high": 0.1208
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.421,
+      "high": 0.153,
+      "low": 0.2636,
+      "critical": 0.1623
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4219,
+      "high": 0.1069,
+      "critical": 0.1544,
+      "low": 0.3169
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4286,
+      "critical": 0.1671,
+      "low": 0.2618,
+      "high": 0.1425
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4328,
+      "critical": 0.1521,
+      "high": 0.1088,
+      "low": 0.3063
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1253,
+      "low": 0.2876,
+      "medium": 0.4312,
+      "critical": 0.156
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1245,
+      "low": 0.2674,
+      "critical": 0.1773,
+      "medium": 0.4308
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1325,
+      "medium": 0.4407,
+      "low": 0.2766,
+      "critical": 0.1502
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1012,
+      "medium": 0.4276,
+      "critical": 0.1621,
+      "low": 0.3091
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1134,
+      "critical": 0.1528,
+      "low": 0.2975,
+      "medium": 0.4363
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.093,
+      "critical": 0.1734,
+      "medium": 0.4309,
+      "low": 0.3027
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1527,
+      "low": 0.304,
+      "medium": 0.4277,
+      "high": 0.1156
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1496,
+      "low": 0.287,
+      "high": 0.1396,
+      "medium": 0.4237
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1795,
+      "medium": 0.4389,
+      "low": 0.2561,
+      "high": 0.1255
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1716,
+      "medium": 0.4133,
+      "high": 0.1106,
+      "low": 0.3045
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1459,
+      "high": 0.1311,
+      "low": 0.2924,
+      "medium": 0.4305
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1388,
+      "high": 0.1084,
+      "medium": 0.4346,
+      "low": 0.3181
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.0771
+  },
+  {
+   "name": "priority-c2",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.298,
+      "medium": 0.4079,
+      "high": 0.1744,
+      "critical": 0.1197
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2954,
+      "medium": 0.391,
+      "critical": 0.1387,
+      "high": 0.1749
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3014,
+      "high": 0.1751,
+      "medium": 0.3986,
+      "critical": 0.1249
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2753,
+      "high": 0.1912,
+      "critical": 0.1435,
+      "medium": 0.3899
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2684,
+      "critical": 0.1578,
+      "medium": 0.3889,
+      "high": 0.1849
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2664,
+      "critical": 0.1516,
+      "high": 0.1887,
+      "medium": 0.3933
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3852,
+      "low": 0.3201,
+      "high": 0.1771,
+      "critical": 0.1175
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3824,
+      "low": 0.2944,
+      "critical": 0.1391,
+      "high": 0.184
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3746,
+      "high": 0.1632,
+      "low": 0.3519,
+      "critical": 0.1104
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "medium": 0.3559,
+      "high": 0.1509,
+      "critical": 0.1145,
+      "low": 0.3786
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3532,
+      "critical": 0.1365,
+      "low": 0.3374,
+      "high": 0.1729
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "medium": 0.3528,
+      "critical": 0.122,
+      "high": 0.1636,
+      "low": 0.3616
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1728,
+      "low": 0.3295,
+      "medium": 0.3758,
+      "critical": 0.1219
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1925,
+      "low": 0.2859,
+      "critical": 0.1393,
+      "medium": 0.3823
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1655,
+      "medium": 0.3887,
+      "low": 0.3305,
+      "critical": 0.1152
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1483,
+      "medium": 0.3653,
+      "critical": 0.126,
+      "low": 0.3604
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1854,
+      "critical": 0.1382,
+      "low": 0.3148,
+      "medium": 0.3616
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1631,
+      "critical": 0.1422,
+      "medium": 0.3638,
+      "low": 0.3309
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.14,
+      "low": 0.3239,
+      "medium": 0.3725,
+      "high": 0.1636
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1398,
+      "low": 0.3067,
+      "high": 0.1728,
+      "medium": 0.3807
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1443,
+      "medium": 0.3774,
+      "low": 0.3103,
+      "high": 0.1681
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "critical": 0.1318,
+      "medium": 0.3557,
+      "high": 0.1528,
+      "low": 0.3597
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1336,
+      "high": 0.1964,
+      "low": 0.3052,
+      "medium": 0.3648
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1274,
+      "high": 0.167,
+      "medium": 0.3602,
+      "low": 0.3454
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.11219999999999997
+  },
+  {
+   "name": "priority-c3",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3854,
+      "medium": 0.4607,
+      "high": 0.0831,
+      "critical": 0.0708
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3579,
+      "medium": 0.4793,
+      "critical": 0.0862,
+      "high": 0.0767
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3436,
+      "high": 0.1137,
+      "medium": 0.4663,
+      "critical": 0.0764
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.39,
+      "high": 0.1001,
+      "critical": 0.0869,
+      "medium": 0.423
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3463,
+      "critical": 0.0923,
+      "medium": 0.4737,
+      "high": 0.0877
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.3824,
+      "critical": 0.0856,
+      "high": 0.1054,
+      "medium": 0.4266
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "medium": 0.4291,
+      "low": 0.4312,
+      "high": 0.075,
+      "critical": 0.0647
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4597,
+      "low": 0.3955,
+      "critical": 0.072,
+      "high": 0.0728
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4205,
+      "high": 0.0946,
+      "low": 0.4165,
+      "critical": 0.0685
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "medium": 0.4219,
+      "high": 0.0789,
+      "critical": 0.0744,
+      "low": 0.4249
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4471,
+      "critical": 0.0883,
+      "low": 0.3849,
+      "high": 0.0797
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.4346,
+      "critical": 0.0801,
+      "high": 0.0786,
+      "low": 0.4067
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.0867,
+      "low": 0.4003,
+      "medium": 0.4448,
+      "critical": 0.0681
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "high": 0.1048,
+      "low": 0.417,
+      "critical": 0.0796,
+      "medium": 0.3987
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.0905,
+      "medium": 0.4388,
+      "low": 0.4086,
+      "critical": 0.062
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.094,
+      "medium": 0.4227,
+      "critical": 0.0789,
+      "low": 0.4045
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "high": 0.0896,
+      "critical": 0.0807,
+      "low": 0.419,
+      "medium": 0.4108
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "high": 0.0827,
+      "critical": 0.0755,
+      "medium": 0.4165,
+      "low": 0.4252
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.0771,
+      "low": 0.3985,
+      "medium": 0.4476,
+      "high": 0.0768
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "critical": 0.0895,
+      "low": 0.421,
+      "high": 0.1056,
+      "medium": 0.3839
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.0844,
+      "medium": 0.4468,
+      "low": 0.3969,
+      "high": 0.0719
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "critical": 0.0847,
+      "medium": 0.4005,
+      "high": 0.0919,
+      "low": 0.423
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.0788,
+      "high": 0.1082,
+      "low": 0.4048,
+      "medium": 0.4082
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "low",
+     "probabilities": {
+      "critical": 0.0679,
+      "high": 0.0918,
+      "medium": 0.4193,
+      "low": 0.421
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.09539999999999998
+  },
+  {
+   "name": "priority-c4",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2682,
+      "medium": 0.3479,
+      "high": 0.1962,
+      "critical": 0.1877
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2791,
+      "medium": 0.3398,
+      "critical": 0.192,
+      "high": 0.1892
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2819,
+      "high": 0.197,
+      "medium": 0.3356,
+      "critical": 0.1855
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2831,
+      "high": 0.1728,
+      "critical": 0.1988,
+      "medium": 0.3453
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.288,
+      "critical": 0.1982,
+      "medium": 0.3209,
+      "high": 0.193
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "low": 0.2893,
+      "critical": 0.1989,
+      "high": 0.163,
+      "medium": 0.3489
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3401,
+      "low": 0.2996,
+      "high": 0.1841,
+      "critical": 0.1763
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3336,
+      "low": 0.2985,
+      "critical": 0.1904,
+      "high": 0.1774
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3286,
+      "high": 0.1817,
+      "low": 0.3129,
+      "critical": 0.1767
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3196,
+      "high": 0.1582,
+      "critical": 0.2036,
+      "low": 0.3186
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3214,
+      "critical": 0.188,
+      "low": 0.303,
+      "high": 0.1876
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "medium": 0.3299,
+      "critical": 0.1796,
+      "high": 0.1624,
+      "low": 0.3281
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1939,
+      "low": 0.2948,
+      "medium": 0.3379,
+      "critical": 0.1733
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1658,
+      "low": 0.3026,
+      "critical": 0.1878,
+      "medium": 0.3438
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1781,
+      "medium": 0.3397,
+      "low": 0.3026,
+      "critical": 0.1796
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1485,
+      "medium": 0.3395,
+      "critical": 0.1948,
+      "low": 0.3173
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1605,
+      "critical": 0.1861,
+      "low": 0.2985,
+      "medium": 0.3548
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "high": 0.1517,
+      "critical": 0.1885,
+      "medium": 0.3502,
+      "low": 0.3096
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1943,
+      "low": 0.319,
+      "medium": 0.3193,
+      "high": 0.1673
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1934,
+      "low": 0.3074,
+      "high": 0.1559,
+      "medium": 0.3432
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1968,
+      "medium": 0.333,
+      "low": 0.2981,
+      "high": 0.172
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.182,
+      "medium": 0.339,
+      "high": 0.1558,
+      "low": 0.3232
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1806,
+      "high": 0.1763,
+      "low": 0.3009,
+      "medium": 0.3423
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "medium",
+     "probabilities": {
+      "critical": 0.1818,
+      "high": 0.1658,
+      "medium": 0.3383,
+      "low": 0.3141
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.05990000000000001
+  },
+  {
+   "name": "route-c0",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "support": 0.6854,
+      "engineering": 0.1657,
+      "sales": 0.1489
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "support": 0.6729,
+      "sales": 0.1466,
+      "engineering": 0.1805
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "engineering": 0.1645,
+      "support": 0.6884,
+      "sales": 0.1472
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "engineering": 0.1458,
+      "sales": 0.164,
+      "support": 0.6903
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "sales": 0.1659,
+      "support": 0.6704,
+      "engineering": 0.1637
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "sales": 0.1606,
+      "engineering": 0.1636,
+      "support": 0.6758
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.03469999999999998
+  },
+  {
+   "name": "route-c1",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "support": 0.2599,
+      "engineering": 0.6652,
+      "sales": 0.0749
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "support": 0.2391,
+      "sales": 0.0806,
+      "engineering": 0.6804
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "engineering": 0.6909,
+      "support": 0.2296,
+      "sales": 0.0795
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "engineering": 0.7009,
+      "sales": 0.0874,
+      "support": 0.2118
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "sales": 0.0776,
+      "support": 0.2578,
+      "engineering": 0.6645
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "sales": 0.0827,
+      "engineering": 0.6892,
+      "support": 0.2282
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.04810000000000003
+  },
+  {
+   "name": "route-c2",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "support": 0.6172,
+      "engineering": 0.201,
+      "sales": 0.1818
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "support": 0.6071,
+      "sales": 0.1861,
+      "engineering": 0.2069
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "engineering": 0.192,
+      "support": 0.6075,
+      "sales": 0.2005
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "engineering": 0.185,
+      "sales": 0.1885,
+      "support": 0.6264
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "sales": 0.197,
+      "support": 0.5975,
+      "engineering": 0.2055
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "sales": 0.1999,
+      "engineering": 0.1927,
+      "support": 0.6074
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.028899999999999926
+  },
+  {
+   "name": "route-c3",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "support": 0.3108,
+      "engineering": 0.5879,
+      "sales": 0.1013
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "support": 0.2995,
+      "sales": 0.105,
+      "engineering": 0.5955
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "engineering": 0.5907,
+      "support": 0.3129,
+      "sales": 0.0964
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "engineering": 0.5902,
+      "sales": 0.1043,
+      "support": 0.3055
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "sales": 0.1021,
+      "support": 0.3125,
+      "engineering": 0.5854
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "sales": 0.108,
+      "engineering": 0.5936,
+      "support": 0.2984
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.014500000000000013
+  },
+  {
+   "name": "route-c4",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "support": 0.4662,
+      "engineering": 0.4515,
+      "sales": 0.0823
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "support": 0.4581,
+      "sales": 0.0754,
+      "engineering": 0.4665
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "engineering": 0.4918,
+      "support": 0.4295,
+      "sales": 0.0788
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "engineering": 0.4623,
+      "sales": 0.0749,
+      "support": 0.4628
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "engineering",
+     "probabilities": {
+      "sales": 0.067,
+      "support": 0.4641,
+      "engineering": 0.469
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "support",
+     "probabilities": {
+      "sales": 0.0682,
+      "engineering": 0.4608,
+      "support": 0.471
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.04149999999999998
+  },
+  {
+   "name": "sentiment-c0",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "positive": 0.3163,
+      "neutral": 0.5202,
+      "negative": 0.1634
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "positive": 0.2776,
+      "negative": 0.2263,
+      "neutral": 0.4961
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "neutral": 0.5192,
+      "positive": 0.3156,
+      "negative": 0.1652
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "neutral": 0.4951,
+      "negative": 0.1783,
+      "positive": 0.3266
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "negative": 0.2011,
+      "positive": 0.3126,
+      "neutral": 0.4863
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "negative": 0.2208,
+      "neutral": 0.4968,
+      "positive": 0.2823
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.06290000000000001
+  },
+  {
+   "name": "sentiment-c1",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "positive": 0.0813,
+      "neutral": 0.5148,
+      "negative": 0.4039
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "positive": 0.0718,
+      "negative": 0.5184,
+      "neutral": 0.4099
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "neutral": 0.4856,
+      "positive": 0.0861,
+      "negative": 0.4283
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "neutral": 0.4653,
+      "negative": 0.4384,
+      "positive": 0.0962
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "negative": 0.555,
+      "positive": 0.0822,
+      "neutral": 0.3628
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "negative": 0.5114,
+      "neutral": 0.4128,
+      "positive": 0.0758
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.15200000000000002
+  },
+  {
+   "name": "sentiment-c2",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "positive": 0.1114,
+      "neutral": 0.7825,
+      "negative": 0.106
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "positive": 0.0943,
+      "negative": 0.1156,
+      "neutral": 0.7901
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "neutral": 0.7752,
+      "positive": 0.1117,
+      "negative": 0.1131
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "neutral": 0.7474,
+      "negative": 0.0991,
+      "positive": 0.1535
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "negative": 0.096,
+      "positive": 0.1343,
+      "neutral": 0.7697
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "negative": 0.1046,
+      "neutral": 0.7612,
+      "positive": 0.1342
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.0592
+  },
+  {
+   "name": "sentiment-c3",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "positive",
+     "probabilities": {
+      "positive": 0.5191,
+      "neutral": 0.4158,
+      "negative": 0.0651
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "positive",
+     "probabilities": {
+      "positive": 0.5137,
+      "negative": 0.0837,
+      "neutral": 0.4026
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "neutral": 0.5129,
+      "positive": 0.4045,
+      "negative": 0.0826
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "neutral": 0.4942,
+      "negative": 0.0832,
+      "positive": 0.4225
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "positive",
+     "probabilities": {
+      "negative": 0.0946,
+      "positive": 0.464,
+      "neutral": 0.4415
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "neutral",
+     "probabilities": {
+      "negative": 0.1166,
+      "neutral": 0.5048,
+      "positive": 0.3785
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.1406
+  },
+  {
+   "name": "sentiment-c4",
+   "k": 3,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "positive": 0.0741,
+      "neutral": 0.396,
+      "negative": 0.53
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "positive": 0.0721,
+      "negative": 0.603,
+      "neutral": 0.3249
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "neutral": 0.3569,
+      "positive": 0.0859,
+      "negative": 0.5572
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "neutral": 0.399,
+      "negative": 0.4974,
+      "positive": 0.1036
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "negative": 0.5777,
+      "positive": 0.0836,
+      "neutral": 0.3387
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0
+     ],
+     "chosen": "negative",
+     "probabilities": {
+      "negative": 0.5402,
+      "neutral": 0.3725,
+      "positive": 0.0872
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.10559999999999997
+  },
+  {
+   "name": "timeframe-c0",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "immediate": 0.1201,
+      "this_week": 0.2725,
+      "this_month": 0.282,
+      "no_deadline": 0.3254
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "immediate": 0.1012,
+      "this_week": 0.2593,
+      "no_deadline": 0.3712,
+      "this_month": 0.2683
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "immediate": 0.1432,
+      "this_month": 0.2648,
+      "this_week": 0.2458,
+      "no_deadline": 0.3462
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "immediate": 0.183,
+      "this_month": 0.2887,
+      "no_deadline": 0.2733,
+      "this_week": 0.255
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "immediate": 0.1291,
+      "no_deadline": 0.335,
+      "this_week": 0.2553,
+      "this_month": 0.2805
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "immediate": 0.1915,
+      "no_deadline": 0.3047,
+      "this_month": 0.248,
+      "this_week": 0.2558
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_week": 0.2175,
+      "immediate": 0.1333,
+      "this_month": 0.3224,
+      "no_deadline": 0.3269
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_week": 0.2272,
+      "immediate": 0.119,
+      "no_deadline": 0.3555,
+      "this_month": 0.2983
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_week": 0.2209,
+      "this_month": 0.2707,
+      "immediate": 0.1335,
+      "no_deadline": 0.3749
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_week": 0.2229,
+      "this_month": 0.2822,
+      "no_deadline": 0.3584,
+      "immediate": 0.1366
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_week": 0.2306,
+      "no_deadline": 0.3368,
+      "immediate": 0.1202,
+      "this_month": 0.3125
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_week": 0.2409,
+      "no_deadline": 0.3502,
+      "this_month": 0.2722,
+      "immediate": 0.1367
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2353,
+      "immediate": 0.136,
+      "this_week": 0.2778,
+      "no_deadline": 0.3509
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2562,
+      "immediate": 0.1752,
+      "no_deadline": 0.3078,
+      "this_week": 0.2608
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2414,
+      "this_week": 0.2138,
+      "immediate": 0.148,
+      "no_deadline": 0.3968
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2275,
+      "this_week": 0.2349,
+      "no_deadline": 0.3993,
+      "immediate": 0.1383
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2789,
+      "no_deadline": 0.2818,
+      "immediate": 0.1656,
+      "this_week": 0.2737
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2897,
+      "no_deadline": 0.3359,
+      "this_week": 0.2375,
+      "immediate": 0.1368
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "no_deadline": 0.3034,
+      "immediate": 0.1439,
+      "this_week": 0.2759,
+      "this_month": 0.2768
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2387,
+      "immediate": 0.2061,
+      "this_month": 0.2758,
+      "this_week": 0.2794
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "no_deadline": 0.2888,
+      "this_week": 0.2526,
+      "immediate": 0.1367,
+      "this_month": 0.322
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "no_deadline": 0.2875,
+      "this_week": 0.2781,
+      "this_month": 0.2957,
+      "immediate": 0.1387
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2779,
+      "this_month": 0.2457,
+      "immediate": 0.1785,
+      "this_week": 0.2979
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "no_deadline": 0.3502,
+      "this_month": 0.2529,
+      "this_week": 0.2547,
+      "immediate": 0.1421
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.1606
+  },
+  {
+   "name": "timeframe-c1",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.1298,
+      "this_week": 0.4444,
+      "this_month": 0.1922,
+      "no_deadline": 0.2335
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.1314,
+      "this_week": 0.4653,
+      "no_deadline": 0.2501,
+      "this_month": 0.1533
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.1298,
+      "this_month": 0.2152,
+      "this_week": 0.4209,
+      "no_deadline": 0.2341
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.1845,
+      "this_month": 0.2372,
+      "no_deadline": 0.2248,
+      "this_week": 0.3535
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.1326,
+      "no_deadline": 0.2911,
+      "this_week": 0.4051,
+      "this_month": 0.1712
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.1856,
+      "no_deadline": 0.2511,
+      "this_month": 0.1944,
+      "this_week": 0.3689
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4538,
+      "immediate": 0.129,
+      "this_month": 0.1804,
+      "no_deadline": 0.2368
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4464,
+      "immediate": 0.1325,
+      "no_deadline": 0.2429,
+      "this_month": 0.1782
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4536,
+      "this_month": 0.1878,
+      "immediate": 0.1195,
+      "no_deadline": 0.2392
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4287,
+      "this_month": 0.1645,
+      "no_deadline": 0.2533,
+      "immediate": 0.1535
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4272,
+      "no_deadline": 0.2703,
+      "immediate": 0.1317,
+      "this_month": 0.1708
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4172,
+      "no_deadline": 0.2841,
+      "this_month": 0.1561,
+      "immediate": 0.1426
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2037,
+      "immediate": 0.1377,
+      "this_week": 0.4122,
+      "no_deadline": 0.2464
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2155,
+      "immediate": 0.1933,
+      "no_deadline": 0.2322,
+      "this_week": 0.3591
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2294,
+      "this_week": 0.4114,
+      "immediate": 0.1293,
+      "no_deadline": 0.2299
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.1933,
+      "this_week": 0.4033,
+      "no_deadline": 0.2584,
+      "immediate": 0.1449
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2069,
+      "no_deadline": 0.249,
+      "immediate": 0.1897,
+      "this_week": 0.3544
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.1777,
+      "no_deadline": 0.3098,
+      "this_week": 0.376,
+      "immediate": 0.1366
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2625,
+      "immediate": 0.1534,
+      "this_week": 0.4115,
+      "this_month": 0.1727
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2209,
+      "immediate": 0.1983,
+      "this_month": 0.2226,
+      "this_week": 0.3582
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2861,
+      "this_week": 0.4149,
+      "immediate": 0.1334,
+      "this_month": 0.1656
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.286,
+      "this_week": 0.4128,
+      "this_month": 0.1675,
+      "immediate": 0.1336
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2502,
+      "this_month": 0.219,
+      "immediate": 0.1836,
+      "this_week": 0.3473
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2831,
+      "this_month": 0.2029,
+      "this_week": 0.3748,
+      "immediate": 0.1392
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.118
+  },
+  {
+   "name": "timeframe-c2",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.2242,
+      "this_week": 0.3438,
+      "this_month": 0.2277,
+      "no_deadline": 0.2042
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.2201,
+      "this_week": 0.3516,
+      "no_deadline": 0.1991,
+      "this_month": 0.2291
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.2301,
+      "this_month": 0.2407,
+      "this_week": 0.2895,
+      "no_deadline": 0.2397
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.281,
+      "this_month": 0.2585,
+      "no_deadline": 0.1514,
+      "this_week": 0.3091
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.2568,
+      "no_deadline": 0.1536,
+      "this_week": 0.3333,
+      "this_month": 0.2563
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.3067,
+      "no_deadline": 0.1471,
+      "this_month": 0.2192,
+      "this_week": 0.3271
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.3096,
+      "immediate": 0.2354,
+      "this_month": 0.2415,
+      "no_deadline": 0.2135
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.3292,
+      "immediate": 0.2289,
+      "no_deadline": 0.185,
+      "this_month": 0.257
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.3111,
+      "this_month": 0.2301,
+      "immediate": 0.2247,
+      "no_deadline": 0.2341
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.3287,
+      "this_month": 0.2499,
+      "no_deadline": 0.181,
+      "immediate": 0.2405
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.3243,
+      "no_deadline": 0.1922,
+      "immediate": 0.2087,
+      "this_month": 0.2748
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.3431,
+      "no_deadline": 0.1807,
+      "this_month": 0.2414,
+      "immediate": 0.2348
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2269,
+      "immediate": 0.2332,
+      "this_week": 0.3209,
+      "no_deadline": 0.2189
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2462,
+      "immediate": 0.2739,
+      "no_deadline": 0.1518,
+      "this_week": 0.328
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2241,
+      "this_week": 0.3176,
+      "immediate": 0.2317,
+      "no_deadline": 0.2265
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2255,
+      "this_week": 0.347,
+      "no_deadline": 0.2021,
+      "immediate": 0.2254
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2547,
+      "no_deadline": 0.1403,
+      "immediate": 0.2607,
+      "this_week": 0.3444
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2414,
+      "no_deadline": 0.1543,
+      "this_week": 0.3519,
+      "immediate": 0.2525
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.1297,
+      "immediate": 0.2787,
+      "this_week": 0.3509,
+      "this_month": 0.2406
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.1318,
+      "immediate": 0.3176,
+      "this_month": 0.2182,
+      "this_week": 0.3324
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.1367,
+      "this_week": 0.3433,
+      "immediate": 0.2548,
+      "this_month": 0.2653
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.1426,
+      "this_week": 0.3668,
+      "this_month": 0.2451,
+      "immediate": 0.2455
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.1269,
+      "this_month": 0.2364,
+      "immediate": 0.2756,
+      "this_week": 0.361
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.148,
+      "this_month": 0.2271,
+      "this_week": 0.3459,
+      "immediate": 0.279
+     }
+    }
+   ],
+   "decision_changed": false,
+   "max_abs_delta_prob": 0.11279999999999998
+  },
+  {
+   "name": "timeframe-c3",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.0522,
+      "this_week": 0.4691,
+      "this_month": 0.2037,
+      "no_deadline": 0.2751
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.0511,
+      "this_week": 0.4749,
+      "no_deadline": 0.2814,
+      "this_month": 0.1926
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.0547,
+      "this_month": 0.2359,
+      "this_week": 0.4254,
+      "no_deadline": 0.284
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.0632,
+      "this_month": 0.2243,
+      "no_deadline": 0.3177,
+      "this_week": 0.3948
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.0492,
+      "no_deadline": 0.2948,
+      "this_week": 0.478,
+      "this_month": 0.178
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "immediate": 0.0613,
+      "no_deadline": 0.3219,
+      "this_month": 0.2182,
+      "this_week": 0.3986
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4585,
+      "immediate": 0.0543,
+      "this_month": 0.2074,
+      "no_deadline": 0.2798
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4591,
+      "immediate": 0.0534,
+      "no_deadline": 0.2817,
+      "this_month": 0.2058
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4584,
+      "this_month": 0.2012,
+      "immediate": 0.0499,
+      "no_deadline": 0.2905
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.4102,
+      "this_month": 0.2337,
+      "no_deadline": 0.3014,
+      "immediate": 0.0547
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.416,
+      "no_deadline": 0.2949,
+      "immediate": 0.051,
+      "this_month": 0.2381
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_week": 0.3895,
+      "no_deadline": 0.3248,
+      "this_month": 0.2311,
+      "immediate": 0.0546
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2329,
+      "immediate": 0.0557,
+      "this_week": 0.3908,
+      "no_deadline": 0.3207
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.217,
+      "immediate": 0.0564,
+      "no_deadline": 0.3331,
+      "this_week": 0.3935
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2586,
+      "this_week": 0.358,
+      "immediate": 0.0596,
+      "no_deadline": 0.3237
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "this_month": 0.2599,
+      "this_week": 0.343,
+      "no_deadline": 0.3373,
+      "immediate": 0.0597
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2426,
+      "no_deadline": 0.3579,
+      "immediate": 0.0559,
+      "this_week": 0.3437
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2249,
+      "no_deadline": 0.3594,
+      "this_week": 0.3549,
+      "immediate": 0.0607
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.3305,
+      "immediate": 0.051,
+      "this_week": 0.4319,
+      "this_month": 0.1866
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.323,
+      "immediate": 0.0576,
+      "this_month": 0.2287,
+      "this_week": 0.3906
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.3242,
+      "this_week": 0.4211,
+      "immediate": 0.0478,
+      "this_month": 0.2069
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.3147,
+      "this_week": 0.4244,
+      "this_month": 0.2111,
+      "immediate": 0.0497
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.3525,
+      "this_month": 0.2347,
+      "immediate": 0.0507,
+      "this_week": 0.3621
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.3459,
+      "this_month": 0.2414,
+      "this_week": 0.3587,
+      "immediate": 0.054
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.13499999999999995
+  },
+  {
+   "name": "timeframe-c4",
+   "k": 4,
+   "permutations": [
+    {
+     "order": [
+      0,
+      1,
+      2,
+      3
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "immediate": 0.1111,
+      "this_week": 0.2919,
+      "this_month": 0.3103,
+      "no_deadline": 0.2867
+     }
+    },
+    {
+     "order": [
+      0,
+      1,
+      3,
+      2
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "immediate": 0.0942,
+      "this_week": 0.2809,
+      "no_deadline": 0.311,
+      "this_month": 0.314
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      1,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "immediate": 0.1136,
+      "this_month": 0.3009,
+      "this_week": 0.2598,
+      "no_deadline": 0.3258
+     }
+    },
+    {
+     "order": [
+      0,
+      2,
+      3,
+      1
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "immediate": 0.154,
+      "this_month": 0.3239,
+      "no_deadline": 0.2297,
+      "this_week": 0.2924
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      1,
+      2
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "immediate": 0.0958,
+      "no_deadline": 0.3242,
+      "this_week": 0.2625,
+      "this_month": 0.3175
+     }
+    },
+    {
+     "order": [
+      0,
+      3,
+      2,
+      1
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "immediate": 0.1423,
+      "no_deadline": 0.315,
+      "this_month": 0.2543,
+      "this_week": 0.2884
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      2,
+      3
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "this_week": 0.2432,
+      "immediate": 0.1257,
+      "this_month": 0.3321,
+      "no_deadline": 0.299
+     }
+    },
+    {
+     "order": [
+      1,
+      0,
+      3,
+      2
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "this_week": 0.2625,
+      "immediate": 0.1018,
+      "no_deadline": 0.2983,
+      "this_month": 0.3374
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      0,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_week": 0.2427,
+      "this_month": 0.3176,
+      "immediate": 0.1019,
+      "no_deadline": 0.3378
+     }
+    },
+    {
+     "order": [
+      1,
+      2,
+      3,
+      0
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "this_week": 0.2418,
+      "this_month": 0.334,
+      "no_deadline": 0.3124,
+      "immediate": 0.1118
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      0,
+      2
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "this_week": 0.2394,
+      "no_deadline": 0.3097,
+      "immediate": 0.0862,
+      "this_month": 0.3647
+     }
+    },
+    {
+     "order": [
+      1,
+      3,
+      2,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_week": 0.2419,
+      "no_deadline": 0.3372,
+      "this_month": 0.3168,
+      "immediate": 0.104
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      1,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2948,
+      "immediate": 0.1044,
+      "this_week": 0.2743,
+      "no_deadline": 0.3265
+     }
+    },
+    {
+     "order": [
+      2,
+      0,
+      3,
+      1
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "this_month": 0.3102,
+      "immediate": 0.1259,
+      "no_deadline": 0.2699,
+      "this_week": 0.294
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      0,
+      3
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.3009,
+      "this_week": 0.2348,
+      "immediate": 0.1224,
+      "no_deadline": 0.3419
+     }
+    },
+    {
+     "order": [
+      2,
+      1,
+      3,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "this_month": 0.2874,
+      "this_week": 0.2335,
+      "no_deadline": 0.3631,
+      "immediate": 0.116
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      0,
+      1
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "this_month": 0.3224,
+      "no_deadline": 0.257,
+      "immediate": 0.1134,
+      "this_week": 0.3071
+     }
+    },
+    {
+     "order": [
+      2,
+      3,
+      1,
+      0
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "this_month": 0.3231,
+      "no_deadline": 0.3223,
+      "this_week": 0.2335,
+      "immediate": 0.1211
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      1,
+      2
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "no_deadline": 0.2906,
+      "immediate": 0.0976,
+      "this_week": 0.2712,
+      "this_month": 0.3407
+     }
+    },
+    {
+     "order": [
+      3,
+      0,
+      2,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2507,
+      "immediate": 0.1329,
+      "this_month": 0.3066,
+      "this_week": 0.3097
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      0,
+      2
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "no_deadline": 0.2711,
+      "this_week": 0.2533,
+      "immediate": 0.1011,
+      "this_month": 0.3745
+     }
+    },
+    {
+     "order": [
+      3,
+      1,
+      2,
+      0
+     ],
+     "chosen": "this_month",
+     "probabilities": {
+      "no_deadline": 0.3072,
+      "this_week": 0.2481,
+      "this_month": 0.3374,
+      "immediate": 0.1074
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      0,
+      1
+     ],
+     "chosen": "this_week",
+     "probabilities": {
+      "no_deadline": 0.2677,
+      "this_month": 0.3005,
+      "immediate": 0.1173,
+      "this_week": 0.3145
+     }
+    },
+    {
+     "order": [
+      3,
+      2,
+      1,
+      0
+     ],
+     "chosen": "no_deadline",
+     "probabilities": {
+      "no_deadline": 0.3346,
+      "this_month": 0.3003,
+      "this_week": 0.2409,
+      "immediate": 0.1243
+     }
+    }
+   ],
+   "decision_changed": true,
+   "max_abs_delta_prob": 0.1334
+  }
+ ],
+ "seconds": 39.32198333297856
+}
