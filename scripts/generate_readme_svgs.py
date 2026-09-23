@@ -5,7 +5,8 @@
 
 - hero-throughput.svg: mixed-workload throughput, GPU-only against GPU + ANE, read from
   benchmarks/v1.0/placement-*.json (the same numbers as `scripts/v1_report.py hetero`).
-- architecture.svg: request-level routing and concurrent GPU + ANE serving.
+- architecture.svg: request-level routing and concurrent GPU + ANE serving; the ANE limits
+  are read from laya_apple/data/routing.json.
 
 Colours are CSS classes with a prefers-color-scheme override, and each figure draws its own
 background card with the same override. prefers-color-scheme inside an image follows the
@@ -24,6 +25,7 @@ from pathlib import Path
 from v1_report import MODELS, PLACEMENT, V1
 
 ROOT = Path(__file__).resolve().parents[1]
+ROUTING = ROOT / "laya_apple" / "data" / "routing.json"
 OUT = ROOT / "docs" / "readme"
 FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif"
 
@@ -84,7 +86,7 @@ def throughput_data():
 def hero() -> str:
     rows, (soc, macos) = throughput_data()
     W, top, row_h = 880, 112, 66
-    H = top + row_h * len(rows) + 34
+    H = top + row_h * len(rows) + 52
     x0, bar_max, bar_h = 196, 440, 16
     scale = bar_max / max(r[2] for r in rows)
     b = [
@@ -111,19 +113,20 @@ def hero() -> str:
             b.append(f'<rect x="{x0}" y="{by}" width="{w:.1f}" height="{bar_h}" rx="2" class="{cls}"/>')
             b.append(_text(x0 + w + 8, by + 12.5, f"{v:.1f} req/s", cls="t" if j else "m", size=12))
         b.append(_text(W - 24, y + 30, f"{ratio:.2f}×", cls="acc", size=28, weight=700, anchor="end"))
-    b.append(f'<line x1="24" x2="{W - 24}" y1="{H - 46}" y2="{H - 46}" class="grid"/>')
+    b.append(f'<line x1="24" x2="{W - 24}" y1="{H - 64}" y2="{H - 64}" class="grid"/>')
     b.append(
         _text(
             24,
-            H - 20,
-            f"{soc} · macOS {macos} · one short and one long request stream per model through one Laya "
-            "instance · data: benchmarks/v1.0",
+            H - 38,
+            "One short and one long request stream per model through one "
+            'Laya(execution="workers") instance; GPU-only runs both on the MLX worker.',
             cls="m",
             size=12,
         )
     )
+    b.append(_text(24, H - 18, f"{soc} · macOS {macos} · data: benchmarks/v1.0/placement-*.json", cls="m", size=12))
     title = "Mixed-workload throughput, GPU-only vs GPU + ANE: " + ", ".join(
-        f"{m} {gpu:.1f} to {het:.1f} req/s ({r:.2f}x)" for m, gpu, het, r in rows
+        f"{m} {gpu:.1f} to {het:.1f} req/s ({r:.2f}×)" for m, gpu, het, r in rows
     )
     return _svg(W, H, title, b)
 
@@ -155,8 +158,19 @@ def _elbow(x1, y1, xs, y2, x2, accent=False) -> str:
     )
 
 
+def ane_limits() -> tuple[int, int]:
+    """(max tokens, max questions) that `auto` sends to the ANE; the same for every model."""
+    models = json.loads(ROUTING.read_text())["models"].values()
+    limits = {(m["auto_ane_max_len"], m["auto_ane_max_questions"]) for m in models}
+    if len(limits) != 1:
+        sys.exit(f"auto ANE limits differ between models: {limits}; the figure assumes one")
+    return limits.pop()
+
+
 def architecture() -> str:
-    W, H = 880, 300
+    max_len, max_q = ane_limits()
+    questions = "one question" if max_q == 1 else f"≤ {max_q} questions"
+    W, H = 880, 330
     b = [
         "<defs>"
         '<marker id="hm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">'
@@ -174,22 +188,32 @@ def architecture() -> str:
             ["Apple Neural Engine", "Core ML fixed-shape artifact,", "parity-validated on this Mac"],
             accent=True,
         ),
-        *_box(620, 180, 236, 96, ["MLX GPU", "worker process, any length,", "batches multiple questions"]),
+        *_box(620, 180, 236, 96, ["MLX GPU", "up to the model's max length,", "batches multiple questions"]),
         '<line x1="164" y1="150" x2="192" y2="150" class="ln" stroke-width="1.6" marker-end="url(#hm)"/>',
         _elbow(372, 140, 404, 72, 616, accent=True),
         _elbow(372, 160, 404, 228, 616),
-        _text(512, 44, "short, single question,", cls="acc", size=12, anchor="middle"),
+        _text(512, 44, f"≤ {max_len} tokens, {questions},", cls="acc", size=12, anchor="middle"),
         _text(512, 62, "validated artifact present", cls="acc", size=12, anchor="middle"),
-        _text(512, 248, "long, multi-question,", cls="m", size=12, anchor="middle"),
-        _text(512, 266, "unvalidated or unknown", cls="m", size=12, anchor="middle"),
+        _text(512, 248, "longer, several questions,", cls="m", size=12, anchor="middle"),
+        _text(512, 266, "unvalidated Mac or no artifact", cls="m", size=12, anchor="middle"),
         '<line x1="680" y1="126" x2="680" y2="174" class="ln" stroke-width="1.2" stroke-dasharray="3 3"/>',
-        _text(690, 146, "serve independent", cls="m", size=12),
-        _text(690, 162, "requests concurrently", cls="m", size=12),
+        _text(690, 138, 'with execution="workers":', cls="m", size=12),
+        _text(690, 154, "serve independent", cls="m", size=12),
+        _text(690, 170, "requests concurrently", cls="m", size=12),
+        f'<line x1="24" x2="{W - 24}" y1="{H - 36}" y2="{H - 36}" class="grid"/>',
+        _text(
+            24,
+            H - 14,
+            'Routing on an idle machine. With execution="workers", the router also compares queue backlogs, '
+            "so a request can go to the other engine.",
+            cls="m",
+            size=12,
+        ),
     ]
     title = (
-        "laya-apple routing: validated short single-question requests go to the Apple Neural Engine; "
-        "long, multi-question, unvalidated or unknown requests go to the MLX GPU; both serve "
-        "independent requests concurrently"
+        f"laya-apple routing: requests of at most {max_len} tokens with {questions} and a validated artifact go "
+        "to the Apple Neural Engine; longer, multi-question or unvalidated requests go to the MLX GPU; with "
+        'execution="workers" both engines serve independent requests concurrently'
     )
     return _svg(W, H, title, b)
 

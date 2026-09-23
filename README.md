@@ -10,11 +10,12 @@ for Apple silicon.** It runs the MLX GPU and the Apple Neural Engine at the same
 uses the Neural Engine only where it has been proven to give the same decisions as
 upstream Laya.
 
-![Mixed-workload throughput against GPU-only serving: laya 41.9 to 122.5 req/s (2.92×), laya-multilingual 55.7 to 241.8 req/s (4.34×), laya-typed-decisions 24.0 to 109.6 req/s (4.57×)](docs/readme/hero-throughput.svg)
+![Mixed-workload throughput against GPU-only serving: laya 41.9 to 122.5 req/s (2.92×), laya-multilingual 55.7 to 241.8 req/s (4.34×), laya-typed-decisions 24.0 to 109.6 req/s (4.57×)](https://raw.githubusercontent.com/tc3oliver/laya-apple/main/docs/readme/hero-throughput.svg)
 
 The gain comes from running both engines at once, not from raw ANE latency. This is the
 v1.0 benchmark on one Apple M4 Max with macOS 26.6.2: one short and one long
-request stream through one `Laya` instance. Other Macs are untested, and you can
+request stream through one `Laya(execution="workers")` instance (see
+[GPU + ANE heterogeneous serving](#gpu--ane-heterogeneous-serving)). Other Macs are untested, and you can
 [add yours](docs/community-benchmarks.md). The method and raw data are in
 [`benchmarks/v1.0.md`](benchmarks/v1.0.md).
 
@@ -50,7 +51,7 @@ pip install "laya-apple[convert]"   # + building ANE artifacts on this Mac (torc
 laya-apple artifacts build laya-typed-decisions   # optional: build + parity-validate ANE artifacts here (~5 min)
 ```
 
-Without the `ane` extra and a built artifact, everything runs on the MLX GPU. To run from
+Without the `ane` extra, or without a built artifact, everything runs on the MLX GPU. To run from
 source or develop laya-apple, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Quickstart (30 seconds)
@@ -94,7 +95,7 @@ coreml ane validated_short_single_question_path 11.2 ms
 
 ## How auto routing works
 
-![Validated short single-question requests go to the Apple Neural Engine; long, multi-question, unvalidated or unknown requests go to the MLX GPU; both serve independent requests concurrently](docs/readme/architecture.svg)
+![Requests of at most 128 tokens with one question and a validated artifact go to the Apple Neural Engine; longer, multi-question or unvalidated requests go to the MLX GPU; with execution="workers" both engines serve independent requests concurrently](https://raw.githubusercontent.com/tc3oliver/laya-apple/main/docs/readme/architecture.svg)
 
 | Request | Goes to | Why (measured on the tested Mac) |
 |---|---|---|
