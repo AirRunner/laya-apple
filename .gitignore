@@ -19,9 +19,9 @@ weights/
 # Benchmark raw output
 benchmarks/results/
 
+.cache/
+
 # Local tooling
 .omc/
 .DS_Store
 
-# Private planning notes
-DEVELOPMENT_PLAN.md
