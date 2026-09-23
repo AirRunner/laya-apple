@@ -8,7 +8,7 @@ labels: ["help wanted", "ane", "hardware", "correctness"]
 The Apple Neural Engine artifacts and the parity gate that validates them
 (`laya_apple/conversion/`, `laya_apple/parity/`) have only ever been run on an M4 Max
 (`docs/support-matrix.md`). Whether the BC1S channel-first graph rewrite that makes the
-M4 Max's ANE pass parity (README, "Correctness first") also passes on the earlier ANE
+M4 Max's ANE pass parity (README, "Correctness") also passes on the earlier ANE
 generation in M1/M2 is unknown.
 
 ## Why it matters

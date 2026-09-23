@@ -23,7 +23,7 @@ If the windowed-attention rewrite (or another approach to the quadratic score co
 be carried through the full artifact release gate — 100% ANE compute plan, 0 transitions,
 the placement probe, and 0 hard mismatches at FP16 tolerance — it could extend validated
 ANE coverage to longer sequences than are offered today, where currently `auto` always
-routes to MLX (README, "Auto routing": "Longer contexts favour MLX").
+routes to MLX (README, "How auto routing works": longer contexts go to the MLX GPU because "MLX is faster there").
 
 ## Expected output
 

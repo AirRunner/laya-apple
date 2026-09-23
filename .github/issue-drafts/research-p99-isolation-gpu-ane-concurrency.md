@@ -10,9 +10,9 @@ heterogeneous (`auto`) configuration, each stream's tail latency is measurably a
 solo value: for example, laya-typed-decisions (thread placement) short-stream P99 rises
 +8% and long-stream P99 rises +13% versus running that stream alone, and
 laya-multilingual (thread placement) short-stream P99 rises +153%. The README's own
-"Limitations" section states this plainly: "Isolation between the two engines is
-partial," citing `benchmarks/v0.2.md`, and separately notes that heavy Python work on
-the calling thread slows a thread-placed ANE stream (GIL).
+"Limitations" section states this plainly ("Isolation is partial"), and
+`docs/guide.md` notes that heavy Python work on the calling thread slows a thread-placed
+ANE stream (GIL).
 
 ## Why it matters
 
@@ -48,7 +48,7 @@ laya-typed-decisions (+8% thread vs. +91% process — the opposite ordering).
 - `benchmarks/v0.2.md` (Part A table, the exact deltas cited above)
 - `laya_apple/executor.py`
 - `laya_apple/scheduling.py`
-- `README.md` ("Limitations" — "Isolation between the two engines is partial")
+- `README.md` ("Limitations" — "Isolation is partial")
 
 ## Difficulty / scope
 

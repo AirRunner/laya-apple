@@ -12,8 +12,7 @@ oldest supported hardware generation.
 
 ## Why it matters
 
-MLX is the default, always-available backend (`README.md`, "What makes laya-apple
-different": "MLX GPU is the general backend"). Confirming it actually runs correctly
+MLX is the default, always-available backend (`docs/architecture.md`: "MLX is the general backend"). Confirming it actually runs correctly
 and at a known speed on M1/M2 matters more, for most users, than ANE validation, and
 this is the lowest-effort way to extend hardware coverage since it needs no ANE artifact
 build (`coremltools`/`torch` extras) at all.

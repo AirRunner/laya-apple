@@ -41,7 +41,7 @@ throughput tables.
 
 ## Relevant files
 
-- `README.md` ("Not yet measured")
+- `README.md` ("Limitations": "Not measured yet")
 - `docs/benchmarks.md` (existing benchmark conventions)
 - `benchmarks/v1.0.md` (existing throughput tables this would sit alongside)
 

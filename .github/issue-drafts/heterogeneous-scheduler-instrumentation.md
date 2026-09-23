@@ -16,7 +16,7 @@ spike" today means re-deriving it from individual request logs.
 
 ## Why it matters
 
-`benchmarks/v0.2.md` ("Isolation between the two engines is partial") already documents
+`README.md` ("Limitations": "Isolation is partial") and `benchmarks/v0.2.md` already document
 that each stream's P99 under concurrency is above its solo value. Understanding *why* —
 queue depth spikes, backlog snapshot staleness, scheduling latency — needs
 instrumentation that doesn't exist yet.
@@ -44,7 +44,7 @@ its cost measured and justified.
 
 - `laya_apple/scheduling.py` (`decide_queued`, `ServiceModel`, `ANE_GPU_BACKLOG`/`GPU_ANE_BACKLOG`)
 - `laya_apple/executor.py`
-- `benchmarks/v0.2.md` ("Isolation between the two engines is partial")
+- `README.md` ("Limitations": "Isolation is partial") and `benchmarks/v0.2.md`
 - `docs/no-silent-fallback.md` (row 2, queue-based routing)
 
 ## Difficulty / scope
