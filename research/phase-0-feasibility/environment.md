@@ -13,7 +13,7 @@ record also embeds `environment()` or `conditions()` from the moment it was take
 | Neural Engine | 16-core ANE (M4 family) |
 | Unified memory | 64 GiB |
 | Power | AC, low-power mode off; `pmset -g therm` reported no thermal or performance warning at any recorded point |
-| Model artifacts | converted packages on external Samsung T7 USB SSD (`<research-artifacts>`); HF cache on the same volume |
+| Model artifacts | converted packages on external Samsung T7 USB SSD (`<data>/models-experimental/laya-apple`); HF cache on the same volume |
 
 ## Software
 

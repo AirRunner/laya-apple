@@ -29,7 +29,7 @@ RAW = RESEARCH / "raw"
 REPORTS = RESEARCH / "reports"
 # Converted packages are reproducible and large, so they live on the data volume.
 ARTIFACTS = Path(
-    os.environ.get("LAYA_APPLE_ARTIFACTS", "<research-artifacts>")
+    os.environ.get("LAYA_APPLE_ARTIFACTS", "<data>/models-experimental/laya-apple")
 )
 
 # Hugging Face revisions. `laya` is pinned to the revision the MLX and Core ML ports

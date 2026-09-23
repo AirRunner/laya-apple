@@ -2,11 +2,11 @@
  "generated_by": "scripts/derive_routing.py",
  "rule": ", over the ANE buckets in the registry (sorted b1 < b2 < ...):\n  a bucket b_i joins auto routing iff\n    (1) the BC1S ANE graph passed parity at b_i on CPU_AND_NE, and\n    (2) ANE forward P50 at b_i  <  MLX FP16 forward P50 at b_{i-1}\n        (a request just above b_{i-1} is padded to b_i on the ANE but costs about MLX(b_{i-1})\n         on the GPU, so this is the conservative comparison; for b_1 the comparison is\n         against MLX(b_1) because no shorter MLX length was measured),\n  and routing stops at the first bucket that fails.\nMulti-question requests are never auto-routed to the ANE: with 4 and 8 questions MLX was\nfaster at every measured length, and 2-3 questions were not measured.",
  "evidence": {
-  "latency.jsonl": "3688a0dd9f88b38d2b2f75f8a00a68aaab5bf262eb1e7b8009a21384577a8376",
-  "environment.json": "687a3ec6f20101cc69df11f44c816178418d0e5744560ce0391fa4331e2be34b",
-  "parity/laya": "0a5a100f2f50b125da7076c792b4cf9cf5360d705d8224d99d890e55a2d0cf8a",
-  "parity/laya-multilingual": "5e621d00be9178ea21ca0ca4bda875b6701662ca96540430d857bd211f3d0519",
-  "parity/laya-typed-decisions": "98935b744b1367ee58d04388575e0e41ff0f7387c4c5295293c7eb6a250388d9"
+  "latency.jsonl": "13dbe669f67c949b5022f829f5eb98b18ef225d6593e28aafeaf407c557755e1",
+  "environment.json": "908b86d4bec34575f59a9f4cc64f20d775191098bcb95262ce5901f86163bbc7",
+  "parity/laya": "a2a9079cb0d7ff7685492b1394c62e9adee52d59576e855ef41fdcee355406f1",
+  "parity/laya-multilingual": "49be0b41c7ce87cc9a7a5805608ee81d24c55ae0cce982aadc2cece375d9d7c3",
+  "parity/laya-typed-decisions": "f8154c76aeea4fb775bd99a4edc281414eccc2a3cbc3e2225e110ee585621479"
  },
  "hardware": "Apple M4 Max, macOS 26.6.2 (Phase -1); thresholds are not validated elsewhere",
  "validated_profiles": [

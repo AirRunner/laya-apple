@@ -51,7 +51,7 @@ uv run python scripts/report.py parity|latency|crossover
 ```
 
 Converted packages go to `$LAYA_APPLE_ARTIFACTS`, by default
-`<research-artifacts>`. They are reproducible and never
+`<data>/models-experimental/laya-apple`. They are reproducible and never
 committed. Run timed scripts on a quiet machine, one at a time.
 
 ## Layout

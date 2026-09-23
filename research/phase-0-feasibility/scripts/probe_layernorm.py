@@ -25,7 +25,7 @@ from common import RAW  # noqa: E402
 
 OUT_DIR = RAW / "layernorm"
 OUT_DIR.mkdir(parents=True, exist_ok=True)
-PROBE_ROOT = Path("<research-artifacts>/probes/layernorm")
+PROBE_ROOT = Path("<data>/models-experimental/laya-apple/probes/layernorm")
 PROBE_ROOT.mkdir(parents=True, exist_ok=True)
 
 UNITS = {"cpu_only": "CPU_ONLY", "cpu_ne": "CPU_AND_NE", "cpu_gpu": "CPU_AND_GPU", "all": "ALL"}

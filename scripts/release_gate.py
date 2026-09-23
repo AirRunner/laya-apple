@@ -1,7 +1,7 @@
 """v0.3 release gate: run every release check, record status/duration/output per step, and
 write a JSON + markdown report.
 
-    LAYA_APPLE_CACHE=<cache> HF_HUB_OFFLINE=1 \\
+    LAYA_APPLE_CACHE=/path/to/cache HF_HUB_OFFLINE=1 \\
         uv run python scripts/release_gate.py [--quick] [--out benchmarks/release-gate-X.json]
 
 Every step runs even after an earlier one fails; the process exits non-zero iff any
@@ -30,6 +30,14 @@ EXCLUDED_ARTIFACT_DIRS = {"quarantine", "rejected", ".staging", ".locks"}
 
 def _tail(s: str, n: int = TAIL_CHARS) -> str:
     return s[-n:] if len(s) > n else s
+
+
+def _sanitize(text: str) -> str:
+    """Replace this machine's repo root and home directory with portable placeholders
+    so a committed report never carries the local username or path layout."""
+    text = text.replace(str(ROOT), ".")
+    text = text.replace(str(Path.home()), "~")
+    return text
 
 
 def run_step(name: str, cmd, *, cwd=None, env=None, required=True) -> dict:
@@ -69,7 +77,6 @@ def env_with_cache():
     import os
 
     env = dict(os.environ)
-    env.setdefault("LAYA_APPLE_CACHE", "<cache>")
     env.setdefault("HF_HUB_OFFLINE", "1")
     return env
 
@@ -456,8 +463,8 @@ def main(argv=None):
         stem = ROOT / "benchmarks" / f"release-gate-{report['version']}"
     stem.parent.mkdir(parents=True, exist_ok=True)
     json_path, md_path = stem.with_name(stem.name + ".json"), stem.with_name(stem.name + ".md")
-    json_path.write_text(json.dumps(report, indent=1))
-    md_path.write_text(to_markdown(report))
+    json_path.write_text(_sanitize(json.dumps(report, indent=1)))
+    md_path.write_text(_sanitize(to_markdown(report)))
     print(f"wrote {json_path} and {md_path}")
 
     return 0 if report["passed"] else 1
