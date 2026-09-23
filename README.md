@@ -10,15 +10,10 @@ for Apple silicon.** It runs the MLX GPU and the Apple Neural Engine at the same
 uses the Neural Engine only where it has been proven to give the same decisions as
 upstream Laya.
 
-**Mixed-workload throughput against GPU-only serving:**
+![Mixed-workload throughput against GPU-only serving: laya 41.9 to 122.5 req/s (2.92×), laya-multilingual 55.7 to 241.8 req/s (4.34×), laya-typed-decisions 24.0 to 109.6 req/s (4.57×)](docs/readme/hero-throughput.svg)
 
-| Model | GPU-only | GPU + ANE | Speed-up | Answer mismatches |
-|---|---:|---:|---:|---:|
-| laya | 41.9 req/s | 122.5 req/s | **2.92×** | 0 |
-| laya-multilingual | 55.7 req/s | 241.8 req/s | **4.34×** | 0 |
-| laya-typed-decisions | 24.0 req/s | 109.6 req/s | **4.57×** | 0 |
-
-This is the v1.0 benchmark on one Apple M4 Max with macOS 26.6.2: one short and one long
+The gain comes from running both engines at once, not from raw ANE latency. This is the
+v1.0 benchmark on one Apple M4 Max with macOS 26.6.2: one short and one long
 request stream through one `Laya` instance. Other Macs are untested, and you can
 [add yours](docs/community-benchmarks.md). The method and raw data are in
 [`benchmarks/v1.0.md`](benchmarks/v1.0.md).
@@ -98,6 +93,8 @@ coreml ane validated_short_single_question_path 11.2 ms
   `heterogeneous_serving.py`) and the [user guide](docs/guide.md).
 
 ## How auto routing works
+
+![Validated short single-question requests go to the Apple Neural Engine; long, multi-question, unvalidated or unknown requests go to the MLX GPU; both serve independent requests concurrently](docs/readme/architecture.svg)
 
 | Request | Goes to | Why (measured on the tested Mac) |
 |---|---|---|

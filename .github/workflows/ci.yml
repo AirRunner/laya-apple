@@ -38,3 +38,4 @@ jobs:
           uv run python scripts/derive_routing.py --check
           uv run python scripts/derive_placement.py --check
           uv run python scripts/make_goldens.py --check
+          uv run python scripts/generate_readme_svgs.py --check
