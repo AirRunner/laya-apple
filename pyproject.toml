@@ -1,6 +1,6 @@
 [project]
 name = "laya-apple"
-version = "0.2.0"
+version = "0.3.0"
 description = "Apple-native inference runtime for Laya with MLX GPU and Apple Neural Engine acceleration."
 readme = "README.md"
 license = "Apache-2.0"
