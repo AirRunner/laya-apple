@@ -1,0 +1,17 @@
+{
+ "duration_s": 600,
+ "threads": 6,
+ "requests_completed": 19202,
+ "errors": [],
+ "served": {
+  "long@gpu": 6402,
+  "multi@gpu": 6398,
+  "short@ane": 6399,
+  "short@gpu": 3
+ },
+ "short_latency_p99_first_third_ms": 10.904999915510416,
+ "short_latency_p99_last_third_ms": 10.836250032298267,
+ "rss_growth_bytes": 5980160,
+ "thermal_before": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+ "thermal_after": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded"
+}

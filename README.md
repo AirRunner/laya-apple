@@ -10,7 +10,7 @@ of short, single-question, fixed-shape requests.
 
 ## Status
 
-v0.2. Tested only on **Apple M4 Max, macOS 26.6.2**, with MLX 0.32.2 and
+v0.3. Tested only on **Apple M4 Max, macOS 26.6.2**, with MLX 0.32.2 and
 coremltools 9.0. Other Apple Silicon and macOS versions are expected to run
 the MLX backend correctly but are not validated; the ANE path is validated
 only on the tested profile (see `docs/support-matrix.md`).
@@ -262,6 +262,64 @@ on the tested machine); the system caches the result. `artifacts build` pays
 this cost once at the registered path, so later loads take 0.14–0.31 s per
 bucket. If the system evicts its cache, the next load pays it again.
 
+## Artifact lifecycle
+
+- **Concurrent builds are safe.** One build per (model, revision, bucket) runs at a time
+  across processes, under a file lock in `<cache>/artifacts/.locks/`. A second builder
+  waits, then finds the artifact already registered.
+- **Corruption is quarantined.** An artifact whose files no longer match their manifest
+  hash, or whose manifest cannot be read, is moved to `<cache>/artifacts/quarantine/` when
+  it is detected. The error names the rebuild command. Nothing corrupt stays where the
+  runtime looks.
+- **Cleanup is explicit.** `laya-apple artifacts prune` lists what it would delete and why:
+  - other revisions or weights, unregistered models, buckets no longer offered;
+  - builds from another platform profile, unvalidated or rejected builds;
+  - quarantined entries, abandoned staging directories, orphaned verification stamps.
+  Add `--yes` to delete. It only ever deletes inside the cache.
+- **Warm after eviction.** `laya-apple artifacts warm MODEL` pays Core ML's on-device ANE
+  compile ahead of the first request.
+
+**Moving artifacts between machines.** Artifacts are never downloaded. You can build them
+once and carry them to another machine yourself:
+
+```bash
+laya-apple artifacts export laya-typed-decisions --out exports/   # one .tar.gz per offered bucket
+# on the other machine:
+laya-apple artifacts import exports/laya-typed-decisions-L64.tar.gz
+```
+
+An import is registered only after the receiving machine has checked, itself:
+- the manifest against the pinned checkpoint;
+- the build platform profile;
+- the file hash;
+- the compute plan (100% ANE, 0 transitions);
+- the full parity gate against the shipped goldens (the checkpoint must be downloaded).
+
+The local results are recorded in the manifest under `imported`.
+
+**Cold start.** With `execution="workers"`, `ane_startup="background"` makes
+`from_pretrained` return as soon as MLX is ready. The ANE finishes loading behind it,
+including any on-device compile. Until it is ready, `auto` routes to MLX with reason
+`ane_starting`. `laya.wait_for_ane()` blocks until it is ready, and
+`info()["ane_ready"]` reports it. Measured start times are in
+[`benchmarks/v0.3.md`](benchmarks/v0.3.md).
+
+## Calibrating another machine
+
+The shipped routing table applies only to the profile it was measured on (SoC, macOS
+major version, coremltools version). On any other profile, `auto` uses MLX only
+(`platform_not_validated`). To enable the ANE on your machine:
+
+```bash
+laya-apple artifacts build laya-typed-decisions   # builds and parity-validates here
+laya-apple calibrate laya-typed-decisions          # measures MLX and ANE latency here
+```
+
+`calibrate` applies the same rule that produced the shipped table to local measurements.
+It writes `<cache>/profiles/<profile>.json`. Such a local profile is used only when no
+shipped profile matches the machine. `Laya.info()["routing_profile"]` reports which table
+is in effect: `shipped`, `local:<path>`, or `None` (MLX only).
+
 ## No silent fallback
 
 - An explicit `device="ane"` request runs on the exact validated artifact
@@ -311,6 +369,11 @@ laya-apple download MODEL...
 laya-apple artifacts build MODEL [--length L ...] [--force] [--skip-existing]
 laya-apple artifacts list
 laya-apple artifacts verify [MODEL] [--length L ...]
+laya-apple artifacts warm [MODEL] [--length L ...]
+laya-apple artifacts prune [--yes]
+laya-apple artifacts export MODEL [--length L ...] [--out DIR]
+laya-apple artifacts import ARCHIVE.tar.gz [--force]
+laya-apple calibrate [MODEL ...] [--warmup N] [--iters N]
 laya-apple parity MODEL [--device gpu|ane] [--dtype float16|float32]
 laya-apple benchmark MODEL [--device auto|gpu|ane] [--lengths L ...] [--questions N] [--warmup N] [--iters N] [--output FILE]
 ```
@@ -428,5 +491,12 @@ official Convai Innovations, Apple, or MLX release.
   routing derivation, correctness policy, and roadmap.
 - [`docs/support-matrix.md`](docs/support-matrix.md) — platform and model
   support matrix.
+- [`docs/compatibility.md`](docs/compatibility.md) — what is tested, expected
+  and unknown, and what happens on an untested machine.
+- [`docs/api.md`](docs/api.md) — the stable public API and the deprecation
+  policy.
+- [`docs/no-silent-fallback.md`](docs/no-silent-fallback.md) — every path that
+  could run a request somewhere other than recorded, and the test that pins it.
+- [`docs/benchmarks.md`](docs/benchmarks.md) — how to reproduce every benchmark.
 - [`research/phase-0-feasibility/`](research/phase-0-feasibility/) — the
   measurements this project is built on.

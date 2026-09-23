@@ -1,0 +1,185 @@
+{
+ "generated_at": "2026-09-23T18:33:37+0800",
+ "platform": {
+  "soc": "Apple M4 Max",
+  "macos": "26.6.2",
+  "macos_build": "25G83",
+  "coremltools": "9.0"
+ },
+ "runs": 5,
+ "repeats": 3,
+ "rows": [
+  {
+   "model": "laya",
+   "bucket": 64,
+   "expected_ane_service_ms": 8.1007,
+   "ane_probe_ms": [
+    7.902,
+    7.992,
+    7.961
+   ],
+   "cpu_only_probe_ms": [
+    16.137,
+    16.156,
+    16.214
+   ],
+   "ane_ratio_max": 0.987,
+   "cpu_ratio_min": 1.992
+  },
+  {
+   "model": "laya",
+   "bucket": 96,
+   "expected_ane_service_ms": 8.9975,
+   "ane_probe_ms": [
+    8.725,
+    8.58,
+    8.566
+   ],
+   "cpu_only_probe_ms": [
+    24.652,
+    24.543,
+    24.543
+   ],
+   "ane_ratio_max": 0.97,
+   "cpu_ratio_min": 2.728
+  },
+  {
+   "model": "laya",
+   "bucket": 128,
+   "expected_ane_service_ms": 9.8614,
+   "ane_probe_ms": [
+    9.281,
+    9.339,
+    9.303
+   ],
+   "cpu_only_probe_ms": [
+    26.875,
+    26.794,
+    26.748
+   ],
+   "ane_ratio_max": 0.947,
+   "cpu_ratio_min": 2.712
+  },
+  {
+   "model": "laya-multilingual",
+   "bucket": 64,
+   "expected_ane_service_ms": 3.4301,
+   "ane_probe_ms": [
+    3.295,
+    3.265,
+    3.147
+   ],
+   "cpu_only_probe_ms": [
+    7.647,
+    7.607,
+    7.628
+   ],
+   "ane_ratio_max": 0.961,
+   "cpu_ratio_min": 2.218
+  },
+  {
+   "model": "laya-multilingual",
+   "bucket": 96,
+   "expected_ane_service_ms": 3.8522,
+   "ane_probe_ms": [
+    3.645,
+    3.65,
+    3.661
+   ],
+   "cpu_only_probe_ms": [
+    11.407,
+    11.33,
+    11.355
+   ],
+   "ane_ratio_max": 0.95,
+   "cpu_ratio_min": 2.941
+  },
+  {
+   "model": "laya-multilingual",
+   "bucket": 128,
+   "expected_ane_service_ms": 4.311,
+   "ane_probe_ms": [
+    3.981,
+    3.879,
+    3.869
+   ],
+   "cpu_only_probe_ms": [
+    12.143,
+    12.324,
+    12.392
+   ],
+   "ane_ratio_max": 0.923,
+   "cpu_ratio_min": 2.817
+  },
+  {
+   "model": "laya-multilingual",
+   "bucket": 256,
+   "expected_ane_service_ms": 8.3486,
+   "ane_probe_ms": [
+    7.694,
+    7.634,
+    7.635
+   ],
+   "cpu_only_probe_ms": [
+    24.067,
+    24.029,
+    24.143
+   ],
+   "ane_ratio_max": 0.922,
+   "cpu_ratio_min": 2.878
+  },
+  {
+   "model": "laya-typed-decisions",
+   "bucket": 64,
+   "expected_ane_service_ms": 8.0746,
+   "ane_probe_ms": [
+    7.924,
+    7.867,
+    7.86
+   ],
+   "cpu_only_probe_ms": [
+    16.15,
+    16.213,
+    16.134
+   ],
+   "ane_ratio_max": 0.981,
+   "cpu_ratio_min": 1.998
+  },
+  {
+   "model": "laya-typed-decisions",
+   "bucket": 96,
+   "expected_ane_service_ms": 9.0178,
+   "ane_probe_ms": [
+    8.7,
+    8.68,
+    8.575
+   ],
+   "cpu_only_probe_ms": [
+    24.541,
+    24.598,
+    24.561
+   ],
+   "ane_ratio_max": 0.965,
+   "cpu_ratio_min": 2.721
+  },
+  {
+   "model": "laya-typed-decisions",
+   "bucket": 128,
+   "expected_ane_service_ms": 9.9307,
+   "ane_probe_ms": [
+    9.431,
+    9.391,
+    9.364
+   ],
+   "cpu_only_probe_ms": [
+    26.754,
+    26.808,
+    26.775
+   ],
+   "ane_ratio_max": 0.95,
+   "cpu_ratio_min": 2.694
+  }
+ ],
+ "ane_ratio_max": 0.987,
+ "cpu_ratio_min": 1.992
+}

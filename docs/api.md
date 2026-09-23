@@ -1,0 +1,107 @@
+# Public API and stability policy
+
+laya-apple follows [Semantic Versioning](https://semver.org/) from 1.0.0. This page
+defines what "the public API" means. Anything not listed here is internal and may change
+in any release.
+
+## Stable (covered by SemVer)
+
+### Python
+
+Import these from the top-level `laya_apple` package:
+
+| Name | Contract |
+|---|---|
+| `Laya.from_pretrained(model_id, device="auto", *, dtype="float16", local_files_only=False, batch_size=16, execution="inline", ane_placement="auto", ane_startup="wait")` | Loads a pinned checkpoint. Invalid arguments raise `ValueError`. Every other failure raises a `LayaAppleError` subclass |
+| `Laya.predict(context=None, questions=None, *, state=None) -> Result` | Blocking and thread-safe |
+| `Laya.submit(...) -> concurrent.futures.Future[Result]` | Same arguments as `predict` |
+| `await Laya.apredict(...) -> Result` | Same arguments as `predict` |
+| `Laya.close()`, `with Laya.from_pretrained(...) as laya:` | Idempotent. Queued work fails with `BackendUnavailableError` |
+| `Laya.wait_for_ane(timeout=None) -> bool` | Only meaningful with `ane_startup="background"` |
+| `Laya.info() -> dict` | The keys below are stable. New keys may be added |
+| `Result` | Fields `answers`, `usage`, `runtime`, `model`, `extra`, and `to_dict()` |
+| `RuntimeInfo` | Every field listed in `laya_apple/result.py` at 1.0.0. New optional fields may be added |
+| The exception classes in `laya_apple.errors`, re-exported at top level | Their hierarchy: every one derives from `LayaAppleError`, and the artifact errors from `ArtifactError` |
+| `laya_apple.__version__` | |
+
+**Stable `info()` keys:**
+- `model`, `repo`, `revision`;
+- `device`, `execution`, `ane_placement`, `dtype`;
+- `mlx`, `ane_buckets`, `ane_load_errors`;
+- `routing_profile`, `ane_ready`, `auto_ane`.
+
+**Argument values:**
+
+| Argument | Values |
+|---|---|
+| `device` | `auto`, `gpu`, `ane` |
+| `dtype` | `float16`, `float32` (MLX only; `device="ane"` accepts only `float16`) |
+| `execution` | `inline`, `workers` |
+| `ane_placement` | `auto`, `thread`, `process` |
+| `ane_startup` | `wait`, `background` |
+
+### Routing reasons
+
+The strings in `RuntimeInfo.routing_reason` are stable:
+- `gpu_requested`, `ane_requested`, `validated_short_single_question_path`;
+- `multiple_questions`, `sequence_exceeds_ane_auto_range`;
+- `ane_artifact_unavailable`, `ane_runtime_unavailable`, `platform_not_validated`;
+- `ane_backlog_shorter_on_gpu`, `gpu_backlog_shorter_on_ane`, `ane_starting`.
+
+New reasons may be added in a minor release. Code that switches on the reason must accept
+unknown values.
+
+**Which device serves a request is not part of the API.** Routing thresholds, auto
+buckets and service-time estimates are measured data. They can change in any release,
+with the evidence recorded in `CHANGELOG.md`. The guarantee is that every decision is
+recorded in `RuntimeInfo`, never that a given request lands on a given device.
+
+### Command line
+
+The `laya-apple` subcommands, and their arguments as listed in the README's CLI
+reference, are stable:
+- `predict`, `info`, `download`;
+- `artifacts build|list|verify|warm|prune|export|import`;
+- `parity`, `calibrate`, `benchmark`.
+
+**Exit codes:**
+- `0` means success;
+- `1` means a check failed (`artifacts verify`, `parity`);
+- `2` means a laya-apple error or an invalid argument value.
+
+### Files and environment
+
+| Item | Contract |
+|---|---|
+| `LAYA_APPLE_CACHE`, `XDG_CACHE_HOME`, `HF_HUB_OFFLINE` | Their meaning as documented in the README |
+| Artifact manifest, `format: "laya-apple-artifact"`, `format_version: 1` | The shipped JSON Schema is [`laya_apple/data/manifest.schema.json`](../laya_apple/data/manifest.schema.json). Fields may be added without a version change, and readers ignore fields they do not know. Removing a field or changing its meaning requires `format_version: 2`. A release that reads v2 keeps reading v1 for at least one major version |
+| Export archive (`artifacts export`) | A `.tar.gz` holding `manifest.json` and `model.mlmodelc/` |
+| Local capability profile, `format: "laya-apple-profile"`, `format_version: 1` | `<cache>/profiles/<profile>.json` |
+
+The cache *layout* (the directories under `<cache>/artifacts/`) is not public. Use the
+CLI or the manifest, not paths.
+
+## Internal (no compatibility promise)
+
+These are not covered by SemVer:
+- `Laya.prepare`, `Laya.route`, `Laya.backlogs`, and the `mlx` / `ane` attributes;
+- every submodule other than `laya_apple.errors`: `laya_apple.routing`, `scheduling`,
+  `executor`, `artifacts`, `lifecycle`, `profiles`, `derivation`, `backends`,
+  `conversion`, `parity`, `schema`, `workload`, `benchmark`;
+- the bundled data files, except the manifest schema;
+- everything under `scripts/`.
+
+## Deprecation policy
+
+- A stable name or behaviour is deprecated before it is removed. Deprecated functionality
+  keeps working for at least one minor release and is removed only in the next major
+  release.
+- Using a deprecated name or argument emits a `DeprecationWarning` naming the
+  replacement and the version that removes it.
+- Every deprecation and removal is listed under *Deprecated* or *Removed* in
+  `CHANGELOG.md`.
+- **Exception:** a correctness or safety defect may be fixed in any release, even when the
+  fix changes behaviour. An example is a path that could silently run on an unvalidated
+  configuration. The CHANGELOG says so explicitly.
+- A pinned model revision changes only in a minor or major release. The old revision's
+  artifacts are then reported by `artifacts prune`.

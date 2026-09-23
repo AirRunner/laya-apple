@@ -5,6 +5,76 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-09-23
+
+### Added
+
+- **Artifact lifecycle** (`laya_apple/lifecycle.py`):
+  - Builds and imports of one (model, revision, bucket) are serialised across processes
+    by a file lock.
+  - An artifact that fails its hash check, or whose manifest cannot be read, is
+    quarantined when detected, and the error names the rebuild command.
+  - `laya-apple artifacts prune` lists stale, foreign-profile, unvalidated, rejected,
+    quarantined and abandoned entries with a reason. It deletes them only with `--yes`,
+    and only inside the cache.
+  - `laya-apple artifacts warm` pre-pays Core ML's on-device ANE compile.
+- **Artifact distribution without trust:** `laya-apple artifacts export` / `import`.
+  - An imported artifact is registered only after the receiving machine re-checks the
+    manifest, platform profile, file hash, compute plan, and the full parity gate.
+  - Local results are recorded under `imported`. There are no automatic downloads.
+- **Local capability profiles:** `laya-apple calibrate`.
+  - On a platform profile with no shipped routing table, it measures MLX and ANE latency
+    and applies the shipped derivation rule (`laya_apple/derivation.py`).
+  - It writes `<cache>/profiles/<profile>.json`.
+  - `Laya.info()["routing_profile"]` reports which table is in effect.
+- **Background ANE start-up:** `ane_startup="background"` (workers, `auto`).
+  - `from_pretrained` returns once MLX is ready.
+  - Requests go to MLX with reason `ane_starting` until the ANE is loaded.
+  - `wait_for_ane()` blocks until then, and `info()["ane_ready"]` reports it.
+- **Release tooling and stress tests:**
+  - `scripts/release_gate.py`: lint, format, data-drift checks, the full test suite,
+    a clean-install matrix (Python 3.11–3.13 × base/ane with the README quickstart), and
+    artifact verification. It writes a JSON + Markdown report.
+  - `tests/stress/` (opt-in, `LAYA_APPLE_STRESS=1`): sustained mixed load through
+    workers, repeated load/close, inline memory growth, inline thread safety.
+  - `scripts/bench_coldstart.py` measures cold start.
+
+- **Artifact manifest schema:**
+  - `laya_apple/data/manifest.schema.json` is the published `format_version: 1` schema.
+  - It is enforced on every load, and a failure names the offending field.
+- **Runtime placement probe:**
+  - Every loaded ANE bucket is timed against a `CPU_ONLY` instance of the same artifact.
+  - A ratio above 0.8 means the model is not running on the Neural Engine. Explicit `ane`
+    raises `ComputeUnitMismatchError`; `auto` drops the bucket with a warning.
+  - Measured ratios are 0.32–0.50 (`benchmarks/v1.0/probe.json`), and results appear in
+    `info()["ane_probes"]`.
+- `docs/no-silent-fallback.md`: an audit of every path that could run a request somewhere
+  other than recorded, each pinned by a test (`tests/integration/test_no_silent_fallback.py`).
+
+### Fixed
+
+- `dtype` was ignored for `device="ane"`. Now `ane` accepts only `float16`, and an unknown
+  `dtype` is refused for every device.
+- A local capability profile could widen the auto buckets beyond the validated ones. A
+  profile whose buckets are not a prefix of the offered ones, or which is unreadable, is
+  now ignored with a warning.
+- Under `execution="workers"`:
+  - A dead ANE worker is detected before the next request is routed, not after that
+    request fails on it.
+  - A worker reported ready before its queue existed.
+  - `close()` during background ANE start-up leaked the loading backend and emitted a
+    spurious warning.
+- ANE worker processes no longer hide Core ML / coremltools / NumPy warnings.
+
+### Changed
+
+- The build's parity step uses the torch-free `laya_apple.parity.ane.ane_parity`, which
+  imports also use.
+- The routing derivation rule moved from `scripts/derive_routing.py` into the package
+  (`laya_apple.derivation`), so `calibrate` and the shipped table share one
+  implementation.
+- `artifacts export` defaults to every offered bucket and the current directory.
+
 ## [0.2.0] - 2026-09-23
 
 ### Added
