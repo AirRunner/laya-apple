@@ -1,4 +1,4 @@
-"""Heterogeneous routing: short single-question requests go to the ANE, long or
+"""Heterogeneous serving: short single-question requests go to the ANE, long or
 multi-question requests go to the MLX GPU, and both run concurrently.
 
 This is what differentiates laya-apple from a plain MLX or Core ML runtime: one
@@ -7,7 +7,7 @@ per request which one to use, and records that decision on the result.
 
 Run:
 
-    uv run --extra ane python examples/heterogeneous_routing.py
+    uv run --extra ane python examples/heterogeneous_serving.py
 
 Without the `[ane]` extra (no coremltools installed), the ANE path is simply
 unavailable: every request still gets an answer, but `routing_reason` for what

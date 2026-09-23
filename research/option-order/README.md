@@ -40,8 +40,8 @@ uv run python scripts/option_order.py run --device gpu --dtype float32 \
 uv run python scripts/option_order.py run --device gpu --dtype float16 \
     --output benchmarks/v1.0/option-order-gpu-float16.json
 
-uv run python scripts/option_order.py run --device ane \
-    --output benchmarks/v1.0/option-order-ane.json
+uv run python scripts/option_order.py run --device ane --dtype float16 \
+    --output benchmarks/v1.0/option-order-ane-float16.json
 ```
 
 `--device ane` only serves the single-question requests this case set already uses within

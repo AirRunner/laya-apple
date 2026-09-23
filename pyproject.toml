@@ -1,7 +1,7 @@
 [project]
 name = "laya-apple"
-version = "1.0.0"
-description = "Apple-native inference runtime for Laya with MLX GPU and Apple Neural Engine acceleration."
+version = "1.0.1"
+description = "Correctness-validated heterogeneous Laya runtime for Apple Silicon (MLX GPU + Apple Neural Engine)"
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
@@ -9,7 +9,7 @@ authors = [
     { name = "oliver", email = "tc3oliver@gmail.com" }
 ]
 requires-python = ">=3.11,<3.14"
-keywords = ["apple-silicon", "mlx", "coreml", "neural-engine", "inference", "laya"]
+keywords = ["apple-silicon", "mlx", "coreml", "apple-neural-engine", "inference", "laya", "heterogeneous-computing"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
@@ -49,7 +49,7 @@ laya-apple = "laya_apple.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/tc3oliver/laya-apple"
-Documentation = "https://github.com/tc3oliver/laya-apple#readme"
+Documentation = "https://github.com/tc3oliver/laya-apple/blob/main/docs/guide.md"
 Changelog = "https://github.com/tc3oliver/laya-apple/blob/main/CHANGELOG.md"
 Issues = "https://github.com/tc3oliver/laya-apple/issues"
 Repository = "https://github.com/tc3oliver/laya-apple"

@@ -5,6 +5,43 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-09-23
+
+Documentation, examples and tooling only. The library code is unchanged since 1.0.0.
+
+### Added
+
+- `examples/basic.py` (one prediction with `device="auto"`) and `examples/auto_routing.py`
+  (short, long and multi-question requests through one `auto` instance, with the routing
+  reason for each).
+- `scripts/hardware_report.py`: one command that records this machine's environment and
+  runs MLX and ANE parity, latency, routing and a short heterogeneous mix, writing a
+  bundle under `hardware-results/` for the community matrix.
+- `docs/community-benchmarks.md`: the Apple Silicon results matrix and how to add a Mac
+  to it. `hardware-results/README.md` describes the bundle format, and
+  `hardware-results/apple-m4-max-macos26/` is the first entry.
+- New documents:
+  - `docs/architecture.md`;
+  - `docs/correctness.md` (fast ≠ correct: what was tested, on which platform);
+  - `docs/reproducibility.md` (every headline number traced to its report, raw data,
+    command and environment);
+  - `docs/releases/v1.0.0.md`;
+  - `docs/launch-checklist.md`.
+- Contributor surface:
+  - `.github/labels.yml` and seeded issue drafts in `.github/issue-drafts/`
+    (`good first issue`, `help wanted`, `research`);
+  - `scripts/github_seed.sh` creates them on GitHub. It is dry-run by default.
+
+### Changed
+
+- `examples/heterogeneous_routing.py` is renamed `examples/heterogeneous_serving.py`;
+  its behaviour is unchanged.
+- The README leads with the v1.0 mixed-workload result and the three differentiators;
+  deeper material moved to `docs/`.
+- `CONTRIBUTING.md` maps each kind of change to the tests it needs, and covers parity
+  checks, benchmarking, hardware results and backend changes.
+- Package description and keywords.
+
 ## [1.0.0] - 2026-09-23
 
 First stable release. There are no breaking changes since 0.3.0; one CLI flag is added.
@@ -36,8 +73,9 @@ The following now follow Semantic Versioning, with the deprecation policy in
   - graph, bucket, compute target, precision and platform;
   - the parity result and the artifact checksum;
   - whether `auto` offers the bucket.
-- `examples/heterogeneous_routing.py`: a mixed batch served concurrently, showing backend,
-  device and routing reason for each request.
+- `examples/heterogeneous_routing.py` (renamed `heterogeneous_serving.py` after 1.0.0): a
+  mixed batch served concurrently, showing backend, device and routing reason for each
+  request.
 - **Option-order robustness check** (`scripts/option_order.py`, `research/option-order/`,
   `tests/integration/test_option_order.py`):
   - `choice` decisions depend on option order in upstream Laya itself;

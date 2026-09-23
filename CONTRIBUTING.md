@@ -41,6 +41,41 @@ LAYA_APPLE_STRESS=1 uv run pytest -q -m stress                    # ~60s
 LAYA_APPLE_STRESS=1 LAYA_APPLE_STRESS_SECONDS=600 uv run pytest -q -m stress   # release soak
 ```
 
+### Which tests a PR needs
+
+Run the fast suite for every PR. Run the other tiers only when they apply to what you
+changed — most PRs need only the fast suite plus lint.
+
+| Tier | Command | Hardware / setup | Run it when your PR touches |
+|---|---|---|---|
+| Fast (unit) | `uv run pytest -q -m "not integration and not parity and not ane and not stress"` | None — no checkpoints, no ANE, runs in CI | Everything. Always run this before opening a PR. |
+| Checkpoint / integration | `HF_HUB_OFFLINE=1 uv run pytest -q -m integration` | A downloaded checkpoint (`laya-apple download <model>`) | Model loading, prompts, the schema, or anything that calls `predict()` end to end |
+| Parity | `HF_HUB_OFFLINE=1 uv run pytest -q -m parity` | A downloaded checkpoint; `reference` extra if you're regenerating goldens | Parity tolerances, calibration math, or the MLX/PyTorch numerics |
+| ANE validation | `HF_HUB_OFFLINE=1 uv run pytest -q -m ane` | Apple Silicon with the ANE, `ane` extra, built artifacts (`laya-apple artifacts build <model>`) | The Core ML backend, artifact conversion, the placement probe, or the compute-plan check |
+| Stress / soak | `LAYA_APPLE_STRESS=1 uv run pytest -q -m stress` | Apple Silicon; minutes to ~10 min for the release soak | Worker lifecycle, queueing, or anything claiming improved reliability under load |
+| Full benchmark suite | see "How to benchmark" below | Apple Silicon, significant wall-clock time | A new benchmark report or a routing-threshold change — **not** routine PRs |
+
+By what a PR touches:
+
+- **Docs-only** (`docs/`, `README.md`, this file): fast suite only, for anything that
+  might have broken a doctest or a linked example; often nothing to run beyond lint.
+- **Scripts** (`scripts/`): fast suite; add integration if the script exercises
+  `predict()` or artifact loading.
+- **Backend code** (`laya_apple/backends/`, `laya_apple/model.py`): fast suite +
+  integration; add ANE validation if you touched the Core ML backend, and parity if the
+  change could affect numerics.
+- **Routing** (`laya_apple/routing.py`, `laya_apple/scheduling.py`,
+  `laya_apple/derivation.py`, `laya_apple/profiles.py`): fast suite + integration; a
+  threshold change needs new measurements (see "Artifact release policy" below) and the
+  relevant `scripts/derive_*.py --check`.
+- **Artifacts** (`laya_apple/artifacts.py`, `laya_apple/conversion/`,
+  `laya_apple/lifecycle.py`): fast suite + ANE validation; a new or changed artifact
+  configuration needs the full gate in "Artifact release policy" below.
+
+Do not run the full benchmark suite or a release soak for a change unrelated to
+performance or reliability — it is expensive and its purpose is to validate a release,
+not every PR.
+
 ## Lint and format
 
 ```bash
@@ -60,6 +95,72 @@ pytest markers, and (optionally) a soak test. See `--help` for the current flags
 including `--quick` (skip the install matrix and slow markers) and `--soak SECONDS`. Run
 it before proposing a release, not as a substitute for the fast suite during normal
 development.
+
+## How to run parity checks
+
+To check one model against the shipped PyTorch FP32 goldens on a specific device:
+
+```bash
+laya-apple parity laya-typed-decisions --device gpu   # MLX, FP16 by default
+laya-apple parity laya-typed-decisions --device ane    # Core ML, needs built ANE artifacts
+laya-apple parity laya-typed-decisions --device gpu --dtype float32
+```
+
+This is the same gate used in `CONTRIBUTING.md`'s "Artifact release policy" and reports
+hard mismatches, near-tie flips and max probability error against the tolerances in
+`laya_apple/parity/__init__.py`. Run it for any change that could affect numerics
+(model code, calibration, dtype handling, the ANE graph).
+
+## How to benchmark
+
+- **Quick, cross-model sanity check:** `scripts/hardware_report.py --quick` — the fast
+  pass used for a community hardware-results bundle (see "How to add a hardware result"
+  below).
+- **Single model, single device:** `laya-apple benchmark <model> [--device gpu|ane]` —
+  useful while iterating on one backend without running the full suite.
+- **Full release-quality benchmark:** the methodology, exact commands and raw-data
+  layout are in [`docs/reproducibility.md`](docs/reproducibility.md). This is what
+  produces a report like `benchmarks/v1.0.md`; it takes significant wall-clock time and
+  is for release reports, not routine PRs (see "Which tests a PR needs" above).
+
+## How to add a hardware result
+
+laya-apple's own numbers all come from one machine (`docs/support-matrix.md`).
+Community results on other Apple Silicon extend that coverage. See
+[`docs/community-benchmarks.md`](docs/community-benchmarks.md) for the bundle format,
+the `hardware-results/<soc>-macos<major>/` layout `scripts/hardware_report.py`
+produces, and how to submit one as a PR. Several starter issues for specific hardware
+are seeded under the `benchmark` and `hardware` labels — see "Where issues are" below.
+
+## How to modify a backend
+
+Backends live in `laya_apple/backends/` (`base.py` defines the interface, `mlx.py` is
+the GPU backend, `coreml_ane.py` is the Neural Engine backend), with the ANE artifact
+build and graph rewrite in `laya_apple/conversion/`. Whatever you change, these must
+stay true:
+
+- **Parity.** The backend's output still passes the parity gate at the shipped
+  tolerances — run `laya-apple parity <model> --device <device>` (above) before and
+  after your change to see the delta. See "Non-negotiable rules" below: tolerances are
+  never loosened to make a change pass.
+- **No silent fallback.** If your change adds or touches a device, bucket, precision or
+  `except`-around-backend-selection decision, add a row to
+  [`docs/no-silent-fallback.md`](docs/no-silent-fallback.md) describing the new path and
+  add a test that pins the behavior (see the existing rows and their tests for the
+  pattern).
+- **The placement probe.** Any change to how or when the ANE model loads should keep the
+  runtime placement probe intact (`docs/no-silent-fallback.md`, "Runtime placement
+  probe"); do not bypass or weaken `PROBE_MAX_RATIO`.
+
+A new or changed ANE artifact configuration additionally needs the full gate in
+"Artifact release policy" below before it can ship.
+
+## Where issues are
+
+Open issues are labeled by area (`coreml`, `mlx`, `ane`, `scheduler`, `correctness`,
+`documentation`, `benchmark`, `hardware`, `research`, `performance`) and by how
+self-contained they are (`good first issue`, `help wanted`). `.github/labels.yml` is the
+canonical label set; `scripts/github_seed.sh` applies it to the repository.
 
 ## Non-negotiable rules
 
