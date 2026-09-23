@@ -2,12 +2,17 @@
 
 ## Dev setup
 
-To work on laya-apple, or to run it from source (Apple silicon, Python 3.11–3.13):
+To run laya-apple from source (Apple silicon, Python 3.11–3.13):
 
 ```bash
 git clone https://github.com/tc3oliver/laya-apple && cd laya-apple
-uv sync --extra ane --extra convert          # run from source: MLX + Neural Engine + artifact builds
+uv sync --extra ane --extra convert          # MLX + Neural Engine + artifact builds
 uv run laya-apple artifacts build laya-typed-decisions   # optional: build + parity-validate ANE artifacts here (~5 min)
+```
+
+To develop, pick one of these (`uv sync` removes extras it is not given):
+
+```bash
 uv sync --extra dev                          # tests, ruff, psutil
 uv sync --extra dev --extra ane              # + Neural Engine backend (coremltools==9.0)
 uv sync --extra dev --extra ane --extra convert     # + building ANE artifacts (torch==2.7.0)

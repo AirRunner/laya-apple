@@ -16,8 +16,9 @@ unzip -Z1 dist/*.whl             # only laya_apple/ and laya_apple-<version>.dis
 The distributions contain the `laya_apple` package only: its code, the bundled routing,
 placement and manifest-schema data, and the parity goldens that `laya-apple parity`
 uses. Benchmarks, research, tests, scripts, examples and generated Core ML models never
-ship. The release workflow fails if any of them appear, or if a local path appears in any
-shipped file. It also checks that `LICENSE` and `NOTICE` are in the wheel metadata.
+ship. The release workflow fails on any file outside an allowlist (the package, its
+metadata and the sdist's top-level files), or if a local path appears in any shipped file.
+It also checks that `LICENSE` and `NOTICE` are in both the wheel and the sdist.
 
 To check that the wheel imports on its own, outside the source tree:
 
@@ -30,10 +31,10 @@ cd /tmp && /tmp/laya-wheel/bin/python -c "import laya_apple; print(laya_apple.__
 
 1. The `publish` job runs in the GitHub environment `pypi` with `permissions: id-token: write`.
 2. `pypa/gh-action-pypi-publish` asks GitHub for a short-lived OIDC token. The token names
-   the repository, the workflow file and the environment.
+   the repository, the workflow file and the environment, and is valid for minutes.
 3. PyPI accepts the upload only if those match the trusted publisher registered for the
    `laya-apple` project: owner `tc3oliver`, repository `laya-apple`, workflow
-   `release.yml`, environment `pypi`. The token expires after the upload.
+   `release.yml`, environment `pypi`. Nothing long-lived is stored on either side.
 
 A fork, a copy of the workflow in another repository, or another workflow in this
 repository cannot publish. The `publish` job also refuses to run outside
@@ -41,7 +42,9 @@ repository cannot publish. The `publish` job also refuses to run outside
 
 ## Configure PyPI (once)
 
-A maintainer does this once, logged in to PyPI.
+Done for `laya-apple`: 1.0.1 was the first release published this way, and the publisher
+now lives under the project's *Settings → Publishing* on PyPI, where it is changed if the
+repository, workflow or environment is ever renamed. For reference, the original setup:
 
 1. Go to <https://pypi.org/manage/account/publishing/> and, under *Add a new pending
    publisher* → *GitHub*, enter:
@@ -56,14 +59,16 @@ A maintainer does this once, logged in to PyPI.
 
    A *pending* publisher reserves the name. The first successful upload creates the
    project, and the publisher then appears under the project's *Publishing* settings.
-2. On GitHub, the `pypi` environment (*Settings → Environments*) should require a
-   reviewer. The publish job then waits for an approval before it can request a token.
+2. On GitHub, the `pypi` environment (*Settings → Environments*) requires a reviewer and
+   only accepts `main` and `v*` tags. The publish job waits for that approval before it
+   can request a token.
 
 ## Make a release
 
-1. Update `version` in `pyproject.toml` and `__version__` in `laya_apple/__init__.py`, add
-   the `CHANGELOG.md` section, and run the release gate
-   (`uv run python scripts/release_gate.py`, see [`CONTRIBUTING.md`](../CONTRIBUTING.md)).
+1. Update `version` in `pyproject.toml` and `__version__` in `laya_apple/__init__.py` (the
+   workflow fails unless both equal the tag), add the `CHANGELOG.md` section, and run the
+   release gate (`uv run python scripts/release_gate.py`, see
+   [`CONTRIBUTING.md`](../CONTRIBUTING.md)).
 2. Commit, then create and push an annotated tag that matches the version exactly:
 
    ```bash
@@ -71,10 +76,10 @@ A maintainer does this once, logged in to PyPI.
    git push origin main v1.2.3
    ```
 
-3. The push runs `release.yml`. The `build` job checks that the tag equals the package
-   version, builds the sdist and wheel, checks their contents and metadata, installs the
-   wheel into a clean environment and imports it. The `publish` job then uploads the same
-   files to PyPI, after the environment approval if one is configured.
+3. The push runs `release.yml`. The `build` job checks that the tag is on `main` and equals
+   the package version, builds the sdist and wheel, checks their contents and metadata,
+   installs the wheel into a clean environment and imports it. The `publish` job then
+   uploads the same files to PyPI, after the environment approval.
 4. Create the GitHub release from the tag, with the notes from `CHANGELOG.md`.
 
 PyPI never accepts the same version twice. If a build is wrong after upload, fix it and
@@ -91,5 +96,5 @@ gh workflow run release.yml --ref main -f tag=v1.0.1
 ```
 
 The workflow then builds that tag's source, with the same checks as a tag push. It refuses
-a ref other than `main` and a tag that is not `vX.Y.Z`. It never creates or changes a
-tag.
+a ref other than `main`, a tag that is not `vX.Y.Z`, and any tag but the newest, so an old
+version cannot be published by accident. It never creates or changes a tag.

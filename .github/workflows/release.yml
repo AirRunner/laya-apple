@@ -4,9 +4,13 @@ name: Release
 # stored anywhere. See docs/publishing.md.
 #
 # - Pushing a version tag (vX.Y.Z) builds and publishes that tag.
-# - workflow_dispatch builds and publishes an EXISTING version tag. It is for tags created
-#   before this workflow existed (their commit does not contain this file, so pushing them
-#   again would not run it); it only runs from main and never creates or moves a tag.
+# - workflow_dispatch builds and publishes the newest EXISTING version tag. It is for tags
+#   created before this workflow existed (their commit does not contain this file, so
+#   pushing them again would not run it); it only runs from main and never creates or
+#   moves a tag.
+#
+# Third-party actions are pinned to commit SHAs (tag in the trailing comment), except the
+# PyPI publish action, which PyPA asks to be used from its release/v1 branch.
 
 on:
   push:
@@ -51,13 +55,27 @@ jobs:
           fi
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: refs/tags/${{ steps.tag.outputs.tag }}
+          fetch-depth: 0
           persist-credentials: false
 
+      - name: Tag is on main and is the newest release tag
+        env:
+          EVENT: ${{ github.event_name }}
+          TAG: ${{ steps.tag.outputs.tag }}
+        run: |
+          if ! git merge-base --is-ancestor HEAD origin/main; then
+            echo "::error::$TAG is not on main"; exit 1
+          fi
+          newest=$(git tag -l 'v*' --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+          if [ "$EVENT" = workflow_dispatch ] && [ "$TAG" != "$newest" ]; then
+            echo "::error::Manual releases publish only the newest tag ($newest), not $TAG"; exit 1
+          fi
+
       - name: Install uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@c18668ad3cf93ea998bef934396af7bb5c839dc7 # v10.2.0
         with:
           python-version: "3.12"
 
@@ -79,42 +97,58 @@ jobs:
           test "$(ls dist/*.whl | wc -l)" -eq 1
           test "$(ls dist/*.tar.gz | wc -l)" -eq 1
           files=$( (unzip -Z1 dist/*.whl; tar tzf dist/*.tar.gz) )
-          # Only the package, its metadata and the license/readme files ship.
-          if printf '%s\n' "$files" | grep -E '(^|/)(benchmarks|research|tests|scripts|examples|hardware-results|docs)/|\.mlmodelc|\.mlpackage'; then
-            echo "::error::unexpected files in the distributions"; exit 1
+          # Allowlist: the package, its metadata, and the sdist's top-level files. Anything
+          # else (benchmarks, research, tests, local config, models) fails the release.
+          allowed='^(laya_apple/|laya_apple-[^/]+\.dist-info/|laya_apple-[^/]+/($|laya_apple(/|$)|PKG-INFO$|pyproject\.toml(\.orig)?$|README\.md$|LICENSE$|NOTICE$))'
+          if printf '%s\n' "$files" | grep -Ev "$allowed"; then
+            echo "::error::unexpected files in the distributions (listed above)"; exit 1
+          fi
+          if printf '%s\n' "$files" | grep -E '\.(mlmodelc|mlpackage|safetensors|jsonl)(/|$)|__pycache__'; then
+            echo "::error::model, raw-data or cache files in the distributions"; exit 1
           fi
           for f in LICENSE NOTICE; do
-            printf '%s\n' "$files" | grep -q "dist-info/licenses/$f" || { echo "::error::$f missing from wheel"; exit 1; }
+            printf '%s\n' "$files" | grep -q "dist-info/licenses/$f$" || { echo "::error::$f missing from the wheel"; exit 1; }
+            printf '%s\n' "$files" | grep -Eq "^laya_apple-[^/]+/$f$" || { echo "::error::$f missing from the sdist"; exit 1; }
           done
           mkdir -p "$RUNNER_TEMP/unpacked"
           unzip -q dist/*.whl -d "$RUNNER_TEMP/unpacked"
           tar xzf dist/*.tar.gz -C "$RUNNER_TEMP/unpacked"
-          if grep -rIlE '/Users/|/Volumes/|/home/runner' "$RUNNER_TEMP/unpacked"; then
+          if grep -rIlE '/Users/|/Volumes/|/home/runner|/private/var/|/private/tmp/' "$RUNNER_TEMP/unpacked"; then
             echo "::error::local paths in the distributions"; exit 1
           fi
 
       - name: Check metadata
-        run: uvx twine check --strict dist/*
+        run: uvx twine==7.0.0 check --strict dist/*
 
       - name: Import the built wheel
         env:
           HF_HUB_OFFLINE: "1"
+          TAG: ${{ steps.tag.outputs.tag }}
         run: |
           uv venv "$RUNNER_TEMP/wheel-venv"
           uv pip install --python "$RUNNER_TEMP/wheel-venv/bin/python" dist/*.whl
           cd "$RUNNER_TEMP"
           "$RUNNER_TEMP/wheel-venv/bin/python" - <<'EOF'
+          import importlib.metadata
           import importlib.resources as r
+          import os
+
           import laya_apple
           from laya_apple import Laya, LayaAppleError  # noqa: F401
+
           assert "site-packages" in laya_apple.__file__, laya_apple.__file__
+          tag_version = os.environ["TAG"][1:]
+          dist_version = importlib.metadata.version("laya-apple")
+          assert laya_apple.__version__ == dist_version == tag_version, (
+              f"__version__ {laya_apple.__version__}, metadata {dist_version}, tag {tag_version}"
+          )
           data = {p.name for p in r.files("laya_apple.data").iterdir()}
           assert {"routing.json", "placement.json", "manifest.schema.json"} <= data, data
           print("laya-apple", laya_apple.__version__, "imports from", laya_apple.__file__)
           EOF
           "$RUNNER_TEMP/wheel-venv/bin/laya-apple" --help > /dev/null
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: dist
           path: dist/
@@ -132,7 +166,7 @@ jobs:
     permissions:
       id-token: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
         with:
           name: dist
           path: dist/
