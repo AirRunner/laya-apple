@@ -1,6 +1,7 @@
 # laya-apple
 
 [![CI](https://github.com/tc3oliver/laya-apple/actions/workflows/ci.yml/badge.svg)](https://github.com/tc3oliver/laya-apple/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/laya-apple)](https://pypi.org/project/laya-apple/)
 ![Python 3.11–3.13](https://img.shields.io/badge/python-3.11%E2%80%933.13-blue)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-green)](LICENSE)
 
@@ -40,15 +41,22 @@ pass. On a Mac there are two engines that can run it, with different strengths.
 
 ## Install
 
-From a clone (Apple silicon, Python 3.11–3.13; not on PyPI yet):
+Apple silicon, Python 3.11–3.13:
 
 ```bash
-git clone https://github.com/tc3oliver/laya-apple && cd laya-apple
-uv sync --extra ane --extra convert
-uv run laya-apple artifacts build laya-typed-decisions   # optional: build + parity-validate ANE artifacts here (~5 min)
+pip install laya-apple
 ```
 
-Without `artifacts build`, or with a plain `uv sync`, everything runs on the MLX GPU.
+Optional extras:
+
+```bash
+pip install "laya-apple[ane]"       # + the Neural Engine runtime (coremltools 9.0)
+pip install "laya-apple[convert]"   # + building ANE artifacts on this Mac (torch 2.7.0)
+laya-apple artifacts build laya-typed-decisions   # optional: build + parity-validate ANE artifacts here (~5 min)
+```
+
+Without the `ane` extra and a built artifact, everything runs on the MLX GPU. To run from
+source or develop laya-apple, see [`CONTRIBUTING.md`](CONTRIBUTING.md).
 
 ## Quickstart (30 seconds)
 
