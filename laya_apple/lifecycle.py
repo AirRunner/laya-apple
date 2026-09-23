@@ -1,4 +1,4 @@
-"""Artifact lifecycle: build locking, quarantine, pruning, warming (DEVELOPMENT_PLAN.md §9.3).
+"""Artifact lifecycle: build locking, quarantine, pruning, warming.
 
 - **Locking.** One build per artifact key at a time, across processes (`fcntl.flock` on
   `<artifacts>/.locks/<model>-<rev12>-L<bucket>.lock`). A second builder waits, then finds

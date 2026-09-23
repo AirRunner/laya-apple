@@ -1,6 +1,6 @@
 {
  "generated_by": "scripts/derive_placement.py",
- "rule": "the placement with the lower short-stream P99 under the heterogeneous mix\n(the isolation objective, DEVELOPMENT_PLAN.md \u00a77.1); ties within 5% go to the higher\naggregate throughput, then to \"thread\" (one process fewer).",
+ "rule": "the placement with the lower short-stream P99 under the heterogeneous mix\n(the isolation objective); ties within 5% go to the higher\naggregate throughput, then to \"thread\" (one process fewer).",
  "evidence": {
   "placement-laya-thread.json": "a4e33dd4dacf6349720547cfe3fb457230f4c92f0a85d66b6f492c6e326db9b7",
   "placement-laya-process.json": "a08442ab9d1117ef63ddc7438fe4950a911d637da021b79f54e0535ef8288d52",

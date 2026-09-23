@@ -1,4 +1,4 @@
-"""DEVELOPMENT_PLAN.md §12.4: repeated inline predict calls on one Laya instance must not
+"""Repeated inline predict calls on one Laya instance must not
 leak memory in the parent process."""
 
 from __future__ import annotations

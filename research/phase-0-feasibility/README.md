@@ -1,8 +1,8 @@
 # Phase -1: feasibility validation
 
-These experiments test the technical assumptions in `DEVELOPMENT_PLAN.md` before any
-runtime code is written. Everything here is research code. None of it is imported by the
-`laya_apple` package.
+These experiments test the technical assumptions behind the runtime's architecture (see
+`docs/support-matrix.md` and `docs/compatibility.md`) before any runtime code is written.
+Everything here is research code. None of it is imported by the `laya_apple` package.
 
 **Start with [conclusion.md](conclusion.md).**
 

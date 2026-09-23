@@ -1,4 +1,4 @@
-"""Stress/soak tests (DEVELOPMENT_PLAN.md §12.4). Opt-in: LAYA_APPLE_STRESS=1, with
+"""Stress/soak tests. Opt-in: LAYA_APPLE_STRESS=1, with
 LAYA_APPLE_STRESS_SECONDS for the sustained-load duration (default 60, 600 for a release)."""
 
 from __future__ import annotations

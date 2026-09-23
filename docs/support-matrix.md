@@ -1,8 +1,8 @@
 # Support matrix
 
-Authoritative source: [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md) §3.3, §4,
-§5, §6, §7. This page summarizes it for quick reference; where they
-disagree, `DEVELOPMENT_PLAN.md` wins.
+The authoritative reference for platform scope, model support, compute-unit status and
+routing derivation. [`compatibility.md`](compatibility.md) restates its conclusions for
+someone deciding whether to run `laya-apple` on a given machine.
 
 ## Platform scope
 
@@ -29,7 +29,7 @@ The runtime verifies `model.safetensors` against the pinned hash before use;
 a mismatch raises `ArtifactRevisionError` rather than a warning. A model's
 longer validated ANE lengths (parity passed up to `max_len`) are not offered
 by either explicit `device="ane"` or `auto` — they lose to MLX on latency
-(§6.3 of the development plan).
+(see "How the auto-ANE buckets were derived" below).
 
 ## Core ML configuration status
 

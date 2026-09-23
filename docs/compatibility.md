@@ -3,9 +3,8 @@
 This page states, for each dimension of the runtime, what is **tested** (every measured
 number in this repository comes from this exact profile), what is **expected** (a
 hypothesis, not measured), and what is **unknown**. Where it disagrees with
-[`support-matrix.md`](support-matrix.md) or [`DEVELOPMENT_PLAN.md`](DEVELOPMENT_PLAN.md),
-those win; this page restates their conclusions for someone deciding whether to run
-`laya-apple` on a given machine.
+[`support-matrix.md`](support-matrix.md), that page wins; this page restates its
+conclusions for someone deciding whether to run `laya-apple` on a given machine.
 
 ## Tested profile
 
@@ -68,6 +67,9 @@ coremltools version) that does not match a shipped, validated profile:
   only when no shipped profile matches the running machine — it never overrides a
   validated shipped profile. `Laya.info()["routing_profile"]` reports which table is in
   effect: `"shipped"`, `"local:<path>"`, or `None` (MLX only, no profile matched).
+  A local profile is bound to the platform profile, the pinned model revision and the
+  artifact hashes it measured. After an upgrade that re-pins a model, or after rebuilding
+  an artifact, it is ignored with a warning until `calibrate` is run again.
 
 - Artifacts are tied to the profile that built them. An artifact built on one SoC,
   macOS major version, or coremltools version is refused when loaded or imported on a
@@ -88,10 +90,8 @@ quietly used as if it were validated.
 - Per-model, per-compute-unit validation status, exact pinned revisions and weight
   hashes: [`support-matrix.md`](support-matrix.md).
 - How the auto-ANE bucket list and routing thresholds were derived from evidence:
-  `support-matrix.md`, "How the auto-ANE buckets were derived", and
-  `DEVELOPMENT_PLAN.md` §7.
-- Platform scope as an architectural decision, including the roadmap for
-  per-(SoC, macOS major, coremltools) capability profiles: `DEVELOPMENT_PLAN.md` §4 and
-  §12.4.
+  `support-matrix.md`, "How the auto-ANE buckets were derived".
+- Platform scope, including per-(SoC, macOS major, coremltools) capability profiles:
+  `support-matrix.md`, "Platform scope", and `laya-apple calibrate` above.
 - The stable public API and what compatibility promises apply to it (routing reasons,
   CLI, file formats): [`api.md`](api.md).

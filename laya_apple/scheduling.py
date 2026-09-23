@@ -1,4 +1,4 @@
-"""Queue-aware, isolation-first routing for heterogeneous execution (v0.2, DEVELOPMENT_PLAN.md §7.1).
+"""Queue-aware, isolation-first routing for heterogeneous execution (v0.2).
 
 `decide_queued` adds one input to the v0.1 rule: a snapshot of each device's backlog. For
 the same snapshot it is deterministic, and with both queues empty it returns exactly what

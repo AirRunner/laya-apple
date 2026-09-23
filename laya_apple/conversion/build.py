@@ -1,4 +1,4 @@
-"""Build, validate and atomically register one fixed-shape ANE artifact (DEVELOPMENT_PLAN.md §9).
+"""Build, validate and atomically register one fixed-shape ANE artifact.
 
     laya-apple artifacts build laya-typed-decisions --length 128
 

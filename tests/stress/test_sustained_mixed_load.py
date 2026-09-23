@@ -1,4 +1,4 @@
-"""DEVELOPMENT_PLAN.md §12.4: sustained mixed load through execution="workers",
+"""Sustained mixed load through execution="workers",
 device="auto" — multiple client threads issuing short (ANE), long (GPU) and
 multi-question (GPU) requests concurrently for LAYA_APPLE_STRESS_SECONDS (default 60,
 600 for the release run).

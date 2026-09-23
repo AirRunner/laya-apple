@@ -8,7 +8,7 @@ Inputs: benchmarks/v0.2/placement-<model>-{thread,process}.json, each the exit-g
 in a worker process. The GPU is always a worker process.
 
 Rule, per model: the placement with the lower short-stream P99 under the heterogeneous mix
-(the isolation objective, DEVELOPMENT_PLAN.md §7.1); ties within 5% go to the higher
+(the isolation objective); ties within 5% go to the higher
 aggregate throughput, then to "thread" (one process fewer).
 """
 

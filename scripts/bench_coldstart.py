@@ -1,4 +1,4 @@
-"""Cold start: ane_startup="wait" against "background" (DEVELOPMENT_PLAN.md §12.4, v0.3).
+"""Cold start: ane_startup="wait" against "background" (v0.3).
 
 Core ML caches its on-device ANE compile per artifact *location*. To measure a genuinely
 cold start, each run copies the model's registered artifacts into a fresh cache root, then

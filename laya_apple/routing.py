@@ -1,4 +1,4 @@
-"""Deterministic device selection (DEVELOPMENT_PLAN.md §7.2, §7.3).
+"""Deterministic device selection.
 
 `decide` is a pure function of the request shape and what is available. It uses no
 timing, no queue state and no randomness, so the same inputs always give the same target

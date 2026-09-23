@@ -1,4 +1,4 @@
-"""DEVELOPMENT_PLAN.md §12.4: inline mode holds a per-instance lock, so many threads
+"""Inline mode holds a per-instance lock, so many threads
 calling predict concurrently on one inline Laya must be as safe as calling it
 sequentially — every answer equal to the sequential reference.
 """

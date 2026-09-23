@@ -1,5 +1,6 @@
 """The auto-routing rule, shared by scripts/derive_routing.py (shipped, Phase -1 evidence)
-and `laya-apple calibrate` (local capability profiles, v0.3). DEVELOPMENT_PLAN.md §7.2.
+and `laya-apple calibrate` (local capability profiles, v0.3). See `docs/support-matrix.md`,
+"How the auto-ANE buckets were derived".
 
 Over the offered ANE buckets b1 < b2 < ...: bucket b_i joins auto routing iff
   (1) the BC1S ANE graph passed parity at b_i on CPU_AND_NE, and

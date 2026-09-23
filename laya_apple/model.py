@@ -1,4 +1,4 @@
-"""`Laya`: the public entry point (DEVELOPMENT_PLAN.md §10).
+"""`Laya`: the public entry point.
 
     from laya_apple import Laya
     laya = Laya.from_pretrained("convaiinnovations/laya-typed-decisions")
@@ -184,7 +184,7 @@ class Laya:
         )
 
     def _routing_profile(self):
-        """Which measured routing table applies on this machine (DEVELOPMENT_PLAN.md §4).
+        """Which measured routing table applies on this machine.
 
         The shipped table if a shipped profile matches; otherwise a local calibration for
         this exact profile (laya-apple calibrate), which also replaces the auto buckets;

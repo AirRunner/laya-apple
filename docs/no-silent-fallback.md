@@ -1,6 +1,6 @@
 # No silent fallback: audit
 
-v1.0 requires "no known silent fallback path" (DEVELOPMENT_PLAN.md §12.5).
+v1.0 requires no known silent fallback path.
 
 **What a silent fallback is.** Any way a request could run somewhere other than where the
 caller or the router said, with nothing in the result or the exception showing it. That

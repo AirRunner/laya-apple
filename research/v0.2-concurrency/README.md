@@ -2,9 +2,8 @@
 
 **Question.** Phase -1 measured GPU + ANE concurrency only across separate processes
 (3.10–3.32× the best single device). Does it hold when one application process drives both
-devices, and if not, what is the smallest execution model that keeps it?
-(DEVELOPMENT_PLAN.md §12.3: "Do not assume threads work, and do not assume processes are
-required.")
+devices, and if not, what is the smallest execution model that keeps it? (Ground rule:
+do not assume threads work, and do not assume processes are required.)
 
 **Answer [Measured].**
 
@@ -49,7 +48,7 @@ required.")
 | multilingual L96 + L1024 | threads, one process | 243.8 (−2.2%) | **+23.0%** | 30.6 (**−9.0%**) | **+11.0%** | 3.05× | **fail** (P99) |
 | | two processes | 252.1 (+1.1%) | +2.4% | 33.7 (+0.2%) | −0.3% | **3.17×** | **pass** |
 
-Exit criteria (DEVELOPMENT_PLAN.md §12.3): aggregate ≥ 2.5× the best single-device
+Exit criteria: aggregate ≥ 2.5× the best single-device
 throughput, each stream's P99 within 10% of its solo value, no correctness change.
 "GPU-only" is the same two streams both on MLX (threads, one process): 31.8 req/s (typed),
 90.1 req/s (multilingual). No answer changed under load in any window.
@@ -139,8 +138,8 @@ the exact policy is [Hypothesis].
   by any request-driven design on this platform. The Phase -1 and step-1 isolation
   numbers describe self-driven loops, not serving.
 - The v0.2 release benchmark reports the achieved isolation against its alternative,
-  GPU-only serving, as well as against solo. See `DEVELOPMENT_PLAN.md` §12.3 for the
-  revised gate.
+  GPU-only serving, as well as against solo. See `benchmarks/v0.2.md`, "Exit gate
+  (revised)", for the revised gate.
 - Placement is ANE on a thread, GPU in a process. The GPU stays out of the caller's
   interpreter because two backends in one interpreter interfere (step 1). The ANE stays in
   it because, of all tested designs, only an in-process ANE kept the short stream near its

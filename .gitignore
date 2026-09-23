@@ -25,3 +25,6 @@ benchmarks/results/
 .omc/
 .DS_Store
 
+
+# Private planning notes (never published)
+docs/DEVELOPMENT_PLAN.md

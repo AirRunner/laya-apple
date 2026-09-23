@@ -1,4 +1,4 @@
-"""Heterogeneous execution: one FIFO queue per device (DEVELOPMENT_PLAN.md §12.3).
+"""Heterogeneous execution: one FIFO queue per device.
 
 Placement per device, chosen from measurements (research/v0.2-concurrency/):
 

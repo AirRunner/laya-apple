@@ -1,4 +1,4 @@
-"""DEVELOPMENT_PLAN.md §12.4: repeated load/close of execution="workers" must not leak
+"""Repeated load/close of execution="workers" must not leak
 worker processes, file descriptors or parent RSS.
 """
 

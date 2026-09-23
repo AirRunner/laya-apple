@@ -1,4 +1,4 @@
-"""Local capability profiles (DEVELOPMENT_PLAN.md §4, v0.3).
+"""Local capability profiles (v0.3).
 
 The shipped routing table (laya_apple/data/routing.json) is valid only for the profile it
 was measured on. On any other profile (SoC, macOS major, coremltools version), `auto`

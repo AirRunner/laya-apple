@@ -33,7 +33,7 @@ from laya_apple.derivation import derive_model  # noqa: E402
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "research/phase-0-feasibility"
 OUT = ROOT / "laya_apple/data/routing.json"
-# Buckets for which ANE artifacts are offered (DEVELOPMENT_PLAN.md §6.3).
+# Buckets for which ANE artifacts are offered.
 CANDIDATE_BUCKETS = {
     "laya": [64, 96, 128],
     "laya-multilingual": [64, 96, 128, 256],

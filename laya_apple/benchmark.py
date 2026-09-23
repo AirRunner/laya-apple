@@ -1,4 +1,4 @@
-"""`laya-apple benchmark`: warm latency on exact-length requests (DEVELOPMENT_PLAN.md §11).
+"""`laya-apple benchmark`: warm latency on exact-length requests.
 
 Two boundaries per configuration: `forward` (backend only, synchronised) and `predict`
 (end to end: prompt build, routing, forward, answer formatting). Load time is reported

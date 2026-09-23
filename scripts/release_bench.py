@@ -1,4 +1,4 @@
-"""Release benchmark: warm latency per model x device x length (DEVELOPMENT_PLAN.md §11).
+"""Release benchmark: warm latency per model x device x length.
 
     LAYA_APPLE_CACHE=... uv run python scripts/release_bench.py benchmarks/v0.1/raw.jsonl
 

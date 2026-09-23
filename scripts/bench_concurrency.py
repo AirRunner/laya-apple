@@ -3,7 +3,7 @@
     LAYA_APPLE_CACHE=... uv run python scripts/bench_concurrency.py --model laya-typed-decisions \
         --short 128 --long 1024 --output benchmarks/v0.2/concurrency-typed.json
 
-Part A, exit gate (DEVELOPMENT_PLAN.md §12.3): the Phase -1 short/long mix, closed-loop, one
+Part A, exit gate: the Phase -1 short/long mix, closed-loop, one
 client thread per stream, all through ONE `Laya(execution="workers")` instance.
   solo_short / solo_long   each stream alone (device="auto")
   hetero                   both streams, device="auto" (short -> ANE, long -> MLX by routing)

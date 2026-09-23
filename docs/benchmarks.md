@@ -153,8 +153,8 @@ It reads `laya_apple/data/placement.json` and the raw Part A/B JSON files under
 - **Same profile.** Every table states the exact hardware, macOS build, MLX,
   coremltools and Python versions it was measured on (see `compatibility.md`). Numbers
   from a different profile are not comparable and are not merged into the same table
-  (`DEVELOPMENT_PLAN.md` §5, §11: compute-unit and profile configurations are never
-  merged).
+  (compute-unit and profile configurations are never merged; see
+  `support-matrix.md`, "Compute-unit terminology").
 - **Quiet machine.** Benchmarks assume AC power and an otherwise idle machine. The v0.1
   report records "AC power, no thermal or performance warnings recorded" for its run.
 - **Thermal state recorded.** The stress suite

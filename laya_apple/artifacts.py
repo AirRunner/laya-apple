@@ -1,6 +1,6 @@
 """Fixed-shape Core ML artifacts: cache layout, manifest, strict verification, placement.
 
-An artifact is usable only if every check below passes (DEVELOPMENT_PLAN.md §3.3, §9):
+An artifact is usable only if every check below passes:
 manifest schema, model revision and weight hash, graph variant, bucket, compute units,
 parity status, file integrity, and - at load - a Core ML compute plan that is 100% Neural
 Engine with no device transitions. Any failure raises a specific error; nothing falls back.
@@ -97,7 +97,7 @@ def _major(version: str | None) -> str:
 
 
 def profile_matches(a: dict, b: dict) -> bool:
-    """Same SoC, same macOS major, same coremltools version (DEVELOPMENT_PLAN.md §4)."""
+    """Same SoC, same macOS major, same coremltools version."""
     return (
         a.get("soc") == b.get("soc")
         and _major(a.get("macos")) == _major(b.get("macos"))
