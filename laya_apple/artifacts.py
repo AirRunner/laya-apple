@@ -275,7 +275,9 @@ def load_verified(spec: ModelSpec, bucket: int, *, compute_units: str = ANE_COMP
     try:
         import coremltools as ct
     except ImportError as e:
-        raise BackendUnavailableError("the ANE path needs coremltools: install the [ane] extra (uv sync --extra ane)") from e
+        raise BackendUnavailableError(
+            "the ANE path needs coremltools: install the [ane] extra (uv sync --extra ane)"
+        ) from e
     d = artifact_dir(spec, bucket)
     manifest = verify_manifest(spec, bucket, read_manifest(spec, bucket), compute_units=compute_units)
     profile = platform_profile()

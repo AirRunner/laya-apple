@@ -135,7 +135,9 @@ def build(spec: ModelSpec, length: int, *, local_files_only: bool = False, force
         import coremltools as ct
         import torch
     except ImportError as e:
-        raise ArtifactError("building artifacts needs: the [ane] and [convert] extras (uv sync --extra ane --extra convert)") from e
+        raise ArtifactError(
+            "building artifacts needs: the [ane] and [convert] extras (uv sync --extra ane --extra convert)"
+        ) from e
 
     from ..backends.coreml_ane import HostWeights, ane_features
     from ..parity import evaluate

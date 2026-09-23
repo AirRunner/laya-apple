@@ -60,5 +60,9 @@ markers = [
 line-length = 120
 extend-exclude = ["research"]
 
+[tool.ruff.format]
+# Vendored upstream code stays byte-identical to its source revision (see NOTICE).
+exclude = ["laya_apple/models/modernbert_mlx.py", "laya_apple/conversion/torch_reference.py"]
+
 [tool.ruff.lint]
 select = ["E4", "E7", "E9", "F", "I"]
