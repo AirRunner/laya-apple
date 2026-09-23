@@ -5,6 +5,18 @@ follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+### Notes
+
+- **History was rewritten on 2026-09-23 before publication:**
+  - a private planning document was removed;
+  - local absolute paths were scrubbed from committed raw data and logs.
+
+  The tags were recreated on the rewritten commits. v1.0.0 and v1.0.1 have exactly
+  the same content as before. At v0.1.0 to v0.3.0, the embedded sha256 of the raw
+  Phase -1 files in `routing.json` and the goldens no longer match: those files lost
+  their path strings. As a result `derive_routing.py --check` and `make_goldens.py
+  --check` report them stale at those tags. No measured value changed.
+
 ## [1.0.1] - 2026-09-23
 
 Documentation, examples and tooling only. The library code is unchanged since 1.0.0.
