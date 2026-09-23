@@ -1,0 +1,120 @@
+{
+ "file": "inproc-laya-typed-decisions-S128-L1024.json",
+ "model": "laya-typed-decisions",
+ "conditions": {
+  "solo:ane_short": {
+   "streams": {
+    "ane_short": {
+     "req_s": 99.40149931441069,
+     "p99_ms": 10.227303928695619,
+     "p50_ms": 10.073750047013164,
+     "answers_changed": false,
+     "cycles": 3
+    }
+   },
+   "aggregate_req_s": 99.40149931441069
+  },
+  "solo:gpu_long": {
+   "streams": {
+    "gpu_long": {
+     "req_s": 13.91276616201927,
+     "p99_ms": 72.64208750566466,
+     "p50_ms": 71.82858302257955,
+     "answers_changed": false,
+     "cycles": 3
+    }
+   },
+   "aggregate_req_s": 13.91276616201927
+  },
+  "solo:gpu_short": {
+   "streams": {
+    "gpu_short": {
+     "req_s": 80.72172015446053,
+     "p99_ms": 12.720101578161119,
+     "p50_ms": 12.39295897539705,
+     "answers_changed": false,
+     "cycles": 3
+    }
+   },
+   "aggregate_req_s": 80.72172015446053
+  },
+  "threads": {
+   "streams": {
+    "ane_short": {
+     "req_s": 98.16330287595298,
+     "p99_ms": 11.543177911080418,
+     "p50_ms": 9.975103952456266,
+     "answers_changed": false,
+     "cycles": 3,
+     "req_s_vs_solo": -0.012456516722562094,
+     "p99_vs_solo": 0.12866284130783856
+    },
+    "gpu_long": {
+     "req_s": 12.413747821873852,
+     "p99_ms": 81.70387451536953,
+     "p50_ms": 81.13754203077406,
+     "answers_changed": false,
+     "cycles": 3,
+     "req_s_vs_solo": -0.10774409076446767,
+     "p99_vs_solo": 0.12474568560544497
+    }
+   },
+   "aggregate_req_s": 110.57705069782683,
+   "vs_gpu_only": 3.4814284354531533,
+   "gate_throughput": true,
+   "gate_p99": false,
+   "gate_correctness": true
+  },
+  "threads_gpu2": {
+   "streams": {
+    "gpu_short": {
+     "req_s": 19.083810328734078,
+     "p99_ms": 66.07127574738115,
+     "p50_ms": 48.85591706261039,
+     "answers_changed": false,
+     "cycles": 3,
+     "req_s_vs_solo": -0.7635851875775526,
+     "p99_vs_solo": 4.194241204867229
+    },
+    "gpu_long": {
+     "req_s": 12.678166902153276,
+     "p99_ms": 80.3060030261986,
+     "p50_ms": 78.84358294541016,
+     "answers_changed": false,
+     "cycles": 3,
+     "req_s_vs_solo": -0.08873859054976074,
+     "p99_vs_solo": 0.10550241304582975
+    }
+   },
+   "aggregate_req_s": 31.761977230887354
+  },
+  "processes": {
+   "streams": {
+    "ane_short": {
+     "req_s": 100.17082816631499,
+     "p99_ms": 10.345741281053051,
+     "p50_ms": 9.9589170422405,
+     "answers_changed": false,
+     "cycles": 3,
+     "req_s_vs_solo": 0.0077396101387856575,
+     "p99_vs_solo": 0.011580505789519302
+    },
+    "gpu_long": {
+     "req_s": 13.911787738548297,
+     "p99_ms": 72.24172078771517,
+     "p50_ms": 71.8597499653697,
+     "answers_changed": false,
+     "cycles": 3,
+     "req_s_vs_solo": -7.032558871322703e-05,
+     "p99_vs_solo": -0.0055114979717271195
+    }
+   },
+   "aggregate_req_s": 114.08261590486329,
+   "vs_gpu_only": 3.5917983025918847,
+   "gate_throughput": true,
+   "gate_p99": true,
+   "gate_correctness": true
+  }
+ },
+ "gpu_only_aggregate_req_s": 31.761977230887354
+}
