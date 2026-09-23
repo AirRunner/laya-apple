@@ -37,7 +37,7 @@ ML Program, FP16, B=1, K=32, SDPA attention.
 | Compilation / load | PASS: 4–9 s | smoke test and `raw/bench/latency.jsonl` |
 | Inference | PASS | |
 | Decision parity | **PASS**: max probability error 0.0016 | `raw/parity/laya-typed-decisions/coreml_units-cpu_gpu_enumerated-True.json` |
-| ANE execution | **NO**: MLComputePlan puts 1648/1648 ops on **CPU** under every setting, including `CPU_AND_NE` and `ALL` | `raw/profile/plan-laya-typed-decisions-enumerated-<units>-L128.json` |
+| ANE execution | **NO**: MLComputePlan puts 1648/1648 ops on **CPU** under every setting, including `CPU_AND_NE` and `ALL`. The same holds for laya (1648) and multilingual (1318) | `raw/profile/plan-laya-typed-decisions-enumerated-<units>-L128.json` |
 | CPU fallback | **Total**. E5RT logs `tensor_buffer has known strides while the model has FlexibleShapeInfo` | `raw/logs/*` |
 | Latency | 218 ms at L128 and 917 ms at L512 (`CPU_AND_GPU` requested) | `raw/bench/latency.jsonl` |
 
@@ -101,7 +101,7 @@ the original checkpoint weights, re-laid-out, with no retraining.
 | **128** | PASS | 38.3 s | PASS | ✅ **0.0077, 0** | 10594 / 0 / 0 / 0 | **plan + Instruments + latency control** | **9.93** | **10.05** |
 | 256 | PASS | 42.8 s | PASS | ✅ 0.0023, 0 | 10594 / 0 / 0 / 0 | plan + latency control | 20.07 | 20.28 |
 | 512 | PASS | 44.7 s | PASS | ✅ 0.0036, 0 (1 near-tie flip) | 10594 / 0 / 0 / 0 | plan + latency control | 54.43 | 54.84 |
-| 1024 | PASS | 42.8 s | PASS | ✅ 0.0024, 0 | see `raw/profile/plan-laya-typed-decisions-ane-cpu_ne-L1024.json` | **plan + Instruments + latency control** | 169.57 | 170.53 |
+| 1024 | PASS | 42.8 s | PASS | ✅ 0.0024, 0 | 10594 / 0 / 0 / 0 | **plan + Instruments + latency control** | 169.57 | 170.53 |
 
 Sources:
 

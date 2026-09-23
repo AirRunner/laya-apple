@@ -1,0 +1,313 @@
+{
+ "model": "laya",
+ "graph": "ordinary",
+ "units": "cpu_ne",
+ "length": 512,
+ "load_s": 9.689419041969813,
+ "plan": {
+  "kind": "MLComputePlan (anticipated placement, not a runtime trace)",
+  "compute_units": "CPU_AND_NE",
+  "preferred_counts": {
+   "none": 1187,
+   "cpu": 42,
+   "ane": 1084
+  },
+  "supported_counts": {
+   "cpu": 1126,
+   "ane": 1114
+  },
+  "estimated_cost_share": {
+   "cpu": 0.06342174316812806,
+   "ane": 0.9365782568318719
+  },
+  "device_transitions_in_program_order": 6,
+  "contiguous_segments_per_device": {
+   "cpu": 4,
+   "ane": 3
+  },
+  "by_operator": {
+   "const": {
+    "none": 1187
+   },
+   "ios16.fill_like": {
+    "ane": 1
+   },
+   "ios16.reduce_sum": {
+    "cpu": 2
+   },
+   "ios18.add": {
+    "cpu": 1,
+    "ane": 117
+   },
+   "ios18.cast": {
+    "cpu": 7
+   },
+   "ios18.clip": {
+    "cpu": 2
+   },
+   "ios18.concat": {
+    "ane": 56,
+    "cpu": 1
+   },
+   "ios18.expand_dims": {
+    "cpu": 4,
+    "ane": 1
+   },
+   "ios18.gather": {
+    "cpu": 1,
+    "ane": 1
+   },
+   "ios18.gather_along_axis": {
+    "ane": 1
+   },
+   "ios18.gelu": {
+    "ane": 29,
+    "cpu": 1
+   },
+   "ios18.greater_equal": {
+    "cpu": 1
+   },
+   "ios18.layer_norm": {
+    "cpu": 1,
+    "ane": 61
+   },
+   "ios18.linear": {
+    "ane": 122,
+    "cpu": 2
+   },
+   "ios18.log": {
+    "cpu": 2
+   },
+   "ios18.logical_and": {
+    "cpu": 1
+   },
+   "ios18.logical_not": {
+    "cpu": 1
+   },
+   "ios18.logical_or": {
+    "cpu": 1
+   },
+   "ios18.mul": {
+    "ane": 252,
+    "cpu": 3
+   },
+   "ios18.real_div": {
+    "cpu": 1
+   },
+   "ios18.relu": {
+    "ane": 2
+   },
+   "ios18.reshape": {
+    "ane": 60
+   },
+   "ios18.scaled_dot_product_attention": {
+    "ane": 30
+   },
+   "ios18.slice_by_index": {
+    "ane": 90,
+    "cpu": 3
+   },
+   "ios18.softmax": {
+    "cpu": 1
+   },
+   "ios18.squeeze": {
+    "ane": 1
+   },
+   "ios18.sub": {
+    "ane": 56,
+    "cpu": 1
+   },
+   "ios18.topk": {
+    "cpu": 1
+   },
+   "ios18.transpose": {
+    "ane": 120
+   },
+   "select": {
+    "cpu": 2
+   },
+   "split": {
+    "ane": 84
+   },
+   "stack": {
+    "cpu": 1
+   },
+   "tile": {
+    "cpu": 1
+   }
+  },
+  "cost_share_by_operator": {
+   "ios16.fill_like": {
+    "ane": 2.4571588287306992e-08
+   },
+   "ios16.reduce_sum": {
+    "cpu": 3.220768332357353e-08
+   },
+   "ios18.add": {
+    "cpu": 8.467026150841547e-07,
+    "ane": 0.07802873677043799
+   },
+   "ios18.cast": {
+    "cpu": 4.527992008886111e-05
+   },
+   "ios18.clip": {
+    "cpu": 3.175405398098798e-08
+   },
+   "ios18.concat": {
+    "ane": 0.00810376055796887,
+    "cpu": 2.4668425279958347e-06
+   },
+   "ios18.expand_dims": {
+    "cpu": 7.584682608030272e-07,
+    "ane": 7.749500921381437e-07
+   },
+   "ios18.gather": {
+    "cpu": 0.06188384876497975,
+    "ane": 1.5504672209290712e-06
+   },
+   "ios18.gather_along_axis": {
+    "ane": 0.0002229688295222043
+   },
+   "ios18.gelu": {
+    "ane": 0.028465566582869178,
+    "cpu": 2.3225822340379784e-07
+   },
+   "ios18.greater_equal": {
+    "cpu": 5.815528171946658e-07
+   },
+   "ios18.layer_norm": {
+    "cpu": 0.000475664841530978,
+    "ane": 0.02380801521857027
+   },
+   "ios18.linear": {
+    "ane": 0.34555025863200656,
+    "cpu": 0.0005038154649489748
+   },
+   "ios18.log": {
+    "cpu": 3.175405398098798e-08
+   },
+   "ios18.logical_and": {
+    "cpu": 0.00011903233949444637
+   },
+   "ios18.logical_not": {
+    "cpu": 2.3225822340379784e-07
+   },
+   "ios18.logical_or": {
+    "cpu": 0.00011903233949444637
+   },
+   "ios18.mul": {
+    "ane": 0.09496594403869753,
+    "cpu": 1.6317635399194233e-07
+   },
+   "ios18.real_div": {
+    "cpu": 1.360888027756628e-09
+   },
+   "ios18.relu": {
+    "ane": 0.0023153601594196795
+   },
+   "ios18.reshape": {
+    "ane": 0.04756666347010038
+   },
+   "ios18.scaled_dot_product_attention": {
+    "ane": 0.02467627383809511
+   },
+   "ios18.slice_by_index": {
+    "ane": 0.07135057358253642,
+    "cpu": 0.0002383155360153426
+   },
+   "ios18.softmax": {
+    "cpu": 2.993953661064581e-08
+   },
+   "ios18.squeeze": {
+    "ane": 2.4949612722496334e-08
+   },
+   "ios18.sub": {
+    "ane": 0.02468678555235302,
+    "cpu": 3.3009848541292577e-09
+   },
+   "ios18.topk": {
+    "cpu": 1.7918359032128933e-08
+   },
+   "ios18.transpose": {
+    "ane": 0.12752532686980783
+   },
+   "select": {
+    "cpu": 1.5604849384942667e-06
+   },
+   "split": {
+    "ane": 0.05930964779097235
+   },
+   "stack": {
+    "cpu": 3.1754053980987986e-09
+   },
+   "tile": {
+    "cpu": 2.9760806649667113e-05
+   }
+  }
+ },
+ "environment": {
+  "soc": "Apple M4 Max",
+  "cpu_cores": {
+   "total": 16,
+   "performance": 12,
+   "efficiency": 4
+  },
+  "memory_bytes": 68719476736,
+  "macos": "26.6.2",
+  "os_build": "25G83",
+  "python": "3.12.14",
+  "executable": "research/phase-0-feasibility/.venv/bin/python3",
+  "packages": {
+   "torch": "2.7.0",
+   "numpy": "2.1.3",
+   "coremltools": "9.0",
+   "transformers": "5.17.0",
+   "tokenizers": "0.23.2",
+   "safetensors": "0.8.0",
+   "huggingface-hub": "1.32.0",
+   "mlx": "0.32.2",
+   "mlx-metal": "0.32.2",
+   "laya": "0.3.5",
+   "laya-mlx": "0.2.0",
+   "laya-coreml": "0.1.1",
+   "psutil": "7.2.2"
+  },
+  "research_git_revision": "8653409f090018900c26b44793668e1cbd0ef96d",
+  "research_scripts_dirty": false,
+  "reference_repos": {
+   "NandhaKishorM/laya": "573e5b62696ba441230cd6be71d593331b5d23af",
+   "mizorewww/laya-mlx": "0a859518634112655cb97c745dbf04f5191aaf13",
+   "mizorewww/laya-coreml": "4619e0483f07adf39068532e85b42ec2347edb83"
+  },
+  "models": {
+   "laya": {
+    "repo": "convaiinnovations/laya",
+    "revision": "c5d78730f3493e4fe16d61507ef4b78eef7318cf",
+    "weights_sha256": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c"
+   },
+   "laya-multilingual": {
+    "repo": "convaiinnovations/laya-multilingual",
+    "revision": "052592a15d198d9ad47da779604259b10b47b7aa",
+    "weights_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204"
+   },
+   "laya-typed-decisions": {
+    "repo": "convaiinnovations/laya-typed-decisions",
+    "revision": "f9ab0b228f0fc0f14d873dbc99038f135c2da1b2",
+    "weights_sha256": "4fa56de72383a9d3efa9cfa78955733c81b9fc8067a587ca4beb82c78107a24e"
+   }
+  },
+  "conditions": {
+   "time": "2026-09-22T23:03:41.343694+00:00",
+   "loadavg": [
+    2.013671875,
+    1.98291015625,
+    1.93310546875
+   ],
+   "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+   "power_source": [
+    "Now drawing from 'AC Power'"
+   ],
+   "low_power_mode": false
+  }
+ }
+}

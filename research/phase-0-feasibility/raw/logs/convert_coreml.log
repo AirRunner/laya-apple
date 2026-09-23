@@ -1,0 +1,177 @@
+research/phase-0-feasibility/.venv/lib/python3.12/site-packages/coremltools/optimize/torch/palettization/fake_palettize.py:82: SyntaxWarning: invalid escape sequence '\_'
+  n_bits (:obj:`int`): Number of palettization bits. There would be :math:`2^{n\_bits}` unique weights in the ``LUT``.
+Tracing float16 B=1, L=128, K=32, flexible=True
+Tuple detected at graph output. This will be flattened in the converted model.
+Converting PyTorch Frontend ==> MIL Ops:   0%|          | 0/2121 [00:00<?, ? ops/s]Converting PyTorch Frontend ==> MIL Ops:  13%|█▎        | 276/2121 [00:00<00:00, 2758.84 ops/s]Converting PyTorch Frontend ==> MIL Ops:  30%|██▉       | 632/2121 [00:00<00:00, 2944.51 ops/s]Converting PyTorch Frontend ==> MIL Ops:  59%|█████▊    | 1243/2121 [00:00<00:00, 4317.39 ops/s]Converting PyTorch Frontend ==> MIL Ops:  88%|████████▊ | 1858/2121 [00:00<00:00, 4984.95 ops/s]Converting PyTorch Frontend ==> MIL Ops: 100%|█████████▉| 2119/2121 [00:00<00:00, 4782.50 ops/s]
+Running MIL frontend_pytorch pipeline:   0%|          | 0/5 [00:00<?, ? passes/s]Running MIL frontend_pytorch pipeline: 100%|██████████| 5/5 [00:00<00:00, 50.35 passes/s]
+Running MIL default pipeline:   0%|          | 0/95 [00:00<?, ? passes/s]Running MIL default pipeline:   5%|▌         | 5/95 [00:00<00:01, 49.14 passes/s]Running MIL default pipeline:  13%|█▎        | 12/95 [00:00<00:01, 60.35 passes/s]Running MIL default pipeline:  20%|██        | 19/95 [00:00<00:01, 51.64 passes/s]Running MIL default pipeline:  26%|██▋       | 25/95 [00:00<00:01, 53.96 passes/s]Running MIL default pipeline:  35%|███▍      | 33/95 [00:00<00:01, 60.61 passes/s]Running MIL default pipeline:  42%|████▏     | 40/95 [00:01<00:01, 28.35 passes/s]Running MIL default pipeline:  49%|████▉     | 47/95 [00:01<00:01, 35.13 passes/s]Running MIL default pipeline:  56%|█████▌    | 53/95 [00:01<00:01, 39.76 passes/s]research/phase-0-feasibility/.venv/lib/python3.12/site-packages/coremltools/converters/mil/mil/ops/defs/iOS15/elementwise_unary.py:889: RuntimeWarning: overflow encountered in cast
+  return input_var.val.astype(dtype=string_to_nptype(dtype_val))
+Running MIL default pipeline:  62%|██████▏   | 59/95 [00:05<00:07,  4.53 passes/s]Running MIL default pipeline:  66%|██████▋   | 63/95 [00:05<00:06,  5.29 passes/s]research/phase-0-feasibility/.venv/lib/python3.12/site-packages/coremltools/converters/mil/mil/passes/defs/optimize_repeat_ops.py:433: RuntimeWarning: overflow encountered in cast
+  max(cur_range.low, tmp_range.low), min(cur_range.high, tmp_range.high)
+Running MIL default pipeline:  71%|███████   | 67/95 [00:05<00:04,  6.47 passes/s]Running MIL default pipeline:  78%|███████▊  | 74/95 [00:06<00:02,  9.73 passes/s]Running MIL default pipeline:  85%|████████▌ | 81/95 [00:06<00:01, 13.75 passes/s]Running MIL default pipeline:  93%|█████████▎| 88/95 [00:06<00:00, 18.49 passes/s]Running MIL default pipeline:  99%|█████████▉| 94/95 [00:07<00:00, 12.89 passes/s]Running MIL default pipeline: 100%|██████████| 95/95 [00:07<00:00, 13.37 passes/s]
+Running MIL backend_mlprogram pipeline:   0%|          | 0/12 [00:00<?, ? passes/s]Running MIL backend_mlprogram pipeline:  58%|█████▊    | 7/12 [00:00<00:00, 65.37 passes/s]Running MIL backend_mlprogram pipeline: 100%|██████████| 12/12 [00:00<00:00, 65.38 passes/s]
+Saved <research-artifacts>/coreml-ordinary/laya-typed-decisions in 12.5s
+{
+ "experiment": "convert_coreml_ordinary",
+ "model": "laya-typed-decisions",
+ "output": "<research-artifacts>/coreml-ordinary/laya-typed-decisions",
+ "fixed_length": null,
+ "attention": "sdpa",
+ "status": "ok",
+ "manifest": {
+  "format": "laya-coreml",
+  "format_version": 1,
+  "source": "<hf-cache>/hub/models--convaiinnovations--laya-typed-decisions/snapshots/f9ab0b228f0fc0f14d873dbc99038f135c2da1b2",
+  "revision": "f9ab0b228f0fc0f14d873dbc99038f135c2da1b2",
+  "source_weights_sha256": "4fa56de72383a9d3efa9cfa78955733c81b9fc8067a587ca4beb82c78107a24e",
+  "precision": "float16",
+  "attention": "sdpa",
+  "attention_mask_construction": "integer_positions_v2",
+  "minimum_deployment_target": "macOS15 / iOS18",
+  "shape": {
+   "batch_size": 1,
+   "max_length": 1024,
+   "min_length": 16,
+   "default_length": 128,
+   "max_options": 32,
+   "flexible": true,
+   "mode": "enumerated",
+   "lengths": [
+    16,
+    32,
+    64,
+    96,
+    128,
+    192,
+    256,
+    384,
+    512,
+    768,
+    1024
+   ]
+  },
+  "versions": {
+   "coremltools": "9.0",
+   "torch": "2.7.0",
+   "numpy": "2.1.3"
+  },
+  "conversion_seconds": 12.526799459010363
+ },
+ "seconds": 23.741438917000778
+}
+Tracing float16 B=1, L=128, K=32, flexible=True
+Tuple detected at graph output. This will be flattened in the converted model.
+Converting PyTorch Frontend ==> MIL Ops:   0%|          | 0/2121 [00:00<?, ? ops/s]Converting PyTorch Frontend ==> MIL Ops:  15%|█▌        | 326/2121 [00:00<00:00, 3255.58 ops/s]Converting PyTorch Frontend ==> MIL Ops:  47%|████▋     | 994/2121 [00:00<00:00, 5268.36 ops/s]Converting PyTorch Frontend ==> MIL Ops:  78%|███████▊  | 1663/2121 [00:00<00:00, 5857.71 ops/s]Converting PyTorch Frontend ==> MIL Ops: 100%|█████████▉| 2119/2121 [00:00<00:00, 5388.03 ops/s]
+Running MIL frontend_pytorch pipeline:   0%|          | 0/5 [00:00<?, ? passes/s]Running MIL frontend_pytorch pipeline: 100%|██████████| 5/5 [00:00<00:00, 57.44 passes/s]
+Running MIL default pipeline:   0%|          | 0/95 [00:00<?, ? passes/s]Running MIL default pipeline:   6%|▋         | 6/95 [00:00<00:01, 53.68 passes/s]Running MIL default pipeline:  14%|█▎        | 13/95 [00:00<00:01, 62.57 passes/s]Running MIL default pipeline:  21%|██        | 20/95 [00:00<00:01, 54.03 passes/s]Running MIL default pipeline:  28%|██▊       | 27/95 [00:00<00:01, 57.50 passes/s]Running MIL default pipeline:  36%|███▌      | 34/95 [00:00<00:01, 31.79 passes/s]Running MIL default pipeline:  41%|████      | 39/95 [00:00<00:01, 35.11 passes/s]Running MIL default pipeline:  48%|████▊     | 46/95 [00:01<00:01, 42.45 passes/s]Running MIL default pipeline:  55%|█████▍    | 52/95 [00:01<00:00, 46.35 passes/s]Running MIL default pipeline:  61%|██████    | 58/95 [00:01<00:01, 28.75 passes/s]research/phase-0-feasibility/.venv/lib/python3.12/site-packages/coremltools/converters/mil/mil/ops/defs/iOS15/elementwise_unary.py:889: RuntimeWarning: overflow encountered in cast
+  return input_var.val.astype(dtype=string_to_nptype(dtype_val))
+Running MIL default pipeline:  66%|██████▋   | 63/95 [00:05<00:07,  4.11 passes/s]research/phase-0-feasibility/.venv/lib/python3.12/site-packages/coremltools/converters/mil/mil/passes/defs/optimize_repeat_ops.py:433: RuntimeWarning: overflow encountered in cast
+  max(cur_range.low, tmp_range.low), min(cur_range.high, tmp_range.high)
+Running MIL default pipeline:  69%|██████▉   | 66/95 [00:05<00:06,  4.80 passes/s]Running MIL default pipeline:  77%|███████▋  | 73/95 [00:05<00:02,  7.40 passes/s]Running MIL default pipeline:  84%|████████▍ | 80/95 [00:06<00:01, 10.75 passes/s]Running MIL default pipeline:  92%|█████████▏| 87/95 [00:06<00:00, 14.87 passes/s]Running MIL default pipeline:  98%|█████████▊| 93/95 [00:06<00:00, 11.75 passes/s]Running MIL default pipeline: 100%|██████████| 95/95 [00:07<00:00, 13.48 passes/s]
+Running MIL backend_mlprogram pipeline:   0%|          | 0/12 [00:00<?, ? passes/s]Running MIL backend_mlprogram pipeline:  58%|█████▊    | 7/12 [00:00<00:00, 59.34 passes/s]Running MIL backend_mlprogram pipeline: 100%|██████████| 12/12 [00:00<00:00, 60.23 passes/s]
+Saved <research-artifacts>/coreml-ordinary/laya in 13.4s
+{
+ "experiment": "convert_coreml_ordinary",
+ "model": "laya",
+ "output": "<research-artifacts>/coreml-ordinary/laya",
+ "fixed_length": null,
+ "attention": "sdpa",
+ "status": "ok",
+ "manifest": {
+  "format": "laya-coreml",
+  "format_version": 1,
+  "source": "<hf-cache>/hub/models--convaiinnovations--laya/snapshots/c5d78730f3493e4fe16d61507ef4b78eef7318cf",
+  "revision": "c5d78730f3493e4fe16d61507ef4b78eef7318cf",
+  "source_weights_sha256": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c",
+  "precision": "float16",
+  "attention": "sdpa",
+  "attention_mask_construction": "integer_positions_v2",
+  "minimum_deployment_target": "macOS15 / iOS18",
+  "shape": {
+   "batch_size": 1,
+   "max_length": 512,
+   "min_length": 16,
+   "default_length": 128,
+   "max_options": 32,
+   "flexible": true,
+   "mode": "enumerated",
+   "lengths": [
+    16,
+    32,
+    64,
+    96,
+    128,
+    192,
+    256,
+    384,
+    512
+   ]
+  },
+  "versions": {
+   "coremltools": "9.0",
+   "torch": "2.7.0",
+   "numpy": "2.1.3"
+  },
+  "conversion_seconds": 13.442065333016217
+ },
+ "seconds": 15.325401582987979
+}
+Tracing float16 B=1, L=128, K=32, flexible=True
+Tuple detected at graph output. This will be flattened in the converted model.
+Converting PyTorch Frontend ==> MIL Ops:   0%|          | 0/1731 [00:00<?, ? ops/s]Converting PyTorch Frontend ==> MIL Ops:  15%|█▍        | 257/1731 [00:00<00:00, 2378.20 ops/s]Converting PyTorch Frontend ==> MIL Ops:  48%|████▊     | 838/1731 [00:00<00:00, 4325.92 ops/s]Converting PyTorch Frontend ==> MIL Ops:  85%|████████▍ | 1468/1731 [00:00<00:00, 5161.21 ops/s]Converting PyTorch Frontend ==> MIL Ops: 100%|█████████▉| 1729/1731 [00:00<00:00, 5157.73 ops/s]
+Running MIL frontend_pytorch pipeline:   0%|          | 0/5 [00:00<?, ? passes/s]Running MIL frontend_pytorch pipeline: 100%|██████████| 5/5 [00:00<00:00, 61.23 passes/s]
+Running MIL default pipeline:   0%|          | 0/95 [00:00<?, ? passes/s]Running MIL default pipeline:   7%|▋         | 7/95 [00:00<00:01, 65.27 passes/s]Running MIL default pipeline:  17%|█▋        | 16/95 [00:00<00:01, 76.85 passes/s]Running MIL default pipeline:  25%|██▌       | 24/95 [00:00<00:01, 64.21 passes/s]Running MIL default pipeline:  35%|███▍      | 33/95 [00:00<00:00, 72.85 passes/s]Running MIL default pipeline:  43%|████▎     | 41/95 [00:00<00:01, 34.63 passes/s]Running MIL default pipeline:  52%|█████▏    | 49/95 [00:01<00:01, 42.36 passes/s]Running MIL default pipeline:  59%|█████▉    | 56/95 [00:01<00:01, 33.05 passes/s]research/phase-0-feasibility/.venv/lib/python3.12/site-packages/coremltools/converters/mil/mil/ops/defs/iOS15/elementwise_unary.py:889: RuntimeWarning: overflow encountered in cast
+  return input_var.val.astype(dtype=string_to_nptype(dtype_val))
+Running MIL default pipeline:  64%|██████▍   | 61/95 [00:06<00:08,  3.97 passes/s]research/phase-0-feasibility/.venv/lib/python3.12/site-packages/coremltools/converters/mil/mil/passes/defs/optimize_repeat_ops.py:433: RuntimeWarning: overflow encountered in cast
+  max(cur_range.low, tmp_range.low), min(cur_range.high, tmp_range.high)
+Running MIL default pipeline:  68%|██████▊   | 65/95 [00:06<00:06,  4.77 passes/s]Running MIL default pipeline:  77%|███████▋  | 73/95 [00:06<00:02,  7.34 passes/s]Running MIL default pipeline:  86%|████████▋ | 82/95 [00:06<00:01, 11.12 passes/s]Running MIL default pipeline:  95%|█████████▍| 90/95 [00:06<00:00, 15.38 passes/s]Running MIL default pipeline: 100%|██████████| 95/95 [00:07<00:00, 12.63 passes/s]
+Running MIL backend_mlprogram pipeline:   0%|          | 0/12 [00:00<?, ? passes/s]Running MIL backend_mlprogram pipeline:  75%|███████▌  | 9/12 [00:00<00:00, 79.42 passes/s]Running MIL backend_mlprogram pipeline: 100%|██████████| 12/12 [00:00<00:00, 81.49 passes/s]
+Saved <research-artifacts>/coreml-ordinary/laya-multilingual in 14.6s
+{
+ "experiment": "convert_coreml_ordinary",
+ "model": "laya-multilingual",
+ "output": "<research-artifacts>/coreml-ordinary/laya-multilingual",
+ "fixed_length": null,
+ "attention": "sdpa",
+ "status": "ok",
+ "manifest": {
+  "format": "laya-coreml",
+  "format_version": 1,
+  "source": "<hf-cache>/hub/models--convaiinnovations--laya-multilingual/snapshots/052592a15d198d9ad47da779604259b10b47b7aa",
+  "revision": "052592a15d198d9ad47da779604259b10b47b7aa",
+  "source_weights_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204",
+  "precision": "float16",
+  "attention": "sdpa",
+  "attention_mask_construction": "integer_positions_v2",
+  "minimum_deployment_target": "macOS15 / iOS18",
+  "shape": {
+   "batch_size": 1,
+   "max_length": 1024,
+   "min_length": 16,
+   "default_length": 128,
+   "max_options": 32,
+   "flexible": true,
+   "mode": "enumerated",
+   "lengths": [
+    16,
+    32,
+    64,
+    96,
+    128,
+    192,
+    256,
+    384,
+    512,
+    768,
+    1024
+   ]
+  },
+  "versions": {
+   "coremltools": "9.0",
+   "torch": "2.7.0",
+   "numpy": "2.1.3"
+  },
+  "conversion_seconds": 14.568531000055373
+ },
+ "seconds": 16.497854624991305
+}

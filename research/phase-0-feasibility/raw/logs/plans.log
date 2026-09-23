@@ -1,0 +1,56 @@
+laya-typed-decisions ordinary cpu_ne 64 load 8.7s ops ane=1084 gpu=0 cpu=42 | cost ane=0.735 gpu=0.000 cpu=0.265 | transitions=6
+laya-typed-decisions ordinary cpu_ne 96 load 7.9s ops ane=1084 gpu=0 cpu=42 | cost ane=0.809 gpu=0.000 cpu=0.191 | transitions=6
+laya-typed-decisions ordinary cpu_ne 128 load 8.2s ops ane=1084 gpu=0 cpu=42 | cost ane=0.844 gpu=0.000 cpu=0.156 | transitions=6
+laya-typed-decisions ordinary cpu_ne 256 load 9.4s ops ane=1084 gpu=0 cpu=42 | cost ane=0.915 gpu=0.000 cpu=0.085 | transitions=6
+laya-typed-decisions ordinary cpu_ne 512 load 9.7s ops ane=1084 gpu=0 cpu=42 | cost ane=0.937 gpu=0.000 cpu=0.063 | transitions=6
+laya-typed-decisions ordinary cpu_ne 1024 load 44.0s ops ane=0 gpu=0 cpu=1093 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.
+laya-typed-decisions ordinary all 64 load 8.5s ops ane=1076 gpu=37 cpu=13 | cost ane=0.732 gpu=0.002 cpu=0.267 | transitions=4
+laya-typed-decisions ordinary all 96 load 8.0s ops ane=1076 gpu=37 cpu=13 | cost ane=0.807 gpu=0.001 cpu=0.191 | transitions=4
+laya-typed-decisions ordinary all 128 load 8.1s ops ane=1076 gpu=37 cpu=13 | cost ane=0.843 gpu=0.001 cpu=0.156 | transitions=4
+laya-typed-decisions ordinary all 256 load 40.2s ops ane=0 gpu=1057 cpu=36 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=3
+laya-typed-decisions ordinary all 512 load 42.5s ops ane=0 gpu=1057 cpu=36 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=3
+laya-typed-decisions ordinary all 1024 load 45.1s ops ane=0 gpu=1063 cpu=30 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=5
+E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.
+laya-typed-decisions ane all 64 load 39.3s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-typed-decisions ane all 96 load 39.6s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-typed-decisions ane all 128 load 40.0s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-typed-decisions ane all 256 load 45.4s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-typed-decisions ane all 512 load 13.8s ops ane=128 gpu=10466 cpu=0 | cost ane=0.044 gpu=0.956 cpu=0.000 | transitions=1
+laya-typed-decisions ane all 1024 load 13.8s ops ane=59 gpu=10535 cpu=0 | cost ane=0.032 gpu=0.968 cpu=0.000 | transitions=4
+laya-multilingual ordinary cpu_ne 64 load 6.9s ops ane=862 gpu=0 cpu=42 | cost ane=0.227 gpu=0.000 cpu=0.773 | transitions=6
+laya-multilingual ordinary cpu_ne 96 load 5.7s ops ane=862 gpu=0 cpu=42 | cost ane=0.304 gpu=0.000 cpu=0.696 | transitions=6
+laya-multilingual ordinary cpu_ne 128 load 5.9s ops ane=862 gpu=0 cpu=42 | cost ane=0.376 gpu=0.000 cpu=0.624 | transitions=6
+laya-multilingual ordinary cpu_ne 256 load 6.5s ops ane=862 gpu=0 cpu=42 | cost ane=0.525 gpu=0.000 cpu=0.475 | transitions=6
+laya-multilingual ordinary cpu_ne 512 load 6.8s ops ane=862 gpu=0 cpu=42 | cost ane=0.640 gpu=0.000 cpu=0.360 | transitions=6
+laya-multilingual ordinary cpu_ne 1024 load 7.5s ops ane=862 gpu=0 cpu=42 | cost ane=0.780 gpu=0.000 cpu=0.220 | transitions=6
+laya-multilingual ordinary all 64 load 6.8s ops ane=834 gpu=69 cpu=1 | cost ane=0.234 gpu=0.766 cpu=0.000 | transitions=4
+laya-multilingual ordinary all 96 load 5.5s ops ane=834 gpu=69 cpu=1 | cost ane=0.314 gpu=0.686 cpu=0.000 | transitions=4
+laya-multilingual ordinary all 128 load 23.5s ops ane=0 gpu=841 cpu=36 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=3
+laya-multilingual ordinary all 256 load 24.1s ops ane=0 gpu=841 cpu=36 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=3
+laya-multilingual ordinary all 512 load 24.8s ops ane=0 gpu=841 cpu=36 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=3
+laya-multilingual ordinary all 1024 load 27.6s ops ane=0 gpu=841 cpu=36 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=3
+E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.
+laya-multilingual ane all 64 load 19.5s ops ane=6390 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-multilingual ane all 96 load 18.9s ops ane=6390 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-multilingual ane all 128 load 18.9s ops ane=6390 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-multilingual ane all 256 load 21.3s ops ane=6390 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-multilingual ane all 512 load 5.5s ops ane=0 gpu=6390 cpu=0 | cost ane=0.000 gpu=1.000 cpu=0.000 | transitions=0
+laya-multilingual ane all 1024 load 5.6s ops ane=16 gpu=6374 cpu=0 | cost ane=0.015 gpu=0.985 cpu=0.000 | transitions=1
+laya ordinary cpu_ne 64 load 8.9s ops ane=1084 gpu=0 cpu=42 | cost ane=0.735 gpu=0.000 cpu=0.265 | transitions=6
+laya ordinary cpu_ne 96 load 8.0s ops ane=1084 gpu=0 cpu=42 | cost ane=0.809 gpu=0.000 cpu=0.191 | transitions=6
+laya ordinary cpu_ne 128 load 11.6s ops ane=1084 gpu=0 cpu=42 | cost ane=0.844 gpu=0.000 cpu=0.156 | transitions=6
+laya ordinary cpu_ne 256 load 10.3s ops ane=1084 gpu=0 cpu=42 | cost ane=0.915 gpu=0.000 cpu=0.085 | transitions=6
+laya ordinary cpu_ne 512 load 9.7s ops ane=1084 gpu=0 cpu=42 | cost ane=0.937 gpu=0.000 cpu=0.063 | transitions=6
+laya ordinary all 64 load 8.9s ops ane=1076 gpu=37 cpu=13 | cost ane=0.732 gpu=0.002 cpu=0.267 | transitions=4
+laya ordinary all 96 load 8.0s ops ane=1076 gpu=37 cpu=13 | cost ane=0.807 gpu=0.001 cpu=0.191 | transitions=4
+laya ordinary all 128 load 8.4s ops ane=1076 gpu=37 cpu=13 | cost ane=0.843 gpu=0.001 cpu=0.156 | transitions=4
+laya ordinary all 256 load 40.3s ops ane=0 gpu=1057 cpu=36 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=3
+laya ordinary all 512 load 42.3s ops ane=0 gpu=1057 cpu=36 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=3
+E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.
+laya ane all 64 load 39.1s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya ane all 96 load 41.3s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya ane all 128 load 42.7s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya ane all 256 load 44.8s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0
+laya ane all 512 load 13.6s ops ane=128 gpu=10466 cpu=0 | cost ane=0.044 gpu=0.956 cpu=0.000 | transitions=1
+laya-typed-decisions ane cpu_ne 1024 load 44.5s ops ane=10594 gpu=0 cpu=0 | cost ane=1.000 gpu=0.000 cpu=0.000 | transitions=0

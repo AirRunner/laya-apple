@@ -1,0 +1,41 @@
+laya-typed-decisions torch,device=mps: passed=True status=ran prob_max=2.8163634995803655e-06 mism=0 hard=0 logit_max=2.1696090698242188e-05 act=0.0 rep=True err=None
+laya-typed-decisions mlx,dtype=float32: passed=True status=ran prob_max=3.3927841795455826e-06 mism=0 hard=0 logit_max=2.3484230041503906e-05 act=0.0 rep=True err=None
+laya-typed-decisions mlx,dtype=float16: passed=True status=ran prob_max=0.001678333801988563 mism=0 hard=0 logit_max=0.021537214517593384 act=0.0 rep=True err=None
+laya-typed-decisions coreml,units=cpu_gpu,enumerated=True: passed=True status=ran prob_max=0.0016074396297766635 mism=0 hard=0 logit_max=0.008597761392593384 act=0.0 rep=True err=None
+laya-typed-decisions coreml,units=cpu_gpu: passed=True status=ran prob_max=0.0028268007618084123 mism=0 hard=0 logit_max=0.027518659830093384 act=0.0 rep=True err=None
+laya-typed-decisions coreml,units=cpu_ne: passed=False status=ran prob_max=0.4180715130794744 mism=23 hard=19 logit_max=2.435382843017578 act=0.0 rep=True err=None
+E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.
+laya-typed-decisions coreml,units=all: passed=False status=ran prob_max=0.4180864236677825 mism=5 hard=3 logit_max=1.195143699645996 act=0.0 rep=True err=None
+E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.
+laya-typed-decisions coreml,units=cpu_only: passed=True status=ran prob_max=0.010185428076740832 mism=0 hard=0 logit_max=0.04955029487609863 act=0.0 rep=True err=None
+laya-typed-decisions ane,units=cpu_ne: passed=True status=ran prob_max=0.007666298291743701 mism=1 hard=0 logit_max=0.053394630551338196 act=0.0 rep=True err=None
+laya-typed-decisions ane,units=all: passed=True status=ran prob_max=0.007666298291743701 mism=0 hard=0 logit_max=0.053394630551338196 act=0.0 rep=True err=None
+laya-typed-decisions ane,units=cpu_gpu: passed=True status=ran prob_max=0.0020122970621108127 mism=0 hard=0 logit_max=0.023612409830093384 act=0.0 rep=True err=None
+laya-typed-decisions ane,units=cpu_only: passed=False status=ran prob_max=0.10120359846018434 mism=2 hard=0 logit_max=0.7462553977966309 act=0.0 rep=True err=None
+    raise ValueError(
+ValueError: Out of range float values are not JSON compliant: nan
+laya-multilingual mlx,dtype=float32: passed=True status=ran prob_max=6.667522310044305e-06 mism=0 hard=0 logit_max=7.2479248046875e-05 act=0.0 rep=True err=None
+laya-multilingual mlx,dtype=float16: passed=True status=ran prob_max=0.00451778070059905 mism=0 hard=0 logit_max=0.1142578125 act=0.0 rep=True err=None
+laya-multilingual coreml,units=cpu_gpu,enumerated=True: passed=True status=ran prob_max=0.0017328937995394478 mism=0 hard=0 logit_max=0.0810546875 act=0.0 rep=True err=None
+laya-multilingual coreml,units=cpu_gpu: passed=True status=ran prob_max=0.005846078690875389 mism=0 hard=0 logit_max=0.09199714660644531 act=0.0 rep=True err=None
+laya-multilingual coreml,units=cpu_ne: passed=False status=ran prob_max=0.9998880402980588 mism=90 hard=85 logit_max=25.014989852905273 act=1.1962480615644643e-108 rep=True err=None
+laya-multilingual coreml,units=all: passed=False status=ran prob_max=0.9998880402988097 mism=43 hard=42 logit_max=24.983739852905273 act=1.2136152813080692e-157 rep=True err=None
+E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.
+laya-multilingual coreml,units=cpu_only: passed=False status=ran prob_max=0.09239718353658233 mism=0 hard=0 logit_max=1.0858774185180664 act=0.0 rep=True err=None
+laya-multilingual ane,units=cpu_ne: passed=True status=ran prob_max=0.012800862258820267 mism=0 hard=0 logit_max=0.4236278533935547 act=0.0 rep=True err=None
+laya-multilingual ane,units=all: passed=True status=ran prob_max=0.012800862258820267 mism=0 hard=0 logit_max=0.10682868957519531 act=0.0 rep=True err=None
+laya-multilingual ane,units=cpu_gpu: passed=True status=ran prob_max=0.003167727406157339 mism=0 hard=0 logit_max=0.06828498840332031 act=0.0 rep=True err=None
+laya-multilingual ane,units=cpu_only: passed=False status=ran prob_max=0.20442473025847752 mism=2 hard=0 logit_max=7.3026018142700195 act=1.88589970218187e-34 rep=True err=None
+laya torch,device=mps: passed=True status=ran prob_max=3.0548854293988015e-06 mism=0 hard=0 logit_max=0.00011444091796875 act=0.0 rep=True err=None
+laya mlx,dtype=float32: passed=True status=ran prob_max=1.015974388918206e-05 mism=0 hard=0 logit_max=6.80685043334961e-05 act=0.0 rep=True err=None
+laya mlx,dtype=float16: passed=True status=ran prob_max=0.0036729885715675037 mism=0 hard=0 logit_max=0.03418922424316406 act=0.0 rep=True err=None
+laya coreml,units=cpu_gpu,enumerated=True: passed=True status=ran prob_max=0.004813639421799409 mism=0 hard=0 logit_max=0.04981422424316406 act=0.0 rep=True err=None
+laya coreml,units=cpu_gpu: passed=True status=ran prob_max=0.0065879257969349014 mism=0 hard=0 logit_max=0.08106422424316406 act=0.0 rep=True err=None
+laya coreml,units=cpu_ne: passed=False status=ran prob_max=0.5603863112594891 mism=17 hard=12 logit_max=3.800191879272461 act=0.0 rep=True err=None
+laya coreml,units=all: passed=False status=ran prob_max=0.3224935178664984 mism=8 hard=6 logit_max=3.792379379272461 act=0.0 rep=True err=None
+E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.E5RT encountered an STL exception. msg = MILCompilerForANE error: failed to compile ANE model using ANEF. Error=_ANECompiler : ANECCompile() FAILED.
+laya coreml,units=cpu_only: passed=False status=ran prob_max=0.02016853254983164 mism=1 hard=0 logit_max=0.39549827575683594 act=0.0 rep=True err=None
+laya ane,units=cpu_ne: passed=True status=ran prob_max=0.01215065788183145 mism=1 hard=0 logit_max=0.46543312072753906 act=0.0 rep=True err=None
+laya ane,units=all: passed=True status=ran prob_max=0.01215065788183145 mism=1 hard=0 logit_max=0.46543312072753906 act=0.0 rep=True err=None
+laya ane,units=cpu_gpu: passed=True status=ran prob_max=0.004270626080726703 mism=0 hard=0 logit_max=0.05762672424316406 act=0.0 rep=True err=None
+laya ane,units=cpu_only: passed=False status=ran prob_max=0.13889090212781055 mism=5 hard=0 logit_max=1.776376724243164 act=0.0 rep=True err=None

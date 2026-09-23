@@ -1,0 +1,12 @@
+laya-typed-decisions enumerated cpu_only 128 load 3.9s ops ane=0 gpu=0 cpu=1648 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-typed-decisions enumerated cpu_gpu 128 load 5.0s ops ane=0 gpu=0 cpu=1648 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-typed-decisions enumerated cpu_ne 128 load 9.1s ops ane=0 gpu=0 cpu=1648 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-typed-decisions enumerated all 128 load 10.1s ops ane=0 gpu=0 cpu=1648 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-multilingual enumerated cpu_only 128 load 3.0s ops ane=0 gpu=0 cpu=1318 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-multilingual enumerated cpu_gpu 128 load 4.0s ops ane=0 gpu=0 cpu=1318 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-multilingual enumerated cpu_ne 128 load 7.2s ops ane=0 gpu=0 cpu=1318 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya-multilingual enumerated all 128 load 8.0s ops ane=0 gpu=0 cpu=1318 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya enumerated cpu_only 128 load 3.7s ops ane=0 gpu=0 cpu=1648 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya enumerated cpu_gpu 128 load 5.1s ops ane=0 gpu=0 cpu=1648 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya enumerated cpu_ne 128 load 8.2s ops ane=0 gpu=0 cpu=1648 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0
+laya enumerated all 128 load 9.5s ops ane=0 gpu=0 cpu=1648 | cost ane=0.000 gpu=0.000 cpu=0.000 | transitions=0

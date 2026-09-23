@@ -1,0 +1,183 @@
+{
+ "model": "laya",
+ "graph": "ane",
+ "units": "all",
+ "length": 128,
+ "load_s": 42.71265637502074,
+ "plan": {
+  "kind": "MLComputePlan (anticipated placement, not a runtime trace)",
+  "compute_units": "ALL",
+  "preferred_counts": {
+   "none": 5941,
+   "ane": 10594
+  },
+  "supported_counts": {
+   "ane": 10594,
+   "cpu": 10594,
+   "gpu": 10594
+  },
+  "estimated_cost_share": {
+   "ane": 1.0
+  },
+  "device_transitions_in_program_order": 0,
+  "contiguous_segments_per_device": {
+   "ane": 1
+  },
+  "by_operator": {
+   "const": {
+    "none": 5941
+   },
+   "ios16.einsum": {
+    "ane": 961
+   },
+   "ios18.add": {
+    "ane": 1437
+   },
+   "ios18.batch_norm": {
+    "ane": 5
+   },
+   "ios18.concat": {
+    "ane": 926
+   },
+   "ios18.conv": {
+    "ane": 122
+   },
+   "ios18.gelu": {
+    "ane": 29
+   },
+   "ios18.layer_norm": {
+    "ane": 62
+   },
+   "ios18.mul": {
+    "ane": 4149
+   },
+   "ios18.relu": {
+    "ane": 2
+   },
+   "ios18.slice_by_index": {
+    "ane": 1
+   },
+   "ios18.softmax": {
+    "ane": 480
+   },
+   "ios18.sub": {
+    "ane": 896
+   },
+   "ios18.transpose": {
+    "ane": 480
+   },
+   "split": {
+    "ane": 1044
+   }
+  },
+  "cost_share_by_operator": {
+   "ios16.einsum": {
+    "ane": 0.03687237645051645
+   },
+   "ios18.add": {
+    "ane": 0.10095600460400325
+   },
+   "ios18.batch_norm": {
+    "ane": 0.0012989621026473705
+   },
+   "ios18.concat": {
+    "ane": 0.009595879569335802
+   },
+   "ios18.conv": {
+    "ane": 0.5401494006671574
+   },
+   "ios18.gelu": {
+    "ane": 0.022005946209555472
+   },
+   "ios18.layer_norm": {
+    "ane": 0.018720336185212093
+   },
+   "ios18.mul": {
+    "ane": 0.1352765103960613
+   },
+   "ios18.relu": {
+    "ane": 0.001785279919876433
+   },
+   "ios18.slice_by_index": {
+    "ane": 0.0001540339563968028
+   },
+   "ios18.softmax": {
+    "ane": 0.0183394077882673
+   },
+   "ios18.sub": {
+    "ane": 0.01903497490600261
+   },
+   "ios18.transpose": {
+    "ane": 0.01711785674569442
+   },
+   "split": {
+    "ane": 0.07869303049928321
+   }
+  }
+ },
+ "environment": {
+  "soc": "Apple M4 Max",
+  "cpu_cores": {
+   "total": 16,
+   "performance": 12,
+   "efficiency": 4
+  },
+  "memory_bytes": 68719476736,
+  "macos": "26.6.2",
+  "os_build": "25G83",
+  "python": "3.12.14",
+  "executable": "research/phase-0-feasibility/.venv/bin/python3",
+  "packages": {
+   "torch": "2.7.0",
+   "numpy": "2.1.3",
+   "coremltools": "9.0",
+   "transformers": "5.17.0",
+   "tokenizers": "0.23.2",
+   "safetensors": "0.8.0",
+   "huggingface-hub": "1.32.0",
+   "mlx": "0.32.2",
+   "mlx-metal": "0.32.2",
+   "laya": "0.3.5",
+   "laya-mlx": "0.2.0",
+   "laya-coreml": "0.1.1",
+   "psutil": "7.2.2"
+  },
+  "research_git_revision": "8653409f090018900c26b44793668e1cbd0ef96d",
+  "research_scripts_dirty": false,
+  "reference_repos": {
+   "NandhaKishorM/laya": "573e5b62696ba441230cd6be71d593331b5d23af",
+   "mizorewww/laya-mlx": "0a859518634112655cb97c745dbf04f5191aaf13",
+   "mizorewww/laya-coreml": "4619e0483f07adf39068532e85b42ec2347edb83"
+  },
+  "models": {
+   "laya": {
+    "repo": "convaiinnovations/laya",
+    "revision": "c5d78730f3493e4fe16d61507ef4b78eef7318cf",
+    "weights_sha256": "891102d372688fc2a094dac56a384bc537b87c63f21f9f3dac0be2b7cbc8d86c"
+   },
+   "laya-multilingual": {
+    "repo": "convaiinnovations/laya-multilingual",
+    "revision": "052592a15d198d9ad47da779604259b10b47b7aa",
+    "weights_sha256": "9d628fd971b700382ac6f65920a86f149777b2e748e0c955fb3b19695aa8f204"
+   },
+   "laya-typed-decisions": {
+    "repo": "convaiinnovations/laya-typed-decisions",
+    "revision": "f9ab0b228f0fc0f14d873dbc99038f135c2da1b2",
+    "weights_sha256": "4fa56de72383a9d3efa9cfa78955733c81b9fc8067a587ca4beb82c78107a24e"
+   }
+  },
+  "conditions": {
+   "time": "2026-09-22T23:10:58.776414+00:00",
+   "loadavg": [
+    2.09423828125,
+    1.93359375,
+    1.9052734375
+   ],
+   "thermal": "Note: No thermal warning level has been recorded\nNote: No performance warning level has been recorded\nNote: No CPU power status has been recorded",
+   "power_source": [
+    "Now drawing from 'AC Power'"
+   ],
+   "low_power_mode": false
+  }
+ }
+}
