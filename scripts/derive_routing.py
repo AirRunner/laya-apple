@@ -56,6 +56,17 @@ def p50(rows, model, pred, length):
     return hit[0]["forward"]["p50_ms"] if hit else None
 
 
+def service_table(rows, model, pred) -> dict:
+    """{questions: {length: forward P50 ms}} from pass-a/refine, for queue-aware routing (v0.2)."""
+    out: dict = {}
+    for r in rows:
+        if r["model"] == model and pred(r["spec"]) and r["tag"] in ("pass-a", "refine") and "forward" in r:
+            out.setdefault(str(r["questions"]), {})[str(r["length"])] = round(r["forward"]["p50_ms"], 4)
+    return {
+        q: dict(sorted(v.items(), key=lambda kv: int(kv[0]))) for q, v in sorted(out.items(), key=lambda kv: int(kv[0]))
+    }
+
+
 def derive() -> dict:
     latency = EVIDENCE / "raw/bench/latency.jsonl"
     rows = [json.loads(line) for line in latency.read_text().splitlines() if line.strip()]
@@ -116,6 +127,8 @@ def derive() -> dict:
             "auto_ane_max_len": max(auto) if auto else 0,
             "auto_ane_max_questions": 1,
             "decisions": decisions,
+            # Phase -1 forward P50s; v0.2 routing uses them as service-time estimates only.
+            "service_ms": {"gpu": service_table(rows, model, is_mlx), "ane": service_table(rows, model, is_ane)},
         }
     return out
 
