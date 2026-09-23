@@ -23,7 +23,7 @@ fills in from measurements rather than expectations.
 | M3 Ultra | ? | ? | ? | ? | |
 | M4 | ? | ? | ? | ? | |
 | M4 Pro | ? | ? | ? | ? | |
-| M4 Max (macOS 26.6.2) | ✓ | ✓ | yes | ✓ | [`benchmarks/v1.0.md`](../benchmarks/v1.0.md) |
+| M4 Max (macOS 26.6.2) | ✓ | ✓ | yes | ✓ | [`benchmarks/v1.0.md`](../benchmarks/v1.0.md), [bundle](../hardware-results/apple-m4-max-macos26/summary.md) |
 
 What each column means:
 
