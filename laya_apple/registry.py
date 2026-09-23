@@ -18,6 +18,7 @@ from .errors import UnsupportedModelError
 ANE_GRAPH = "bc1s-masked"  # the only Core ML graph that passed parity on the Neural Engine
 ANE_COMPUTE_UNITS = "CPU_AND_NE"  # the only compute-unit setting the ANE artifacts are validated on
 ANE_PRECISION = "float16"
+DTYPES = ("float16", "float32")  # MLX; the ANE runs ANE_PRECISION only
 ANE_MAX_OPTIONS = 32
 
 

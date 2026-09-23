@@ -21,6 +21,7 @@ EXCEEDS_AUTO_RANGE = "sequence_exceeds_ane_auto_range"
 ARTIFACT_UNAVAILABLE = "ane_artifact_unavailable"
 RUNTIME_UNAVAILABLE = "ane_runtime_unavailable"
 PLATFORM_NOT_VALIDATED = "platform_not_validated"
+ANE_STARTING = "ane_starting"  # v0.3 workers, ane_startup="background": artifacts still loading
 
 REASONS = (
     GPU_REQUESTED,
@@ -31,6 +32,7 @@ REASONS = (
     ARTIFACT_UNAVAILABLE,
     RUNTIME_UNAVAILABLE,
     PLATFORM_NOT_VALIDATED,
+    ANE_STARTING,
 )
 
 

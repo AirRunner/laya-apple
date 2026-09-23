@@ -78,6 +78,7 @@ def backend_info(kind: str, backend) -> dict:
         info["offered"] = list(backend.offered)
         info["artifact_sha256"] = dict(backend.artifact_sha256)
         info["load_errors"] = {b: _portable(e) for b, e in backend.load_errors.items()}
+        info["probes"] = {b: dict(v) for b, v in backend.probes.items()}
     return info
 
 
@@ -90,7 +91,9 @@ def _forward_timed(backend, rows):
 def _worker_main(kind: str, args: dict, conn) -> None:
     import warnings
 
-    warnings.simplefilter("ignore", RuntimeWarning)  # reported by the parent, not per worker
+    # laya-apple's own load-time warnings are re-issued by the parent from the worker's info;
+    # anything else (Core ML, coremltools, NumPy) stays visible on the worker's stderr.
+    warnings.filterwarnings("ignore", message="laya-apple:", category=RuntimeWarning)
     try:
         backend = load_backend(kind, args)
         warm(kind, backend, args["pad_id"])
@@ -141,6 +144,7 @@ class DeviceWorker:
         self._args = args
         self.info = None
         self._backend = None
+        self._closed = False
         self._proc = self._listener = self._conn = None
         if placement == "process":
             key = os.urandom(32)
@@ -175,10 +179,14 @@ class DeviceWorker:
             self._loader.join()
             if "error" in self._loaded:
                 raise self._loaded["error"]
+            if self._closed:  # closed while loading (background start-up): release, do not serve
+                self._loaded.clear()
+                raise BackendUnavailableError(f"{self.kind} worker closed during start-up")
             self._backend = self._loaded["backend"]
-            self.info = backend_info(self.kind, self._backend)
+            info = backend_info(self.kind, self._backend)
         else:
-            self._connect()
+            info = self._connect()
+        # Everything the router and submit() touch exists before `info` marks the worker ready.
         self._jobs: queue.Queue = queue.Queue()
         self._lock = threading.Lock()
         self._queued_ms = 0.0
@@ -188,6 +196,7 @@ class DeviceWorker:
         self._dead: BaseException | None = None
         self._thread = threading.Thread(target=self._dispatch, name=f"laya-{self.kind}-dispatch", daemon=True)
         self._thread.start()
+        self.info = info
 
     def _connect(self):
         kind, start_timeout = self.kind, self._start_timeout
@@ -221,17 +230,29 @@ class DeviceWorker:
         if status == "load_error":
             self._proc.wait(timeout=10)
             raise payload
-        self.info = payload
+        return payload
+
+    @property
+    def ready(self) -> bool:
+        return self.info is not None
 
     @property
     def alive(self) -> bool:
-        return self._dead is None
+        if getattr(self, "_dead", None) is not None:
+            return False
+        if self.placement == "process" and self.info is not None and self._proc.poll() is not None:
+            # exited before the dispatcher noticed: report it now, not after a request fails on it
+            self._dead = BackendUnavailableError(f"{self.kind} worker exited with code {self._proc.returncode}")
+            return False
+        return True
 
     @property
     def pid(self) -> int | None:
         return self._proc.pid if self._proc is not None else None
 
     def backlog_ms(self) -> float:
+        if self.info is None:
+            return 0.0
         with self._lock:
             running = 0.0
             if self._running_est:
@@ -294,6 +315,7 @@ class DeviceWorker:
     def close(self, timeout: float = 10.0):
         """Finish queued jobs (up to `timeout`), then stop. Jobs still queued after that fail
         with BackendUnavailableError; none is left pending."""
+        self._closed = True
         if self.info is None:  # never became ready: nothing queued
             if self.placement == "process":
                 self._listener.close()

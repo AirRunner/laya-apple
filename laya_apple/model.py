@@ -19,6 +19,7 @@ Two execution modes:
 from __future__ import annotations
 
 import asyncio
+import dataclasses
 import json
 import threading
 import time
@@ -36,11 +37,12 @@ from .errors import (
 )
 from .hub import checkpoint_path, verify_weights
 from .prompt import Calibration, Tokenizer, format_answers, prepare
-from .registry import ANE_COMPUTE_UNITS, ANE_PRECISION, ModelSpec, resolve, routing_table
+from .registry import ANE_COMPUTE_UNITS, ANE_PRECISION, DTYPES, ModelSpec, resolve, routing_table
 from .result import Result, RuntimeInfo
 
 EXECUTIONS = ("inline", "workers")
 ANE_PLACEMENTS = ("auto", "thread", "process")
+ANE_STARTUPS = ("wait", "background")
 
 
 def ane_placement_for(model: str) -> str:
@@ -90,13 +92,25 @@ class Laya:
         batch_size: int,
         execution: str = "inline",
         ane_placement: str = "auto",
+        ane_startup: str = "wait",
     ):
         if device not in routing.DEVICES:
             raise ValueError(f"device must be one of {routing.DEVICES}, got {device!r}")
         if execution not in EXECUTIONS:
             raise ValueError(f"execution must be one of {EXECUTIONS}, got {execution!r}")
+        if dtype not in DTYPES:
+            raise ValueError(f"dtype must be one of {DTYPES}, got {dtype!r}")
+        if device == "ane" and dtype != ANE_PRECISION:
+            # The ANE artifacts are validated in ANE_PRECISION only; never run another silently.
+            raise ValueError(f"device='ane' runs {ANE_PRECISION} only; dtype={dtype!r} is not validated on the ANE")
         self.spec, self.checkpoint, self.device, self.dtype = spec, checkpoint, device, dtype
         self.execution = execution
+        if ane_startup not in ANE_STARTUPS:
+            raise ValueError(f"ane_startup must be one of {ANE_STARTUPS}, got {ane_startup!r}")
+        if ane_startup == "background" and (execution != "workers" or device != "auto"):
+            raise ValueError('ane_startup="background" applies only to execution="workers", device="auto"')
+        self.ane_startup = ane_startup
+        self._ane_thread = None
         if ane_placement not in ANE_PLACEMENTS:
             raise ValueError(f"ane_placement must be one of {ANE_PLACEMENTS}, got {ane_placement!r}")
         self.ane_placement = ane_placement_for(spec.name) if ane_placement == "auto" else ane_placement
@@ -107,7 +121,8 @@ class Laya:
         self.mlx = self.ane = None  # backends (inline) or parent-side views (workers)
         self._workers: dict = {}
         self._tie_buckets: tuple = ()
-        self._service = scheduling.ServiceModel(routing_table()["models"][spec.name]["service_ms"])
+        self.routing_profile, service = self._routing_profile()
+        self._service = scheduling.ServiceModel(service)
         self.ane_state = routing.AneState(routing.RUNTIME_UNAVAILABLE)
         # Inline: one request at a time per instance; Core ML predictions and MLX graph
         # evaluation on a shared model are not documented as re-entrant.
@@ -136,6 +151,7 @@ class Laya:
         batch_size: int = 16,
         execution: str = "inline",
         ane_placement: str = "auto",
+        ane_startup: str = "wait",
     ) -> "Laya":
         """Load a pinned checkpoint.
 
@@ -145,6 +161,9 @@ class Laya:
         execution="workers" serves both devices concurrently (heterogeneous execution): MLX
         in a worker process, Core ML either on a thread in this process or in a worker
         process. ane_placement="auto" uses the measured per-model choice.
+        ane_startup="background" (workers, auto): return once MLX is ready and finish loading
+        the ANE artifacts (and any evicted ANE compile) in the background; until then auto
+        routes to MLX with reason "ane_starting".
         """
         if device not in routing.DEVICES:
             raise ValueError(f"device must be one of {routing.DEVICES}, got {device!r}")
@@ -154,14 +173,53 @@ class Laya:
         path = checkpoint_path(spec, local_files_only=local_files_only)
         verify_weights(spec, path)
         return cls(
-            spec, path, device, dtype=dtype, batch_size=batch_size, execution=execution, ane_placement=ane_placement
+            spec,
+            path,
+            device,
+            dtype=dtype,
+            batch_size=batch_size,
+            execution=execution,
+            ane_placement=ane_placement,
+            ane_startup=ane_startup,
         )
+
+    def _routing_profile(self):
+        """Which measured routing table applies on this machine (DEVELOPMENT_PLAN.md §4).
+
+        The shipped table if a shipped profile matches; otherwise a local calibration for
+        this exact profile (laya-apple calibrate), which also replaces the auto buckets;
+        otherwise none, and auto uses MLX only."""
+        from .profiles import load_local
+
+        shipped = routing_table()["models"][self.spec.name]["service_ms"]
+        if platform_validated():
+            return "shipped", shipped
+        local = load_local(self.spec.name)
+        if local is None:
+            return None, shipped
+        buckets = tuple(local.get("auto_ane_buckets") or ())
+        if buckets != self.spec.ane_buckets[: len(buckets)]:
+            warnings.warn(
+                f"laya-apple: ignoring local profile {local['source']}: its auto buckets {list(buckets)} are not "
+                f"a prefix of the offered buckets {list(self.spec.ane_buckets)} for {self.spec.name}; "
+                "re-run laya-apple calibrate",
+                RuntimeWarning,
+                stacklevel=4,
+            )
+            return None, shipped
+        self.spec = dataclasses.replace(
+            self.spec,
+            auto_ane_buckets=tuple(local["auto_ane_buckets"]),
+            auto_ane_max_len=int(local["auto_ane_max_len"]),
+            auto_ane_max_questions=int(local["auto_ane_max_questions"]),
+        )
+        return f"local:{local['source']}", local["service_ms"]
 
     def _ane_gate(self) -> str | None:
         """Why auto cannot use the ANE here, or None."""
         if not _coremltools_available():
             return routing.RUNTIME_UNAVAILABLE
-        if not platform_validated():
+        if self.routing_profile is None:
             return routing.PLATFORM_NOT_VALIDATED
         return None
 
@@ -214,7 +272,6 @@ class Laya:
         )
 
     def _start_workers(self, batch_size):
-        from .backends.coreml_ane import ANEShapes
         from .executor import DeviceWorker
 
         common = {"model": self.spec.name, "checkpoint": str(self.checkpoint), "pad_id": self.tokenizer.pad_token_id}
@@ -242,27 +299,67 @@ class Laya:
         if self.device in ("auto", "gpu"):
             gpu_args = dict(common, dtype=self.dtype, batch_size=batch_size)
             self._workers["gpu"] = DeviceWorker("gpu", gpu_args, placement="process", wait=False)
-        for w in self._workers.values():
-            w.wait_ready()
+        background = want_ane and self.ane_startup == "background"
+        for kind, w in self._workers.items():
+            if not (background and kind == "ane"):
+                w.wait_ready()
         if "gpu" in self._workers:
             self.mlx = _GPUView(self.spec, self.dtype)
-        if want_ane:
-            worker = self._workers["ane"]
-            info = worker.info
-            load_errors = {int(b): e for b, e in info["load_errors"].items()}
-            shapes = ANEShapes(
-                self.spec, info["offered"], {int(b): h for b, h in info["artifact_sha256"].items()}, load_errors
+        if background:
+            self.ane_state = routing.AneState(routing.ANE_STARTING)
+            self._ane_thread = threading.Thread(
+                target=self._finish_ane_background, name="laya-ane-startup", daemon=True
             )
-            if self.device == "auto":
-                self._warn_rejected(load_errors)
-            if shapes.buckets:
-                self.ane = shapes
-                auto = tuple(b for b in shapes.buckets if b in self.spec.auto_ane_buckets)
-                self._tie_buckets = tuple(b for b in shapes.buckets if b not in self.spec.auto_ane_buckets)
-                self.ane_state = routing.AneState(None, auto if self.device == "auto" else shapes.buckets)
-            else:
-                self._workers.pop("ane").close()
-                self.ane_state = routing.AneState(None, ())
+            self._ane_thread.start()
+        elif want_ane:
+            self._finish_ane()
+
+    def _finish_ane_background(self):
+        try:
+            self._workers["ane"].wait_ready()
+            if self._closed:
+                return
+            self._finish_ane()
+        except BaseException as e:  # reported, and auto keeps using MLX
+            if self._closed:  # close() during start-up is not a start-up failure
+                return
+            warnings.warn(
+                f"laya-apple: ANE startup failed ({type(e).__name__}: {e}); auto routes to MLX",
+                RuntimeWarning,
+                stacklevel=2,
+            )
+            worker = self._workers.pop("ane", None)
+            if worker is not None:
+                worker.close()
+            self.ane_state = routing.AneState(routing.RUNTIME_UNAVAILABLE)
+
+    def _finish_ane(self):
+        from .backends.coreml_ane import ANEShapes
+
+        worker = self._workers["ane"]
+        info = worker.info
+        load_errors = {int(b): e for b, e in info["load_errors"].items()}
+        shapes = ANEShapes(
+            self.spec, info["offered"], {int(b): h for b, h in info["artifact_sha256"].items()}, load_errors
+        )
+        shapes.probes = {int(b): v for b, v in info.get("probes", {}).items()}
+        if self.device == "auto":
+            self._warn_rejected(load_errors)
+        if shapes.buckets:
+            self.ane = shapes
+            auto = tuple(b for b in shapes.buckets if b in self.spec.auto_ane_buckets)
+            self._tie_buckets = tuple(b for b in shapes.buckets if b not in self.spec.auto_ane_buckets)
+            self.ane_state = routing.AneState(None, auto if self.device == "auto" else shapes.buckets)
+        else:
+            self._workers.pop("ane").close()
+            self.ane_state = routing.AneState(None, ())
+
+    def wait_for_ane(self, timeout: float | None = None) -> bool:
+        """With ane_startup="background": block until the ANE finished starting (or failed).
+        Returns whether the ANE path is available to auto routing."""
+        if self._ane_thread is not None:
+            self._ane_thread.join(timeout)
+        return self.ane is not None and self.ane_state.unavailable is None
 
     # ------------------------------------------------------------------ lifecycle
 
@@ -271,12 +368,14 @@ class Laya:
         if self._closed:
             return
         self._closed = True
-        for w in self._workers.values():
+        for w in list(self._workers.values()):  # the background ANE start-up may pop concurrently
             try:
                 w.close()
             except Exception:
                 pass
         self._workers = {}
+        if self._ane_thread is not None and self._ane_thread is not threading.current_thread():
+            self._ane_thread.join(timeout=30)
 
     def __enter__(self):
         return self
@@ -294,9 +393,8 @@ class Laya:
 
     def backlogs(self) -> tuple[float, float]:
         """(gpu, ane) backlog estimates in ms; zeros in inline mode."""
-        g = self._workers["gpu"].backlog_ms() if "gpu" in self._workers else 0.0
-        a = self._workers["ane"].backlog_ms() if "ane" in self._workers else 0.0
-        return g, a
+        gpu, ane = self._workers.get("gpu"), self._workers.get("ane")  # "ane" may be popped concurrently
+        return (gpu.backlog_ms() if gpu else 0.0), (ane.backlog_ms() if ane else 0.0)
 
     def route(self, prepared, backlogs: tuple[float, float] | None = None) -> routing.Decision:
         if self.execution == "inline":
@@ -471,6 +569,9 @@ class Laya:
             "ane_load_errors": {
                 str(b): f"{type(e).__name__}: {e}" for b, e in (self.ane.load_errors.items() if self.ane else [])
             },
+            "ane_probes": {str(b): v for b, v in getattr(self.ane, "probes", {}).items()},
+            "routing_profile": self.routing_profile,
+            "ane_ready": bool(self.ane) and self.ane_state.unavailable is None,
             "auto_ane": {
                 "unavailable": self.ane_state.unavailable,
                 "buckets": list(self.ane_state.buckets),

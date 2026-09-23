@@ -16,8 +16,8 @@ from pathlib import Path
 
 import numpy as np
 
-from ..artifacts import load_verified
-from ..errors import ArtifactError, ArtifactMissingError, UnsupportedShapeError
+from ..artifacts import COMPILED, artifact_dir, load_verified
+from ..errors import ArtifactError, ArtifactMissingError, ComputeUnitMismatchError, UnsupportedShapeError
 from ..registry import ANE_COMPUTE_UNITS, ANE_MAX_OPTIONS, ModelSpec
 
 
@@ -49,6 +49,47 @@ def ane_features(rows, L, B, embedding, type_embedding, window, pad_id):
     feats["type_vectors"] = np.ascontiguousarray(type_embedding[qtype][:, :, None, None], dtype=np.float16)
     feats["marker_map"] = marker_map
     return feats
+
+
+# Runtime placement probe. CPU_AND_NE lets Core ML use the CPU, and the static compute plan
+# (checked at load) cannot see where the *loaded* model runs. The probe times the loaded model
+# against a CPU_ONLY instance of the same artifact on the same input, back to back, so machine
+# load slows both alike. On the ANE the ratio measured 0.32-0.50 for every shipped artifact;
+# a model running on the CPU would measure ~1.0 (benchmarks/v1.0.md, benchmarks/v1.0/probe.json).
+PROBE_MAX_RATIO = 0.8
+PROBE_RUNS = 5
+
+
+def _fastest_ms(model, feats, runs: int) -> float:
+    import time
+
+    model.predict(feats)  # the first call may still pay one-off set-up
+    best = math.inf
+    for _ in range(runs):
+        t = time.perf_counter()
+        model.predict(feats)
+        best = min(best, (time.perf_counter() - t) * 1e3)
+    return best
+
+
+def probe_placement(spec: ModelSpec, bucket: int, model, compiled_path: Path, feats: dict) -> dict:
+    """Refuse a loaded model that runs no faster than the same artifact on the CPU.
+
+    Returns {"ane_ms", "cpu_ms", "ratio"} or raises ComputeUnitMismatchError."""
+    import coremltools as ct
+
+    cpu = ct.models.CompiledMLModel(str(compiled_path), compute_units=ct.ComputeUnit.CPU_ONLY)
+    ane_ms, cpu_ms = _fastest_ms(model, feats, PROBE_RUNS), _fastest_ms(cpu, feats, PROBE_RUNS)
+    del cpu
+    ratio = ane_ms / cpu_ms
+    if ratio > PROBE_MAX_RATIO:
+        raise ComputeUnitMismatchError(
+            f"{spec.name} L{bucket}: the loaded model takes {ane_ms:.1f} ms against {cpu_ms:.1f} ms on CPU_ONLY "
+            f"(ratio {ratio:.2f} > {PROBE_MAX_RATIO}), so it is not running on the Neural Engine (the on-device "
+            f"ANE compile may have failed). Run `laya-apple artifacts warm {spec.name}` and retry; if it "
+            "persists, rebuild the artifact."
+        )
+    return {"ane_ms": round(ane_ms, 3), "cpu_ms": round(cpu_ms, 3), "ratio": round(ratio, 3)}
 
 
 class HostWeights:
@@ -118,6 +159,7 @@ class ANEShapes:
         self.offered = tuple(sorted(offered))
         self.artifact_sha256 = dict(artifact_sha256)
         self.load_errors = dict(load_errors)
+        self.probes: dict = getattr(self, "probes", {})  # runtime placement probe results per bucket
 
     @property
     def buckets(self) -> tuple:
@@ -149,26 +191,49 @@ class ANEShapes:
 
 
 class ANEBackend(ANEShapes):
-    def __init__(self, spec: ModelSpec, checkpoint: Path, pad_id: int, local_attention: int, buckets, *, strict=True):
+    def __init__(
+        self,
+        spec: ModelSpec,
+        checkpoint: Path,
+        pad_id: int,
+        local_attention: int,
+        buckets,
+        *,
+        strict=True,
+    ):
         """Load and verify every offered bucket.
 
         strict (explicit device="ane"): a missing bucket is recorded and raised when a
         request needs it; any other verification failure raises now, as does having no
         usable bucket at all. Non-strict (device="auto"): every artifact failure is recorded
         and the bucket is simply not offered to auto routing.
+
+        Every loaded bucket also passes the runtime placement probe (probe_placement).
         """
         self.pad_id = pad_id
         self.host = HostWeights(checkpoint, local_attention)
         self.models, self.manifests, load_errors = {}, {}, {}
+        self.probes: dict = {}
         tolerated = ArtifactMissingError if strict else ArtifactError
         for b in sorted(buckets):
             try:
                 self.models[b], self.manifests[b] = load_verified(spec, b)
+                self.probes[b] = probe_placement(
+                    spec, b, self.models[b], artifact_dir(spec, b) / COMPILED, self._probe_features(b)
+                )
             except tolerated as e:
+                self.models.pop(b, None)
+                self.manifests.pop(b, None)
                 load_errors[b] = e
         if strict and not self.models:
             raise next(iter(load_errors.values()))
         super().__init__(spec, buckets, {b: m.artifact_sha256 for b, m in self.manifests.items()}, load_errors)
+
+    def _probe_features(self, b: int) -> dict:
+        row = {"ids": [self.pad_id] * b, "markers": [1, 2], "qtype": 0}
+        return ane_features(
+            [row], b, 1, self.host.embedding, self.host.type_embedding, self.host.window(b), self.pad_id
+        )
 
     def forward(self, items):
         buckets = self.check(items)

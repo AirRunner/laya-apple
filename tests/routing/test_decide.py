@@ -146,6 +146,7 @@ def test_every_reason_code_is_reachable(reason, spec):
         ),
         routing.RUNTIME_UNAVAILABLE: lambda: routing.decide("auto", spec, 1, 10, ane_runtime),
         routing.PLATFORM_NOT_VALIDATED: lambda: routing.decide("auto", spec, 1, 10, ane_platform),
+        routing.ANE_STARTING: lambda: routing.decide("auto", spec, 1, 10, routing.AneState(routing.ANE_STARTING)),
     }
     fn = checks[reason]
     if (

@@ -8,9 +8,7 @@ from pathlib import Path
 import numpy as np
 
 from ..errors import BackendUnavailableError
-from ..registry import ModelSpec
-
-DTYPES = ("float16", "float32")
+from ..registry import DTYPES, ModelSpec
 
 
 def collate(items: list[dict], pad_id: int) -> dict:

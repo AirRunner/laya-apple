@@ -161,3 +161,71 @@ def test_both_ane_placements_give_identical_answers(placement, inline, requests)
 def test_invalid_ane_placement_raises():
     with pytest.raises(ValueError):
         Laya.from_pretrained(MODEL, device="gpu", execution="workers", ane_placement="gpu", local_files_only=True)
+
+
+def test_background_ane_startup_serves_mlx_first_then_ane(monkeypatch, inline, requests):
+    import time as _time
+
+    from laya_apple import executor
+
+    real_warm = executor.warm
+
+    def slow_warm(kind, backend, pad_id):
+        if kind == "ane":
+            _time.sleep(3.0)  # stands in for an evicted on-device ANE compile
+        return real_warm(kind, backend, pad_id)
+
+    monkeypatch.setattr(executor, "warm", slow_warm)
+    with Laya.from_pretrained(
+        MODEL, execution="workers", ane_placement="thread", ane_startup="background", local_files_only=True
+    ) as laya:
+        state, qs = requests["short"]
+        r = laya.predict(context=state, questions=qs)
+        assert r.runtime.device == "gpu" and r.runtime.routing_reason == routing.ANE_STARTING
+        assert r.answers == inline["gpu"].predict(context=state, questions=qs).answers
+        assert laya.wait_for_ane(60) is True
+        r = laya.predict(context=state, questions=qs)
+        assert r.runtime.device == "ane" and r.runtime.routing_reason == routing.ANE_AUTO
+
+
+@pytest.mark.parametrize(
+    "kwargs",
+    [
+        {"execution": "inline", "ane_startup": "background"},
+        {"execution": "workers", "device": "ane", "ane_startup": "background"},
+        {"execution": "workers", "ane_startup": "later"},
+    ],
+)
+def test_invalid_ane_startup_raises(kwargs):
+    with pytest.raises(ValueError):
+        Laya.from_pretrained(MODEL, local_files_only=True, **{"device": "auto", **kwargs})
+
+
+@pytest.mark.parametrize("placement", ["thread", "process"])
+def test_close_during_background_startup_is_clean(monkeypatch, placement):
+    import threading
+    import time as _time
+    import warnings
+
+    from laya_apple import executor
+
+    real_warm = executor.warm
+
+    def slow_warm(kind, backend, pad_id):
+        if kind == "ane":
+            _time.sleep(2.0)
+        return real_warm(kind, backend, pad_id)
+
+    monkeypatch.setattr(executor, "warm", slow_warm)  # affects the thread placement only
+    before = set(threading.enumerate())
+    with warnings.catch_warnings(record=True) as caught:
+        warnings.simplefilter("always")
+        laya = Laya.from_pretrained(
+            MODEL, execution="workers", ane_placement=placement, ane_startup="background", local_files_only=True
+        )
+        laya.close()
+        _time.sleep(3.0 if placement == "thread" else 0.5)
+    assert not any("ANE startup failed" in str(w.message) for w in caught)
+    new = [t for t in set(threading.enumerate()) - before if t.name.startswith("laya-")]
+    assert not new, new
+    assert laya._workers == {}
