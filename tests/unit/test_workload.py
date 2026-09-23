@@ -4,6 +4,9 @@ import pytest
 
 from laya_apple.workload import make_request
 
+# tokenizer/config need a downloaded checkpoint.
+pytestmark = pytest.mark.integration
+
 
 @pytest.mark.parametrize("length", [64, 128, 200])
 def test_make_request_hits_exact_length(tokenizer, config, length):

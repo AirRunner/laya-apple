@@ -6,6 +6,7 @@ from laya_apple.errors import InvalidRequestError
 from laya_apple.prompt import Calibration, clamp_temperature, prepare
 
 
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_prepared_token_ids_match_goldens_exactly(tokenizer, config, golden):
     """prepare() must reproduce the upstream token ids/markers for every golden case."""
     for case in golden["cases"]:
@@ -31,11 +32,13 @@ def test_prepared_token_ids_match_goldens_exactly(tokenizer, config, golden):
         [1, 2],
     ],
 )
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_malformed_questions_raise_invalid_request_error(tokenizer, config, bad_questions):
     with pytest.raises(InvalidRequestError):
         prepare(tokenizer, config, "some context", bad_questions)
 
 
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_list_of_strings_becomes_noul_questions(tokenizer, config):
     prep = prepare(tokenizer, config, "ctx", ["Is this urgent?", "Did they mention billing?"])
     assert prep.question_count == 2
@@ -73,6 +76,7 @@ def test_calibration_no_warning_when_within_range():
         Calibration({"temperature": [1.0, 2.0, 3.0]})
 
 
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_answer_schema_choice(tokenizer, config, calibration):
     from laya_apple.prompt import format_answers
 
@@ -89,6 +93,7 @@ def test_answer_schema_choice(tokenizer, config, calibration):
     assert round(ans["action"]["act_probability"], 4) == ans["action"]["act_probability"]
 
 
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_answer_schema_score(tokenizer, config, calibration):
     from laya_apple.prompt import format_answers
 
@@ -101,6 +106,7 @@ def test_answer_schema_score(tokenizer, config, calibration):
     assert set(ans) >= {"type", "confidence", "action", "score", "legend", "probabilities"}
 
 
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_answer_schema_noul(tokenizer, config, calibration):
     from laya_apple.prompt import format_answers
 
@@ -112,6 +118,7 @@ def test_answer_schema_noul(tokenizer, config, calibration):
     assert 0.0 <= ans["noul"] <= 1.0
 
 
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_answer_probabilities_are_rounded_to_4_decimals(tokenizer, config, calibration):
     from laya_apple.prompt import format_answers
 
@@ -127,6 +134,7 @@ def test_answer_probabilities_are_rounded_to_4_decimals(tokenizer, config, calib
     assert ans["confidence"] == round(ans["confidence"], 4)
 
 
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_answer_non_finite_logits_raise_floating_point_error(tokenizer, config, calibration):
     from laya_apple.prompt import format_answers
 
@@ -137,6 +145,7 @@ def test_answer_non_finite_logits_raise_floating_point_error(tokenizer, config, 
         format_answers(prep, logits, act, calibration)
 
 
+@pytest.mark.integration  # tokenizer/config need a downloaded checkpoint
 def test_answer_non_finite_action_logits_raise_floating_point_error(tokenizer, config, calibration):
     from laya_apple.prompt import format_answers
 

@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          python-version: "3.12"
+
+      - name: Sync dependencies
+        run: uv sync --extra dev
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Format check
+        run: uv run ruff format --check laya_apple scripts tests
+
+      - name: Fast tests
+        env:
+          HF_HUB_OFFLINE: "1"
+        run: |
+          export LAYA_APPLE_CACHE="$RUNNER_TEMP/laya-apple-cache"
+          uv run pytest -q -m "not integration and not parity and not ane and not stress"
+
+      - name: Data-drift checks
+        run: |
+          uv run python scripts/derive_routing.py --check
+          uv run python scripts/derive_placement.py --check
+          uv run python scripts/make_goldens.py --check
