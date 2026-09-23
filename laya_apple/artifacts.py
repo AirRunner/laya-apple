@@ -358,3 +358,59 @@ def list_artifacts() -> list[dict]:
             data = {"status": "unreadable"}
         out.append({"path": str(m.parent), "manifest": data})
     return out
+
+
+def artifact_capabilities() -> list[dict]:
+    """One provenance record per registered artifact (see docs/guide.md: Artifact
+    provenance). Missing manifest fields become `null`; a manifest never crashes this."""
+    from .registry import models
+
+    specs = models()
+    out = []
+    for x in list_artifacts():
+        m = x["manifest"] if isinstance(x["manifest"], dict) else {}
+        src = m.get("source") or {}
+        conv = m.get("conversion") or {}
+        art = m.get("artifact") or {}
+        placement = m.get("placement") or {}
+        parity = m.get("parity") or {}
+        integrity = m.get("integrity") or {}
+        near_tie = parity.get("near_tie_flips")
+        bucket = art.get("length")
+        spec = specs.get(src.get("model"))
+        out.append(
+            {
+                "path": x["path"],
+                "status": m.get("status"),
+                "model": src.get("model"),
+                "repo": src.get("repo"),
+                "revision": src.get("revision"),
+                "source_weights_sha256": src.get("weights_sha256"),
+                "conversion_revision": {
+                    "laya_apple_version": conv.get("laya_apple_version"),
+                    "git_revision": conv.get("git_revision"),
+                    "code_sha256": conv.get("code_sha256"),
+                },
+                "graph": art.get("graph"),
+                "bucket": bucket,
+                "batch": art.get("batch"),
+                "compute_target": {
+                    "compute_units": placement.get("compute_units"),
+                    "ops": placement.get("ops"),
+                    "transitions": placement.get("transitions"),
+                },
+                "precision": art.get("precision"),
+                "platform": m.get("platform"),
+                "parity": {
+                    "passed": parity.get("passed"),
+                    "tolerance": parity.get("tolerance"),
+                    "prob_max_abs": parity.get("prob_max_abs"),
+                    "hard_mismatches": parity.get("hard_mismatches"),
+                    "near_tie_flips": len(near_tie) if isinstance(near_tie, list) else None,
+                },
+                "artifact_sha256": integrity.get("artifact_sha256"),
+                "offered_by_auto": bool(spec) and bucket in spec.auto_ane_buckets,
+                "offered_explicit": bool(spec) and bucket in spec.ane_buckets,
+            }
+        )
+    return out

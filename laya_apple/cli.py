@@ -108,6 +108,11 @@ def cmd_artifacts(a):
     from .registry import models, resolve
 
     if a.action == "list":
+        if a.capabilities:
+            from .artifacts import artifact_capabilities
+
+            _json(artifact_capabilities())
+            return 0
         _json(
             [
                 {
@@ -292,6 +297,9 @@ def build_parser():
     s.add_argument("--skip-existing", action="store_true")
     s.add_argument("--yes", action="store_true", help="prune: actually delete (default is a dry run)")
     s.add_argument("--out", help="export: output directory")
+    s.add_argument(
+        "--capabilities", action="store_true", help="list: print full provenance records instead of the summary"
+    )
     s.set_defaults(fn=cmd_artifacts)
 
     s = sub.add_parser("parity", help="run the parity gate against the shipped goldens")
